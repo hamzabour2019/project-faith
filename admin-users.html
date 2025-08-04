@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - The Project Faith Admin</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Enhanced Table Styling -->
+    <style>
+        /* Enhanced table styling for better visibility */
+        .data-table-container {
+            margin-bottom: 3rem !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+            border-radius: 12px !important;
+            overflow: hidden;
+        }
+
+        .data-table {
+            font-size: 0.95rem !important;
+            min-width: 100% !important;
+        }
+
+        .data-table th {
+            padding: 1.25rem 1rem !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-hover) 100%) !important;
+            color: white !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none !important;
+        }
+
+        .data-table td {
+            padding: 1.25rem 1rem !important;
+            font-size: 0.9rem !important;
+            border-bottom: 1px solid var(--admin-border) !important;
+            vertical-align: middle !important;
+        }
+
+        .data-table tr:hover {
+            background: var(--admin-surface-hover) !important;
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        .table-header {
+            padding: 1.5rem 2rem !important;
+            background: var(--admin-bg-secondary) !important;
+            border-bottom: 2px solid var(--admin-border) !important;
+        }
+
+        .table-title {
+            font-size: 1.4rem !important;
+            font-weight: 700 !important;
+            color: var(--admin-text-primary) !important;
+            margin: 0 !important;
+        }
+
+        /* Enhanced profile avatars */
+        .profile-avatar {
+            width: 45px !important;
+            height: 45px !important;
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            border: 2px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        /* Enhanced status badges */
+        .status-badge {
+            padding: 0.5rem 0.75rem !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            border-radius: 6px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Enhanced buttons */
+        .data-table .btn {
+            padding: 0.6rem 0.8rem !important;
+            font-size: 0.85rem !important;
+            border-radius: 6px !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease;
+        }
+
+        .data-table .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Search and filter enhancements */
+        .search-box input,
+        .form-select {
+            padding: 0.75rem 1rem !important;
+            font-size: 0.9rem !important;
+            border-radius: 8px !important;
+            border: 2px solid var(--admin-border) !important;
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus,
+        .form-select:focus {
+            border-color: var(--admin-primary) !important;
+            box-shadow: 0 0 0 3px rgba(var(--admin-primary-rgb), 0.1) !important;
+        }
+
+        /* Stats cards enhancement */
+        .stats-grid {
+            gap: 2rem !important;
+            margin-bottom: 3rem !important;
+        }
+
+        .stat-card {
+            padding: 2rem !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 1200px) {
+            .data-table {
+                font-size: 0.85rem !important;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 1rem 0.75rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Enhanced Sidebar with Accessibility -->
+        <aside class="admin-sidebar" id="adminSidebar" role="navigation" aria-label="Admin navigation" aria-hidden="false">
+            <div class="sidebar-header">
+                <a href="admin-dashboard.html" class="sidebar-logo" aria-label="The Project Faith Admin Dashboard">The Project Faith</a>
+            </div>
+            <nav class="sidebar-nav" role="menu">
+                <div class="nav-item" role="none">
+                    <a href="admin-dashboard.html" class="nav-link" role="menuitem">
+                        <i class="nav-icon fas fa-chart-line" aria-hidden="true"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </div>
+                <div class="nav-item" role="none">
+                    <a href="admin-users.html" class="nav-link active" role="menuitem" aria-current="page">
+                        <i class="nav-icon fas fa-users" aria-hidden="true"></i>
+                        <span class="nav-text">Users</span>
+                    </a>
+                </div>
+                <div class="nav-item" role="none">
+                    <a href="admin-products.html" class="nav-link" role="menuitem">
+                        <i class="nav-icon fas fa-box" aria-hidden="true"></i>
+                        <span class="nav-text">Products</span>
+                    </a>
+                </div>
+                <div class="nav-item" role="none">
+                    <a href="admin-orders.html" class="nav-link" role="menuitem">
+                        <i class="nav-icon fas fa-shopping-cart" aria-hidden="true"></i>
+                        <span class="nav-text">Orders</span>
+                    </a>
+                </div>
+                <div class="nav-item" role="none">
+                    <a href="admin-condition.html" class="nav-link" role="menuitem">
+                        <i class="nav-icon fas fa-store" aria-hidden="true"></i>
+                        <span class="nav-text">Condition</span>
+                    </a>
+                </div>
+
+
+                <!-- Navigation Divider -->
+                <div style="margin: 1.5rem 1rem; border-top: 1px solid var(--admin-border); opacity: 0.5;"></div>
+
+                <!-- Quick Links Section -->
+                <div style="padding: 0 1rem; margin-bottom: 1rem;">
+                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--admin-text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+                        Quick Links
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="index.html" class="nav-link" target="_blank">
+                        <i class="nav-icon fas fa-external-link-alt"></i>
+                        <span class="nav-text">View Store</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="user-settings.html" class="nav-link">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <span class="nav-text">Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Mobile Sidebar Overlay -->
+        <div class="admin-sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+        <!-- Main Content -->
+        <main class="admin-main" id="adminMain">
+            <!-- Enhanced Header with Accessibility -->
+            <header class="admin-header" role="banner">
+                <div class="admin-header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle"
+                            aria-label="Toggle navigation sidebar"
+                            aria-expanded="false"
+                            aria-controls="adminSidebar">
+                        <i class="fas fa-bars" aria-hidden="true"></i>
+                    </button>
+                    <h1 class="page-title">User Management</h1>
+                </div>
+                <div class="admin-header-right">
+                    <button class="nav-icon theme-toggle" id="themeToggle"
+                            title="Toggle dark mode"
+                            aria-label="Toggle dark mode">
+                        <i class="fas fa-moon" id="themeIcon" aria-hidden="true"></i>
+                    </button>
+
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <!-- Breadcrumb Navigation -->
+                <nav class="breadcrumb fade-in">
+                    <div class="breadcrumb-item">
+                        <a href="admin-dashboard.html" class="breadcrumb-link">
+                            <i class="fas fa-home"></i> Admin
+                        </a>
+                    </div>
+                    <div class="breadcrumb-item">
+                        <span class="breadcrumb-current">User Management</span>
+                    </div>
+                </nav>
+
+                <!-- Page Header -->
+                <div class="page-header fade-in">
+                    <h2 class="page-title">👥 User Management</h2>
+                    <p class="page-subtitle">Manage user accounts, permissions, and monitor user activity across your platform.</p>
+                </div>
+
+                <!-- User Stats -->
+                <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="totalUsersCount">0</h3>
+                                <p>Total Users</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="activeUsersCount">0</h3>
+                                <p>Active Users</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                                <i class="fas fa-user-plus"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="newUsersCount">0</h3>
+                                <p>New This Month</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                                <i class="fas fa-user-slash"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="suspendedUsersCount">0</h3>
+                                <p>Suspended</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters and Search -->
+                <div class="data-table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">All Users</h3>
+                        <div class="table-actions">
+                            <div class="search-box" style="margin-right: 1rem;">
+                                <input type="text" id="userSearch" placeholder="Search users..." style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 0.25rem; background: var(--input-bg); color: var(--text-color);">
+                            </div>
+                            <select id="statusFilter" class="form-select" style="margin-right: 1rem; padding: 0.5rem; min-width: 120px;">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="suspended">Suspended</option>
+                            </select>
+                            <select id="roleFilter" class="form-select" style="margin-right: 1rem; padding: 0.5rem; min-width: 120px;">
+                                <option value="">All Roles</option>
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Users Table -->
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 250px;">User</th>
+                                    <th style="min-width: 250px;">Email</th>
+                                    <th style="min-width: 100px;">Role</th>
+                                    <th style="min-width: 120px;">Status</th>
+                                    <th style="min-width: 150px;">Join Date</th>
+                                    <th style="min-width: 150px;">Last Login</th>
+                                    <th style="min-width: 100px;">Orders</th>
+                                    <th style="min-width: 180px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Users will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- User Details Modal -->
+    <div class="modal" id="userModal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 id="modalTitle">User Details</h3>
+                <button class="close-modal" id="closeUserModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="userModalBody">
+                <!-- User details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" style="display: none;"></div>
+
+    <!-- Modal Styles -->
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 0.75rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            max-height: 90vh;
+            overflow-y: auto;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: var(--section-bg);
+        }
+
+        .dropdown-divider {
+            margin: 0.5rem 0;
+            border: none;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/admin-common.js"></script>
+
+    <script>
+        let currentUsers = [];
+        let filteredUsers = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check admin access
+            if (!authManager.requireAdmin()) {
+                return;
+            }
+
+            // Initialize page
+            initializeUsersPage();
+            setupEventListeners();
+        });
+
+        function initializeUsersPage() {
+            loadUserStats();
+            loadUsers();
+        }
+
+        function loadUserStats() {
+            const stats = authManager.getUserStats();
+            document.getElementById('totalUsersCount').textContent = stats.total;
+            document.getElementById('activeUsersCount').textContent = stats.active;
+            document.getElementById('newUsersCount').textContent = stats.newThisMonth;
+            document.getElementById('suspendedUsersCount').textContent = stats.suspended;
+        }
+
+        function loadUsers() {
+            currentUsers = authManager.getAllUsers();
+            filteredUsers = [...currentUsers];
+            renderUsersTable();
+        }
+
+        function renderUsersTable() {
+            const tbody = document.getElementById('usersTableBody');
+            
+            if (filteredUsers.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem; color: var(--text-light);">No users found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filteredUsers.map(user => `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div class="profile-avatar" style="width: 40px; height: 40px; font-size: 1rem;">
+                                ${getInitials(user.firstName, user.lastName)}
+                            </div>
+                            <div>
+                                <div style="font-weight: 500; cursor: pointer; color: var(--primary-color); text-decoration: underline;"
+                                     onclick="viewUserProfile(${user.id})"
+                                     title="View user profile">
+                                    ${user.firstName} ${user.lastName}
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--text-light);">${user.phone || 'No phone'}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${user.email}</td>
+                    <td>
+                        <select class="form-select" style="font-size: 0.8rem; padding: 0.4rem 0.6rem; min-width: 120px;" onchange="updateUserRole(${user.id}, this.value)">
+                            <option value="user" ${user.role === 'user' ? 'selected' : ''}>User</option>
+                            <option value="vip" ${user.role === 'vip' ? 'selected' : ''}>VIP User</option>
+                            <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Admin</option>
+                        </select>
+                    </td>
+                    <td><span class="status-badge ${getStatusBadgeClass(user.status)}">${user.status}</span></td>
+                    <td>${formatDate(user.joinDate)}</td>
+                    <td>${user.lastLogin ? formatDateTime(user.lastLogin) : 'Never'}</td>
+                    <td>${user.stats.totalOrders}</td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-primary btn-sm" onclick="viewUserProfile(${user.id})" title="View User Profile">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            ${user.status === 'active' ?
+                                `<button class="btn btn-danger btn-sm" onclick="suspendUser(${user.id})" title="Suspend User">
+                                    <i class="fas fa-ban"></i>
+                                </button>` :
+                                `<button class="btn btn-primary btn-sm" onclick="activateUser(${user.id})" title="Activate User">
+                                    <i class="fas fa-check"></i>
+                                </button>`
+                            }
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function setupEventListeners() {
+            // Search functionality
+            document.getElementById('userSearch').addEventListener('input', function(e) {
+                const query = e.target.value;
+                applyFilters();
+            });
+
+            // Filter functionality
+            document.getElementById('statusFilter').addEventListener('change', applyFilters);
+            document.getElementById('roleFilter').addEventListener('change', applyFilters);
+
+            // Modal close
+            document.getElementById('closeUserModal').addEventListener('click', closeModal);
+            document.getElementById('overlay').addEventListener('click', closeModal);
+
+            // Logout (sidebar/user menu handled by admin-common.js)
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                authManager.logout();
+            });
+        }
+
+        function applyFilters() {
+            const searchQuery = document.getElementById('userSearch').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const roleFilter = document.getElementById('roleFilter').value;
+
+            filteredUsers = currentUsers.filter(user => {
+                const matchesSearch = !searchQuery || 
+                    user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    user.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    user.email.toLowerCase().includes(searchQuery.toLowerCase());
+
+                const matchesStatus = !statusFilter || user.status === statusFilter;
+                const matchesRole = !roleFilter || user.role === roleFilter;
+
+                return matchesSearch && matchesStatus && matchesRole;
+            });
+
+            renderUsersTable();
+        }
+
+        function viewUser(userId) {
+            const user = authManager.getUserById(userId);
+            if (!user) return;
+
+            document.getElementById('modalTitle').textContent = 'User Details';
+            document.getElementById('userModalBody').innerHTML = `
+                <div style="display: grid; gap: 1rem;">
+                    <div style="text-align: center; margin-bottom: 1rem;">
+                        <div class="profile-avatar" style="width: 80px; height: 80px; font-size: 2rem; margin: 0 auto 1rem;">
+                            ${getInitials(user.firstName, user.lastName)}
+                        </div>
+                        <h3>${user.firstName} ${user.lastName}</h3>
+                        <p style="color: var(--text-light);">${user.email}</p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <strong>Role:</strong><br>
+                            <span class="status-badge ${user.role === 'admin' ? 'status-pending' : 'status-active'}">${user.role}</span>
+                        </div>
+                        <div>
+                            <strong>Status:</strong><br>
+                            <span class="status-badge ${getStatusBadgeClass(user.status)}">${user.status}</span>
+                        </div>
+                        <div>
+                            <strong>Phone:</strong><br>
+                            ${user.phone || 'Not provided'}
+                        </div>
+                        <div>
+                            <strong>Join Date:</strong><br>
+                            ${formatDate(user.joinDate)}
+                        </div>
+                        <div>
+                            <strong>Last Login:</strong><br>
+                            ${user.lastLogin ? formatDateTime(user.lastLogin) : 'Never'}
+                        </div>
+                        <div>
+                            <strong>Total Orders:</strong><br>
+                            ${user.stats.totalOrders}
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <strong>Address:</strong><br>
+                        ${user.address || 'Not provided'}
+                    </div>
+                </div>
+            `;
+            
+            showModal();
+        }
+
+
+
+        function saveUserChanges(userId) {
+            const firstName = document.getElementById('editFirstName').value.trim();
+            const lastName = document.getElementById('editLastName').value.trim();
+            const email = document.getElementById('editEmail').value.trim();
+            const phone = document.getElementById('editPhone').value.trim();
+            const address = document.getElementById('editAddress').value.trim();
+            const role = document.getElementById('editRole').value;
+            const status = document.getElementById('editStatus').value;
+
+            // Validate required fields
+            if (!firstName || !lastName || !email) {
+                alert('Please fill in all required fields (First Name, Last Name, Email)');
+                return;
+            }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+
+            // Check if email is already taken by another user
+            const existingUser = authManager.users.find(u => u.email === email && u.id !== userId);
+            if (existingUser) {
+                alert('This email is already taken by another user');
+                return;
+            }
+
+            try {
+                // Update user data
+                const updatedData = {
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    address,
+                    role,
+                    status
+                };
+
+                authManager.updateUser(userId, updatedData);
+
+                // Refresh the users table
+                loadUsers();
+
+                // Close modal
+                closeModal();
+
+                // Show success message
+                if (typeof adminInterface !== 'undefined') {
+                    adminInterface.showToast('User updated successfully!', 'success');
+                } else {
+                    alert('User updated successfully!');
+                }
+
+            } catch (error) {
+                alert('Failed to update user: ' + error.message);
+            }
+        }
+
+        function suspendUser(userId) {
+            if (confirm('Are you sure you want to suspend this user?')) {
+                authManager.suspendUser(userId);
+                loadUsers();
+                loadUserStats();
+            }
+        }
+
+        function activateUser(userId) {
+            if (confirm('Are you sure you want to activate this user?')) {
+                authManager.activateUser(userId);
+                loadUsers();
+                loadUserStats();
+            }
+        }
+
+        function showModal() {
+            document.getElementById('userModal').style.display = 'flex';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('userModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function getInitials(firstName, lastName) {
+            return (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function formatDateTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function getStatusBadgeClass(status) {
+            const statusClasses = {
+                'active': 'status-active',
+                'inactive': 'status-inactive',
+                'suspended': 'status-suspended',
+                'vip': 'status-active'
+            };
+            return statusClasses[status] || 'status-inactive';
+        }
+
+        function updateUserRole(userId, newRole) {
+            const user = authManager.getUserById(userId);
+            if (!user) {
+                if (typeof adminInterface !== 'undefined') {
+                    adminInterface.showToast('User not found', 'error');
+                } else {
+                    alert('User not found');
+                }
+                return;
+            }
+
+            // Prevent admin from changing their own role to non-admin
+            const currentUser = authManager.getCurrentUser();
+            if (currentUser.id === userId && newRole !== 'admin') {
+                if (typeof adminInterface !== 'undefined') {
+                    adminInterface.showToast('You cannot remove your own admin privileges', 'warning');
+                } else {
+                    alert('You cannot remove your own admin privileges');
+                }
+                // Reset the dropdown to the original value
+                loadUsers();
+                return;
+            }
+
+            try {
+                authManager.updateUser(userId, { role: newRole });
+
+                // Display user-friendly role name
+                const roleDisplayName = newRole === 'vip' ? 'VIP User' :
+                                      newRole === 'admin' ? 'Admin' : 'User';
+
+                if (typeof adminInterface !== 'undefined') {
+                    adminInterface.showToast(`User role updated to ${roleDisplayName}`, 'success');
+                } else {
+                    alert(`User role updated to ${roleDisplayName}`);
+                }
+
+                // Refresh the table to show updated data
+                setTimeout(() => {
+                    loadUsers();
+                }, 500);
+
+            } catch (error) {
+                if (typeof adminInterface !== 'undefined') {
+                    adminInterface.showToast('Failed to update user role', 'error');
+                } else {
+                    alert('Failed to update user role');
+                }
+                // Reset the dropdown to the original value
+                loadUsers();
+            }
+        }
+
+        function viewUserProfile(userId) {
+            // Store the user ID and redirect directly to user profile page
+            sessionStorage.setItem('viewUserId', userId);
+            window.location.href = 'user-profile.html';
+        }
+    </script>
+</body>
+</html>

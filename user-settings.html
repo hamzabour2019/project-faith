@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings - The Project Faith</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <a href="index.html">
+                        <svg width="150" height="40" viewBox="0 0 150 40" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#4B0082;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#D8BFD8;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <text x="5" y="28" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="url(#logoGradient)">The Project Faith</text>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="sale.html">Sale</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <div class="nav-icons">
+                    <button class="nav-icon theme-toggle" id="themeToggle" title="Toggle dark mode">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <a href="user-profile.html" class="nav-icon active">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button class="nav-icon" id="favoritesBtn">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="favoritesCount">0</span>
+                    </button>
+                    <button class="nav-icon" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-info">
+                <div class="profile-avatar" id="profileAvatar">
+                    <!-- Avatar will be loaded dynamically -->
+                </div>
+                <div class="profile-details">
+                    <h1>Account Settings</h1>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Navigation -->
+        <nav class="profile-nav">
+            <ul class="profile-nav-list">
+                <li class="profile-nav-item">
+                    <a href="user-profile.html" class="profile-nav-link">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Overview</span>
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="user-profile.html#orders" class="profile-nav-link">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Orders</span>
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="user-profile.html#favorites" class="profile-nav-link">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="user-profile-edit.html" class="profile-nav-link">
+                        <i class="fas fa-edit"></i>
+                        <span>Edit Profile</span>
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="user-settings.html" class="profile-nav-link active">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Profile Content -->
+        <div class="profile-content">
+            <div class="profile-main">
+                <!-- Security Settings -->
+                <div class="settings-section">
+                    <h3 class="section-title">Security</h3>
+                    <p class="section-description">Manage your password and security preferences</p>
+                    
+                    <form id="passwordForm">
+                        <div class="form-group">
+                            <label for="currentPassword" class="form-label">Current Password</label>
+                            <input type="password" id="currentPassword" class="form-input" required>
+                            <span class="error-message" id="currentPasswordError"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newPassword" class="form-label">New Password</label>
+                            <input type="password" id="newPassword" class="form-input" required>
+                            <span class="error-message" id="newPasswordError"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" class="form-input" required>
+                            <span class="error-message" id="confirmPasswordError"></span>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" id="changePasswordBtn">
+                            <i class="fas fa-key"></i>
+                            Change Password
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Notification Settings -->
+                <div class="settings-section">
+                    <h3 class="section-title">Notifications</h3>
+                    <p class="section-description">Choose what notifications you want to receive</p>
+                    
+                    <div class="form-group">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <label class="form-label" style="margin-bottom: 0.25rem;">Email Notifications</label>
+                                <p style="font-size: 0.875rem; color: var(--text-light); margin: 0;">Receive order updates and promotional emails</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="emailNotifications">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <label class="form-label" style="margin-bottom: 0.25rem;">Newsletter Subscription</label>
+                                <p style="font-size: 0.875rem; color: var(--text-light); margin: 0;">Get the latest fashion trends and exclusive offers</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="newsletter">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <label class="form-label" style="margin-bottom: 0.25rem;">SMS Notifications</label>
+                                <p style="font-size: 0.875rem; color: var(--text-light); margin: 0;">Receive order updates via text message</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="smsNotifications">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <!-- Account Management -->
+                <div class="settings-section">
+                    <h3 class="section-title">Account Management</h3>
+                    <p class="section-description">Manage your account status and data</p>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+
+                        <button class="btn btn-danger" id="deleteAccountBtn">
+                            <i class="fas fa-trash"></i>
+                            Delete Account
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Save Settings Button -->
+                <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                    <button class="btn btn-primary" id="saveSettingsBtn">
+                        <i class="fas fa-save"></i>
+                        Save Settings
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="profile-sidebar">
+                <div class="sidebar-card">
+                    <h3>Security Tips</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.5rem;">
+                            <i class="fas fa-shield-alt" style="color: var(--success-color); margin-top: 0.25rem;"></i>
+                            <span style="font-size: 0.875rem;">Use a strong, unique password</span>
+                        </li>
+                        <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.5rem;">
+                            <i class="fas fa-lock" style="color: var(--primary-color); margin-top: 0.25rem;"></i>
+                            <span style="font-size: 0.875rem;">Change your password regularly</span>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <button class="btn btn-danger btn-sm" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="messageContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Project Faith</h3>
+                    <p>Your destination for trendy and affordable fashion.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VAITH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Message Styles -->
+    <style>
+        .message {
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .message.success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .message.error {
+            background: var(--error-color);
+            color: white;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/store-status.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/favorites.js"></script>
+
+    <script>
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            if (!authManager.requireAuth()) {
+                return;
+            }
+
+            // Initialize settings
+            initializeSettings();
+            setupEventListeners();
+        });
+
+        function initializeSettings() {
+            currentUser = authManager.getCurrentUser();
+            
+            // Update avatar
+            const avatar = document.getElementById('profileAvatar');
+            avatar.textContent = getInitials(currentUser.firstName, currentUser.lastName);
+            
+            // Load current preferences
+            if (currentUser.preferences) {
+                document.getElementById('emailNotifications').checked = currentUser.preferences.notifications || false;
+                document.getElementById('newsletter').checked = currentUser.preferences.newsletter || false;
+                document.getElementById('smsNotifications').checked = currentUser.preferences.smsNotifications || false;
+
+
+            }
+        }
+
+        function setupEventListeners() {
+            // Password form
+            document.getElementById('passwordForm').addEventListener('submit', handlePasswordChange);
+
+            // Settings save
+            document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
+
+
+
+            // Account management buttons
+
+            document.getElementById('deleteAccountBtn').addEventListener('click', deleteAccount);
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to logout?')) {
+                    authManager.logout();
+                }
+            });
+        }
+
+        function handlePasswordChange(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Clear previous errors
+            clearPasswordErrors();
+            
+            // Validate
+            let isValid = true;
+            
+            if (!currentPassword) {
+                showPasswordError('currentPasswordError', 'Current password is required');
+                isValid = false;
+            }
+            
+            if (!newPassword) {
+                showPasswordError('newPasswordError', 'New password is required');
+                isValid = false;
+            } else if (newPassword.length < 6) {
+                showPasswordError('newPasswordError', 'Password must be at least 6 characters');
+                isValid = false;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                showPasswordError('confirmPasswordError', 'Passwords do not match');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            // Show loading
+            const btn = document.getElementById('changePasswordBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                try {
+                    authManager.changePassword(currentUser.id, currentPassword, newPassword);
+                    showMessage('Password changed successfully!', 'success');
+                    
+                    // Clear form
+                    document.getElementById('passwordForm').reset();
+                    
+                } catch (error) {
+                    showMessage(error.message, 'error');
+                } finally {
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
+                }
+            }, 1000);
+        }
+
+        function saveSettings() {
+            const btn = document.getElementById('saveSettingsBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+            
+            // Collect settings
+            const preferences = {
+                notifications: document.getElementById('emailNotifications').checked,
+                newsletter: document.getElementById('newsletter').checked,
+                smsNotifications: document.getElementById('smsNotifications').checked,
+
+
+            };
+            
+            // Simulate API call
+            setTimeout(() => {
+                try {
+                    authManager.updateUser(currentUser.id, { preferences });
+                    showMessage('Settings saved successfully!', 'success');
+                } catch (error) {
+                    showMessage('Failed to save settings. Please try again.', 'error');
+                } finally {
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
+                }
+            }, 1000);
+        }
+
+
+
+        function deleteAccount() {
+            const confirmation = prompt('This action cannot be undone. Type "DELETE" to confirm account deletion:');
+            
+            if (confirmation === 'DELETE') {
+                authManager.deleteUser(currentUser.id);
+                showMessage('Account deleted successfully.', 'success');
+                
+                setTimeout(() => {
+                    authManager.logout();
+                }, 2000);
+            } else if (confirmation !== null) {
+                showMessage('Account deletion cancelled. Please type "DELETE" exactly.', 'error');
+            }
+        }
+
+        function clearPasswordErrors() {
+            document.getElementById('currentPasswordError').textContent = '';
+            document.getElementById('newPasswordError').textContent = '';
+            document.getElementById('confirmPasswordError').textContent = '';
+        }
+
+        function showPasswordError(elementId, message) {
+            document.getElementById(elementId).textContent = message;
+        }
+
+        function showMessage(message, type) {
+            const container = document.getElementById('messageContainer');
+            const messageEl = document.createElement('div');
+            messageEl.className = `message ${type}`;
+            messageEl.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(messageEl);
+            
+            // Remove message after 5 seconds
+            setTimeout(() => {
+                messageEl.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Condition - The Project Faith Admin</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Enhanced Sidebar with Accessibility -->
+        <aside class="admin-sidebar" id="adminSidebar" role="navigation" aria-label="Admin navigation" aria-hidden="false">
+            <div class="sidebar-header">
+                <a href="admin-dashboard.html" class="sidebar-logo" aria-label="The Project Faith Admin Dashboard">The Project Faith</a>
+            </div>
+            <nav class="sidebar-nav" role="menu">
+                <div class="nav-item" role="none">
+                    <a href="admin-dashboard.html" class="nav-link" role="menuitem">
+                        <i class="nav-icon fas fa-chart-line" aria-hidden="true"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </div>
+                <div class="nav-item" role="none">
+                    <a href="admin-users.html" class="nav-link" role="menuitem">
+                        <i class="nav-icon fas fa-users" aria-hidden="true"></i>
+                        <span class="nav-text">Users</span>
+                    </a>
+                </div>
+                <div class="nav-item" role="none">
+                    <a href="admin-products.html" class="nav-link" role="menuitem">
+                        <i class="nav-icon fas fa-box" aria-hidden="true"></i>
+                        <span class="nav-text">Products</span>
+                    </a>
+                </div>
+                <div class="nav-item" role="none">
+                    <a href="admin-orders.html" class="nav-link" role="menuitem">
+                        <i class="nav-icon fas fa-shopping-cart" aria-hidden="true"></i>
+                        <span class="nav-text">Orders</span>
+                    </a>
+                </div>
+                <div class="nav-item" role="none">
+                    <a href="admin-condition.html" class="nav-link active" role="menuitem" aria-current="page">
+                        <i class="nav-icon fas fa-store" aria-hidden="true"></i>
+                        <span class="nav-text">Condition</span>
+                    </a>
+                </div>
+
+                <!-- Navigation Divider -->
+                <div style="margin: 1.5rem 1rem; border-top: 1px solid var(--admin-border); opacity: 0.5;"></div>
+
+                <!-- Quick Links Section -->
+                <div style="padding: 0 1rem; margin-bottom: 1rem;">
+                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--admin-text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+                        Quick Links
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="index.html" class="nav-link" target="_blank">
+                        <i class="nav-icon fas fa-external-link-alt"></i>
+                        <span class="nav-text">View Store</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="user-settings.html" class="nav-link">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <span class="nav-text">Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Enhanced Header with User Menu -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="breadcrumb">
+                        <span class="breadcrumb-item">Admin</span>
+                        <i class="fas fa-chevron-right breadcrumb-separator"></i>
+                        <span class="breadcrumb-item current">Store Condition</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-menu">
+                        <button class="user-menu-toggle" id="userMenuToggle" aria-label="User menu">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <span class="user-name" id="currentUserName">Admin</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" id="userDropdown">
+                            <a href="user-profile.html" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                <span>Profile</span>
+                            </a>
+                            <a href="user-settings.html" class="dropdown-item">
+                                <i class="fas fa-cog"></i>
+                                <span>Settings</span>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="admin-content">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="page-title-section">
+                        <h1 class="page-title">Store Condition</h1>
+                        <p class="page-subtitle">Manage your store's operational status and availability</p>
+                    </div>
+                </div>
+
+                <!-- Store Status Overview -->
+                <div class="dashboard-grid" style="grid-template-columns: 1fr;">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%);">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 style="margin: 0; color: var(--admin-text-primary);">Current Store Status</h3>
+                                <p style="margin: 0.5rem 0; color: var(--admin-text-secondary);">Monitor and control your store's availability</p>
+                            </div>
+                        </div>
+                        
+                        <div style="padding: 2rem; border-top: 1px solid var(--admin-border);">
+                            <!-- Store Status Display -->
+                            <div class="store-status-display" style="margin-bottom: 3rem;">
+                                <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2rem;">
+                                    <div class="status-indicator-large" id="storeStatusIndicator">
+                                        <div class="status-dot-large"></div>
+                                        <span class="status-text-large" id="storeStatusText">Store is Open</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="status-details-grid">
+                                    <div class="status-detail-card">
+                                        <div class="detail-label">Last Updated</div>
+                                        <div class="detail-value" id="statusLastUpdated">-</div>
+                                    </div>
+                                    <div class="status-detail-card">
+                                        <div class="detail-label">Updated By</div>
+                                        <div class="detail-value" id="statusUpdatedBy">-</div>
+                                    </div>
+                                    <div class="status-detail-card" id="statusReasonCard" style="display: none;">
+                                        <div class="detail-label">Reason</div>
+                                        <div class="detail-value" id="statusReason">-</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Store Control Actions -->
+                            <div class="store-controls">
+                                <div class="control-section">
+                                    <h4 style="margin: 0 0 1rem 0; color: var(--admin-text-primary);">Store Controls</h4>
+                                    
+                                    <div class="form-group" style="margin-bottom: 1.5rem;">
+                                        <label for="statusReasonInput" style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Reason (Optional):</label>
+                                        <input type="text" id="statusReasonInput" class="form-input" placeholder="e.g., Maintenance, System Update, Holiday, etc." style="width: 100%; max-width: 500px;">
+                                    </div>
+                                    
+                                    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 2rem;">
+                                        <button id="toggleStoreBtn" class="btn btn-primary btn-lg" onclick="toggleStoreStatus()">
+                                            <i class="fas fa-power-off"></i>
+                                            <span id="toggleBtnText">Close Store</span>
+                                        </button>
+                                        <button class="btn btn-secondary" onclick="refreshStoreStatus()">
+                                            <i class="fas fa-sync-alt"></i>
+                                            Refresh Status
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    <div>
+                                        <strong>Important:</strong> When the store is closed, customers will only be able to access the login and signup pages. All other pages will redirect to the login page with an appropriate message.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- User Menu Dropdown Styles -->
+    <style>
+        .user-menu {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: var(--section-bg);
+        }
+
+        .dropdown-divider {
+            margin: 0.5rem 0;
+            border: none;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+
+    <!-- Store Condition Specific Styles -->
+    <style>
+        /* Large Status Indicator */
+        .store-status-display .status-indicator-large {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-dot-large {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse-large 2s infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .status-dot-large::after {
+            content: '';
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .status-dot-large.closed {
+            background: #ef4444;
+            animation: pulse-large-red 2s infinite;
+        }
+
+        .status-text-large {
+            font-weight: 700;
+            font-size: 2rem;
+            text-align: center;
+            color: var(--admin-text-primary);
+        }
+
+        .status-text-large.closed {
+            color: #ef4444;
+        }
+
+        @keyframes pulse-large {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(16, 185, 129, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        @keyframes pulse-large-red {
+            0% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 20px rgba(239, 68, 68, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+            }
+        }
+
+        /* Status Details Grid */
+        .status-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .status-detail-card {
+            background: var(--admin-surface-secondary);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--admin-border);
+            text-align: center;
+        }
+
+        .detail-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--admin-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-value {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--admin-text-primary);
+        }
+
+        /* Control Section */
+        .control-section {
+            background: var(--admin-surface);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--admin-border);
+            margin-bottom: 2rem;
+        }
+
+        .btn-lg {
+            padding: 0.875rem 2rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .alert {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .alert-info {
+            color: var(--admin-text-primary);
+        }
+
+        .alert i {
+            color: #3b82f6;
+            margin-top: 0.125rem;
+            font-size: 1.25rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .status-text-large {
+                font-size: 1.5rem;
+            }
+
+            .status-dot-large {
+                width: 40px;
+                height: 40px;
+            }
+
+            .status-dot-large::after {
+                width: 20px;
+                height: 20px;
+            }
+
+            .status-details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/admin-common.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check admin access
+            if (!authManager.requireAdmin()) {
+                return;
+            }
+
+            // Initialize condition page
+            initializeConditionPage();
+            setupEventListeners();
+        });
+
+        function initializeConditionPage() {
+            // Load current store status
+            refreshStoreStatus();
+
+            // Listen for storage changes to sync store status across tabs
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'theprojectfaith_store_status') {
+                    refreshStoreStatus();
+                }
+            });
+        }
+
+        function refreshStoreStatus() {
+            const status = adminManager.getStoreStatus();
+            updateStoreStatusDisplay(status);
+        }
+
+        function updateStoreStatusDisplay(status) {
+            const indicator = document.getElementById('storeStatusIndicator');
+            const statusText = document.getElementById('storeStatusText');
+            const statusDot = indicator.querySelector('.status-dot-large');
+            const toggleBtn = document.getElementById('toggleStoreBtn');
+            const toggleBtnText = document.getElementById('toggleBtnText');
+
+            // Update status display
+            if (status.isOpen) {
+                statusText.textContent = 'Store is Open';
+                statusText.classList.remove('closed');
+                statusDot.classList.remove('closed');
+                toggleBtnText.textContent = 'Close Store';
+                toggleBtn.className = 'btn btn-danger btn-lg';
+            } else {
+                statusText.textContent = 'Store is Closed';
+                statusText.classList.add('closed');
+                statusDot.classList.add('closed');
+                toggleBtnText.textContent = 'Open Store';
+                toggleBtn.className = 'btn btn-success btn-lg';
+            }
+
+            // Update details
+            document.getElementById('statusLastUpdated').textContent = formatDateTime(status.lastUpdated);
+            document.getElementById('statusUpdatedBy').textContent = status.updatedBy || 'System';
+
+            const reasonCard = document.getElementById('statusReasonCard');
+            const reasonSpan = document.getElementById('statusReason');
+            if (status.reason) {
+                reasonSpan.textContent = status.reason;
+                reasonCard.style.display = 'block';
+            } else {
+                reasonCard.style.display = 'none';
+            }
+        }
+
+        function toggleStoreStatus() {
+            const currentUser = authManager.getCurrentUser();
+            const reasonInput = document.getElementById('statusReasonInput');
+            const reason = reasonInput.value.trim() || null;
+
+            try {
+                const newStatus = adminManager.toggleStoreStatus(currentUser, reason);
+                updateStoreStatusDisplay(newStatus);
+
+                // Clear reason input
+                reasonInput.value = '';
+
+                // Show success message
+                const message = newStatus.isOpen ? 'Store has been opened successfully!' : 'Store has been closed successfully!';
+                adminInterface.showToast(message, 'success');
+
+            } catch (error) {
+                console.error('Error toggling store status:', error);
+                adminInterface.showToast('Failed to update store status. Please try again.', 'error');
+            }
+        }
+
+        function formatDateTime(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function setupEventListeners() {
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                adminInterface.showToast('Logging out...', 'info');
+                setTimeout(() => {
+                    authManager.logout();
+                }, 1000);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - The Project Faith</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <a href="index.html">
+                        <svg width="90" height="40" viewBox="0 0 90 40" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#4B0082;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#D8BFD8;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <text x="5" y="28" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="url(#logoGradient)">The Project Faith</text>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="sale.html">Sale</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <div class="nav-icons">
+                    <button class="nav-icon theme-toggle" id="themeToggle" title="Toggle dark mode">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <a href="user-profile.html" class="nav-icon active">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button class="nav-icon" id="favoritesBtn">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="favoritesCount">0</span>
+                    </button>
+                    <button class="nav-icon" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-info">
+                <div class="profile-avatar" id="profileAvatar">
+                    <!-- Avatar will be loaded dynamically -->
+                </div>
+                <div class="profile-details">
+                    <h1>Edit Profile</h1>
+                    <p>Update your personal information and preferences</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Navigation -->
+        <nav class="profile-nav">
+            <ul class="profile-nav-list">
+                <li class="profile-nav-item">
+                    <a href="user-profile.html" class="profile-nav-link">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Overview</span>
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="user-profile.html#orders" class="profile-nav-link">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Orders</span>
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="user-profile.html#favorites" class="profile-nav-link">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="user-profile-edit.html" class="profile-nav-link active">
+                        <i class="fas fa-edit"></i>
+                        <span>Edit Profile</span>
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="user-settings.html" class="profile-nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Profile Content -->
+        <div class="profile-content">
+            <div class="profile-main">
+                <form class="profile-form" id="profileForm">
+                    <!-- Avatar Upload -->
+                    <div class="avatar-upload">
+                        <div class="avatar-preview" id="avatarPreview">
+                            <!-- Current avatar will be shown here -->
+                        </div>
+                        <div>
+                            <div class="file-upload">
+                                <input type="file" id="avatarInput" accept="image/*">
+                                <label for="avatarInput" class="file-upload-label">
+                                    <i class="fas fa-camera"></i>
+                                    Change Photo
+                                </label>
+                            </div>
+                            <p style="font-size: 0.75rem; color: var(--text-light); margin-top: 0.5rem;">
+                                JPG, PNG or GIF. Max size 2MB.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Personal Information -->
+                    <div class="settings-section">
+                        <h3 class="section-title">Personal Information</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">First Name *</label>
+                                <input type="text" id="firstName" class="form-input" required>
+                                <span class="error-message" id="firstNameError"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">Last Name *</label>
+                                <input type="text" id="lastName" class="form-input" required>
+                                <span class="error-message" id="lastNameError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" id="email" class="form-input" required>
+                            <span class="error-message" id="emailError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" class="form-input">
+                            <span class="error-message" id="phoneError"></span>
+                        </div>
+                    </div>
+
+                    <!-- Address Information -->
+                    <div class="settings-section">
+                        <h3 class="section-title">Address Information</h3>
+                        
+                        <div class="form-group">
+                            <label for="address" class="form-label">Street Address</label>
+                            <textarea id="address" class="form-textarea" rows="3" placeholder="Enter your full address"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" id="city" class="form-input">
+                            </div>
+
+                        </div>
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <label for="country" class="form-label">Country</label>
+                                <select id="country" class="form-select">
+                                    <option value="">Select Country</option>
+                                    <option value="US">United States</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="FR">France</option>
+                                    <option value="JP">Japan</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preferences -->
+                    <div class="settings-section">
+                        <h3 class="section-title">Preferences</h3>
+                        
+                        <div class="form-group">
+                            <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                            <input type="date" id="dateOfBirth" class="form-input">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender" class="form-label">Gender</label>
+                            <select id="gender" class="form-select">
+                                <option value="">Prefer not to say</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bio" class="form-label">Bio</label>
+                            <textarea id="bio" class="form-textarea" rows="4" placeholder="Tell us a bit about yourself..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                        <a href="user-profile.html" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary" id="saveBtn">
+                            <i class="fas fa-save"></i>
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="profile-sidebar">
+                <div class="sidebar-card">
+                    <h3>Profile Tips</h3>
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.5rem;">
+                            <i class="fas fa-check-circle" style="color: var(--success-color); margin-top: 0.25rem;"></i>
+                            <span style="font-size: 0.875rem;">Keep your information up to date for better service</span>
+                        </li>
+                        <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.5rem;">
+                            <i class="fas fa-shield-alt" style="color: var(--primary-color); margin-top: 0.25rem;"></i>
+                            <span style="font-size: 0.875rem;">Your personal information is secure and private</span>
+                        </li>
+                        <li style="margin-bottom: 0.75rem; display: flex; align-items: flex-start; gap: 0.5rem;">
+                            <i class="fas fa-bell" style="color: var(--warning-color); margin-top: 0.25rem;"></i>
+                            <span style="font-size: 0.875rem;">Update your email to receive order notifications</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <button class="btn btn-danger btn-sm" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="messageContainer" style="position: fixed; top: 20px; right: 20px; z-index: 9999;"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VAITH</h3>
+                    <p>Your destination for trendy and affordable fashion.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VAITH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Message Styles -->
+    <style>
+        .message {
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .message.success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .message.error {
+            background: var(--error-color);
+            color: white;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/store-status.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/favorites.js"></script>
+
+    <script>
+        let currentUser = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            if (!authManager.requireAuth()) {
+                return;
+            }
+
+            // Initialize profile edit
+            initializeProfileEdit();
+            setupEventListeners();
+        });
+
+        function initializeProfileEdit() {
+            currentUser = authManager.getCurrentUser();
+            
+            // Update avatar
+            const avatar = document.getElementById('profileAvatar');
+            const avatarPreview = document.getElementById('avatarPreview');
+            const initials = getInitials(currentUser.firstName, currentUser.lastName);
+            
+            avatar.textContent = initials;
+            avatarPreview.textContent = initials;
+            
+            // Populate form fields
+            document.getElementById('firstName').value = currentUser.firstName || '';
+            document.getElementById('lastName').value = currentUser.lastName || '';
+            document.getElementById('email').value = currentUser.email || '';
+            document.getElementById('phone').value = currentUser.phone || '';
+            
+            // Parse address if it exists
+            if (currentUser.address) {
+                document.getElementById('address').value = currentUser.address;
+            }
+            
+            // Set other fields from user data if available
+            if (currentUser.dateOfBirth) {
+                document.getElementById('dateOfBirth').value = currentUser.dateOfBirth;
+            }
+            if (currentUser.gender) {
+                document.getElementById('gender').value = currentUser.gender;
+            }
+            if (currentUser.bio) {
+                document.getElementById('bio').value = currentUser.bio;
+            }
+            if (currentUser.country) {
+                document.getElementById('country').value = currentUser.country;
+            }
+        }
+
+        function setupEventListeners() {
+            // Form submission
+            document.getElementById('profileForm').addEventListener('submit', handleFormSubmit);
+
+            // Avatar upload
+            document.getElementById('avatarInput').addEventListener('change', handleAvatarUpload);
+
+            // Real-time validation
+            document.getElementById('firstName').addEventListener('blur', validateFirstName);
+            document.getElementById('lastName').addEventListener('blur', validateLastName);
+            document.getElementById('email').addEventListener('blur', validateEmail);
+            document.getElementById('phone').addEventListener('blur', validatePhone);
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to logout?')) {
+                    authManager.logout();
+                }
+            });
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Validate form
+            if (!validateForm()) {
+                showMessage('Please fix the errors before saving.', 'error');
+                return;
+            }
+
+            // Show loading state
+            const saveBtn = document.getElementById('saveBtn');
+            saveBtn.classList.add('loading');
+            saveBtn.disabled = true;
+
+            // Simulate API call delay
+            setTimeout(() => {
+                try {
+                    // Collect form data
+                    const formData = {
+                        firstName: document.getElementById('firstName').value.trim(),
+                        lastName: document.getElementById('lastName').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        phone: document.getElementById('phone').value.trim(),
+                        address: document.getElementById('address').value.trim(),
+                        city: document.getElementById('city').value.trim(),
+
+
+                        country: document.getElementById('country').value,
+                        dateOfBirth: document.getElementById('dateOfBirth').value,
+                        gender: document.getElementById('gender').value,
+                        bio: document.getElementById('bio').value.trim()
+                    };
+
+                    // Update user
+                    authManager.updateUser(currentUser.id, formData);
+                    
+                    showMessage('Profile updated successfully!', 'success');
+                    
+                    // Redirect after a delay
+                    setTimeout(() => {
+                        window.location.href = 'user-profile.html';
+                    }, 1500);
+                    
+                } catch (error) {
+                    showMessage('Failed to update profile. Please try again.', 'error');
+                } finally {
+                    saveBtn.classList.remove('loading');
+                    saveBtn.disabled = false;
+                }
+            }, 1000);
+        }
+
+        function handleAvatarUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Validate file
+            if (!file.type.startsWith('image/')) {
+                showMessage('Please select a valid image file.', 'error');
+                return;
+            }
+
+            if (file.size > 2 * 1024 * 1024) { // 2MB
+                showMessage('Image size must be less than 2MB.', 'error');
+                return;
+            }
+
+            // Preview image
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const avatarPreview = document.getElementById('avatarPreview');
+                avatarPreview.innerHTML = `<img src="${e.target.result}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function validateForm() {
+            let isValid = true;
+            
+            isValid = validateFirstName() && isValid;
+            isValid = validateLastName() && isValid;
+            isValid = validateEmail() && isValid;
+            isValid = validatePhone() && isValid;
+            
+            return isValid;
+        }
+
+        function validateFirstName() {
+            const input = document.getElementById('firstName');
+            const error = document.getElementById('firstNameError');
+            const value = input.value.trim();
+
+            if (!value) {
+                showFieldError(input, error, 'First name is required');
+                return false;
+            }
+
+            if (value.length < 2) {
+                showFieldError(input, error, 'First name must be at least 2 characters');
+                return false;
+            }
+
+            showFieldSuccess(input, error);
+            return true;
+        }
+
+        function validateLastName() {
+            const input = document.getElementById('lastName');
+            const error = document.getElementById('lastNameError');
+            const value = input.value.trim();
+
+            if (!value) {
+                showFieldError(input, error, 'Last name is required');
+                return false;
+            }
+
+            if (value.length < 2) {
+                showFieldError(input, error, 'Last name must be at least 2 characters');
+                return false;
+            }
+
+            showFieldSuccess(input, error);
+            return true;
+        }
+
+        function validateEmail() {
+            const input = document.getElementById('email');
+            const error = document.getElementById('emailError');
+            const value = input.value.trim();
+
+            if (!value) {
+                showFieldError(input, error, 'Email is required');
+                return false;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(value)) {
+                showFieldError(input, error, 'Please enter a valid email address');
+                return false;
+            }
+
+            // Check if email is already taken (excluding current user)
+            const existingUser = authManager.getAllUsers().find(u => u.email === value && u.id !== currentUser.id);
+            if (existingUser) {
+                showFieldError(input, error, 'This email is already registered');
+                return false;
+            }
+
+            showFieldSuccess(input, error);
+            return true;
+        }
+
+        function validatePhone() {
+            const input = document.getElementById('phone');
+            const error = document.getElementById('phoneError');
+            const value = input.value.trim();
+
+            if (value && value.length < 10) {
+                showFieldError(input, error, 'Please enter a valid phone number');
+                return false;
+            }
+
+            showFieldSuccess(input, error);
+            return true;
+        }
+
+        function showFieldError(input, errorElement, message) {
+            input.classList.add('error');
+            input.classList.remove('success');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function showFieldSuccess(input, errorElement) {
+            input.classList.remove('error');
+            input.classList.add('success');
+            errorElement.style.display = 'none';
+        }
+
+        function showMessage(message, type) {
+            const container = document.getElementById('messageContainer');
+            const messageEl = document.createElement('div');
+            messageEl.className = `message ${type}`;
+            messageEl.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(messageEl);
+            
+            // Remove message after 5 seconds
+            setTimeout(() => {
+                messageEl.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

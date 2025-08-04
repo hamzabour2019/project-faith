@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management - The Project Faith Admin</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Enhanced Table Styling -->
+    <style>
+        /* Enhanced table styling for better visibility */
+        .data-table-container {
+            margin-bottom: 3rem !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+            border-radius: 12px !important;
+            overflow: hidden;
+        }
+
+        .data-table {
+            font-size: 0.95rem !important;
+            min-width: 100% !important;
+        }
+
+        .data-table th {
+            padding: 1.25rem 1rem !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-hover) 100%) !important;
+            color: white !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none !important;
+        }
+
+        .data-table td {
+            padding: 1.25rem 1rem !important;
+            font-size: 0.9rem !important;
+            border-bottom: 1px solid var(--admin-border) !important;
+            vertical-align: middle !important;
+        }
+
+        .data-table tr:hover {
+            background: var(--admin-surface-hover) !important;
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        .table-header {
+            padding: 1.5rem 2rem !important;
+            background: var(--admin-bg-secondary) !important;
+            border-bottom: 2px solid var(--admin-border) !important;
+        }
+
+        .table-title {
+            font-size: 1.4rem !important;
+            font-weight: 700 !important;
+            color: var(--admin-text-primary) !important;
+            margin: 0 !important;
+        }
+
+        /* Enhanced status badges */
+        .status-badge {
+            padding: 0.5rem 0.75rem !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            border-radius: 6px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Enhanced buttons */
+        .data-table .btn {
+            padding: 0.6rem 0.8rem !important;
+            font-size: 0.85rem !important;
+            border-radius: 6px !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease;
+        }
+
+        .data-table .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Order ID styling */
+        .order-id {
+            font-family: 'Courier New', monospace !important;
+            font-weight: 600 !important;
+            color: var(--admin-primary) !important;
+            background: rgba(var(--admin-primary-rgb), 0.1) !important;
+            padding: 0.25rem 0.5rem !important;
+            border-radius: 4px !important;
+            font-size: 0.85rem !important;
+        }
+
+        /* Total amount styling */
+        .total-amount {
+            font-weight: 700 !important;
+            font-size: 1rem !important;
+            color: var(--admin-success) !important;
+        }
+
+        /* Customer info styling */
+        .customer-info {
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.75rem !important;
+        }
+
+        .customer-avatar {
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50% !important;
+            background: var(--admin-primary) !important;
+            color: white !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-weight: 600 !important;
+            font-size: 0.9rem !important;
+        }
+
+        .customer-details h4 {
+            margin: 0 !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+        }
+
+        .customer-details p {
+            margin: 0 !important;
+            font-size: 0.8rem !important;
+            color: var(--admin-text-secondary) !important;
+        }
+
+        /* Search and filter enhancements */
+        .search-box input,
+        .form-select {
+            padding: 0.75rem 1rem !important;
+            font-size: 0.9rem !important;
+            border-radius: 8px !important;
+            border: 2px solid var(--admin-border) !important;
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus,
+        .form-select:focus {
+            border-color: var(--admin-primary) !important;
+            box-shadow: 0 0 0 3px rgba(var(--admin-primary-rgb), 0.1) !important;
+        }
+
+        /* Stats cards enhancement */
+        .stats-grid {
+            gap: 2rem !important;
+            margin-bottom: 3rem !important;
+        }
+
+        .stat-card {
+            padding: 2rem !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 1200px) {
+            .data-table {
+                font-size: 0.85rem !important;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 1rem 0.75rem !important;
+            }
+
+            .customer-info {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 0.5rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <a href="admin-dashboard.html" class="sidebar-logo">The Project Faith</a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-item">
+                    <a href="admin-dashboard.html" class="nav-link">
+                        <i class="nav-icon fas fa-chart-line"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="admin-users.html" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <span class="nav-text">Users</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="admin-products.html" class="nav-link">
+                        <i class="nav-icon fas fa-box"></i>
+                        <span class="nav-text">Products</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="admin-orders.html" class="nav-link active">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <span class="nav-text">Orders</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="admin-condition.html" class="nav-link">
+                        <i class="nav-icon fas fa-store"></i>
+                        <span class="nav-text">Condition</span>
+                    </a>
+                </div>
+
+
+                <!-- Navigation Divider -->
+                <div style="margin: 1.5rem 1rem; border-top: 1px solid var(--admin-border); opacity: 0.5;"></div>
+
+                <!-- Quick Links Section -->
+                <div style="padding: 0 1rem; margin-bottom: 1rem;">
+                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--admin-text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+                        Quick Links
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="index.html" class="nav-link" target="_blank">
+                        <i class="nav-icon fas fa-external-link-alt"></i>
+                        <span class="nav-text">View Store</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="user-settings.html" class="nav-link">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <span class="nav-text">Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main" id="adminMain">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="admin-header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Order Management</h1>
+                </div>
+                <div class="admin-header-right">
+                    <button class="nav-icon theme-toggle" id="themeToggle" title="Toggle dark mode">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h2 class="page-title">Orders</h2>
+                    <p class="page-subtitle">Manage customer orders and fulfillment</p>
+                </div>
+
+                <!-- Order Stats -->
+                <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon orders">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="totalOrdersCount">0</h3>
+                                <p>Total Orders</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="pendingOrdersCount">0</h3>
+                                <p>Pending Orders</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                                <i class="fas fa-times-circle"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="cancelledOrdersCount">0</h3>
+                                <p>Cancelled Orders</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="completedOrdersCount">0</h3>
+                                <p>Completed Orders</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Orders Section -->
+                <div class="data-table-container" style="margin-bottom: 2rem;">
+                    <div class="table-header">
+                        <h3 class="table-title">⏳ Pending Orders (Awaiting Review)</h3>
+                        <div class="table-actions">
+                            <span id="pendingOrdersCount" class="badge" style="background: var(--warning-color); color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; margin-right: 1rem;">0</span>
+                            <button class="btn btn-secondary btn-sm" onclick="refreshPendingOrders()" title="Refresh Pending Orders">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 150px;">Order ID</th>
+                                    <th style="min-width: 220px;">Customer</th>
+                                    <th style="min-width: 180px;">Items</th>
+                                    <th style="min-width: 120px;">Total</th>
+                                    <th style="min-width: 150px;">Order Date</th>
+                                    <th style="min-width: 280px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pendingOrdersTableBody">
+                                <!-- Pending orders will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="noPendingOrders" style="display: none; text-align: center; padding: 2rem; color: var(--text-light);">
+                        <i class="fas fa-check-circle" style="font-size: 3rem; margin-bottom: 1rem; color: var(--success-color);"></i>
+                        <p>No pending orders to review</p>
+                    </div>
+                </div>
+
+                <!-- Filters and Search -->
+                <div class="data-table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">Existing Orders</h3>
+                        <div class="table-actions">
+                            <div class="search-box" style="margin-right: 1rem;">
+                                <input type="text" id="orderSearch" placeholder="Search orders..." style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 0.25rem; background: var(--input-bg); color: var(--text-color);">
+                            </div>
+                            <select id="statusFilter" class="form-select" style="margin-right: 1rem; padding: 0.5rem; min-width: 120px;">
+                                <option value="">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                            <input type="date" id="dateFilter" class="form-input" style="margin-right: 1rem; padding: 0.5rem; min-width: 150px;">
+                        </div>
+                    </div>
+
+                    <!-- Orders Table -->
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 150px;">Order ID</th>
+                                    <th style="min-width: 220px;">Customer</th>
+                                    <th style="min-width: 180px;">Items</th>
+                                    <th style="min-width: 120px;">Total</th>
+                                    <th style="min-width: 120px;">Status</th>
+                                    <th style="min-width: 150px;">Order Date</th>
+                                    <th style="min-width: 250px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordersTableBody">
+                                <!-- Orders will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div class="modal" id="orderModal" style="display: none;">
+        <div class="modal-content" style="max-width: 900px;">
+            <div class="modal-header">
+                <h3 id="modalTitle">Order Details</h3>
+                <button class="close-modal" id="closeOrderModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="orderModalBody">
+                <!-- Order details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" style="display: none;"></div>
+
+    <!-- Modal and Dropdown Styles -->
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 0.75rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            max-height: 90vh;
+            overflow-y: auto;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.25rem;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: var(--section-bg);
+        }
+
+        .dropdown-divider {
+            margin: 0.5rem 0;
+            border: none;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .order-items {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .order-item-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 0.25rem;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
+        .items-count {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+
+    <script>
+        let currentOrders = [];
+        let filteredOrders = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check admin access
+            if (!authManager.requireAdmin()) {
+                return;
+            }
+
+            // Initialize page
+            initializeOrdersPage();
+            setupEventListeners();
+        });
+
+        function initializeOrdersPage() {
+            loadOrderStats();
+            loadPendingOrders();
+            loadOrders();
+        }
+
+        function loadOrderStats() {
+            const stats = adminManager.getOrderStats();
+            document.getElementById('totalOrdersCount').textContent = stats.total;
+            document.getElementById('pendingOrdersCount').textContent = stats.pending;
+            document.getElementById('cancelledOrdersCount').textContent = stats.cancelled;
+            document.getElementById('completedOrdersCount').textContent = stats.completed;
+        }
+
+        function loadOrders() {
+            currentOrders = adminManager.getAllOrders();
+            filteredOrders = [...currentOrders];
+            renderOrdersTable();
+        }
+
+        function renderOrdersTable() {
+            const tbody = document.getElementById('ordersTableBody');
+            
+            if (filteredOrders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: var(--text-light);">No orders found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filteredOrders.map(order => `
+                <tr>
+                    <td style="font-family: monospace; font-weight: 500;">${order.id}</td>
+                    <td>
+                        <div>
+                            <div style="font-weight: 500;">${order.customerName}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-light);">${order.customerEmail}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="order-items">
+                            ${order.items.slice(0, 3).map(item => 
+                                `<img src="${item.image}" alt="${item.name}" class="order-item-preview" title="${item.name}">`
+                            ).join('')}
+                            ${order.items.length > 3 ? 
+                                `<div class="items-count" title="${order.items.length - 3} more items">+${order.items.length - 3}</div>` : 
+                                ''
+                            }
+                        </div>
+                    </td>
+                    <td style="font-weight: 500; color: var(--primary-color);">$${order.total.toFixed(2)}</td>
+                    <td><span class="status-badge ${getOrderStatusBadgeClass(order.status)}">${order.status}</span></td>
+                    <td>${formatDate(order.orderDate)}</td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary btn-sm" onclick="viewOrder('${order.id}')" title="View Order Details">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <select class="form-select" style="padding: 0.25rem; font-size: 0.75rem;" onchange="updateOrderStatus('${order.id}', this.value)" title="Update Order Status">
+                                <option value="">Update Status</option>
+                                <option value="pending" ${order.status === 'pending' ? 'disabled' : ''}>Pending</option>
+                                <option value="completed" ${order.status === 'completed' ? 'disabled' : ''}>Completed</option>
+                                <option value="cancelled" ${order.status === 'cancelled' ? 'disabled' : ''}>Cancelled</option>
+                            </select>
+                            <button class="btn btn-danger btn-sm" onclick="deleteOrder('${order.id}')" title="Delete Order">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Pending Orders Functions
+        function loadPendingOrders() {
+            const pendingOrders = adminManager.getAllPendingOrders();
+            const tbody = document.getElementById('pendingOrdersTableBody');
+            const countBadge = document.getElementById('pendingOrdersCount');
+            const noPendingDiv = document.getElementById('noPendingOrders');
+
+            // Update count badge
+            countBadge.textContent = pendingOrders.length;
+
+            if (pendingOrders.length === 0) {
+                tbody.innerHTML = '';
+                noPendingDiv.style.display = 'block';
+            } else {
+                noPendingDiv.style.display = 'none';
+                tbody.innerHTML = pendingOrders.map(order => `
+                    <tr>
+                        <td style="font-family: monospace; font-weight: 500;">${order.id}</td>
+                        <td>
+                            <div>
+                                <div style="font-weight: 500;">${order.customerName}</div>
+                                <div style="font-size: 0.75rem; color: var(--text-light);">${order.customerEmail}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="order-items">
+                                ${order.items.slice(0, 3).map(item =>
+                                    `<img src="${item.image}" alt="${item.name}" class="order-item-preview" title="${item.name}">`
+                                ).join('')}
+                                ${order.items.length > 3 ?
+                                    `<div class="items-count" title="${order.items.length - 3} more items">+${order.items.length - 3}</div>` :
+                                    ''
+                                }
+                            </div>
+                        </td>
+                        <td style="font-weight: 500; color: var(--primary-color);">$${order.total.toFixed(2)}</td>
+                        <td>${formatDate(order.orderDate)}</td>
+                        <td>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="btn btn-success btn-sm" onclick="approvePendingOrder('${order.id}')" title="Approve Order">
+                                    <i class="fas fa-check"></i> Approve
+                                </button>
+                                <button class="btn btn-secondary btn-sm" onclick="viewPendingOrder('${order.id}')" title="View Order Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="rejectPendingOrder('${order.id}')" title="Reject Order">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="deletePendingOrder('${order.id}')" title="Delete Order">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        function refreshPendingOrders() {
+            loadPendingOrders();
+        }
+
+        function approvePendingOrder(orderId) {
+            if (confirm('Are you sure you want to approve this order and move it to the existing orders list?')) {
+                const approvedOrder = adminManager.approvePendingOrder(orderId, 'pending');
+                if (approvedOrder) {
+                    alert('Order approved successfully!');
+                    loadPendingOrders();
+                    loadOrders();
+                    loadOrderStats();
+                } else {
+                    alert('Error approving order');
+                }
+            }
+        }
+
+        function rejectPendingOrder(orderId) {
+            const reason = prompt('Please provide a reason for rejecting this order (optional):');
+            if (reason !== null) { // User didn't cancel
+                const rejectedOrder = adminManager.rejectPendingOrder(orderId, reason);
+                if (rejectedOrder) {
+                    alert('Order rejected');
+                    loadPendingOrders();
+                } else {
+                    alert('Error rejecting order');
+                }
+            }
+        }
+
+        function viewPendingOrder(orderId) {
+            const order = adminManager.getPendingOrderById(orderId);
+            if (!order) return;
+
+            document.getElementById('modalTitle').textContent = `Pending Order ${order.id}`;
+            document.getElementById('orderModalBody').innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div>
+                        <strong>Order ID:</strong> ${order.id}<br>
+                        <strong>Status:</strong> <span class="status-badge ${getOrderStatusBadgeClass(order.status)}">${order.status}</span><br>
+                        <strong>Total:</strong> $${order.total.toFixed(2)}
+                    </div>
+                    <div>
+                        <strong>Customer:</strong> ${order.customerName}<br>
+                        <strong>Email:</strong> ${order.customerEmail}<br>
+                        <strong>Phone:</strong> ${order.customerPhone || 'N/A'}
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <strong>Shipping Address:</strong><br>
+                    ${order.shippingAddress}
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <strong>Items:</strong>
+                    <div style="margin-top: 0.5rem;">
+                        ${order.items.map(item => `
+                            <div style="display: flex; align-items: center; gap: 1rem; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 0.25rem; margin-bottom: 0.5rem;">
+                                <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 0.25rem;">
+                                <div style="flex: 1;">
+                                    <div style="font-weight: 500;">${item.name}</div>
+                                    <div style="font-size: 0.875rem; color: var(--text-light);">Qty: ${item.quantity} × $${item.price.toFixed(2)}</div>
+                                </div>
+                                <div style="font-weight: 500;">$${(item.quantity * item.price).toFixed(2)}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                    <button class="btn btn-success" onclick="approvePendingOrder('${order.id}'); hideModal();">
+                        <i class="fas fa-check"></i> Approve Order
+                    </button>
+                    <button class="btn btn-danger" onclick="rejectPendingOrder('${order.id}'); hideModal();">
+                        <i class="fas fa-times"></i> Reject Order
+                    </button>
+                    <button class="btn btn-danger" onclick="deletePendingOrder('${order.id}'); closeModal();">
+                        <i class="fas fa-trash"></i> Delete Order
+                    </button>
+                </div>
+            `;
+
+            showModal();
+        }
+
+        function setupEventListeners() {
+            // Sidebar toggle
+            document.getElementById('sidebarToggle').addEventListener('click', function() {
+                const sidebar = document.getElementById('adminSidebar');
+                const main = document.getElementById('adminMain');
+                
+                sidebar.classList.toggle('collapsed');
+                main.classList.toggle('expanded');
+            });
+
+            // Search functionality
+            document.getElementById('orderSearch').addEventListener('input', applyFilters);
+
+            // Filter functionality
+            document.getElementById('statusFilter').addEventListener('change', applyFilters);
+            document.getElementById('dateFilter').addEventListener('change', applyFilters);
+
+            // User menu toggle
+            document.getElementById('userMenuBtn').addEventListener('click', function(e) {
+                e.stopPropagation();
+                const dropdown = document.getElementById('userDropdown');
+                dropdown.classList.toggle('show');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                const dropdown = document.getElementById('userDropdown');
+                dropdown.classList.remove('show');
+            });
+
+            // Modal close
+            document.getElementById('closeOrderModal').addEventListener('click', closeModal);
+            document.getElementById('overlay').addEventListener('click', closeModal);
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                authManager.logout();
+            });
+        }
+
+        function applyFilters() {
+            const searchQuery = document.getElementById('orderSearch').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const dateFilter = document.getElementById('dateFilter').value;
+
+            filteredOrders = currentOrders.filter(order => {
+                const matchesSearch = !searchQuery || 
+                    order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    order.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    order.customerEmail.toLowerCase().includes(searchQuery.toLowerCase());
+
+                const matchesStatus = !statusFilter || order.status === statusFilter;
+                
+                const matchesDate = !dateFilter || 
+                    new Date(order.orderDate).toDateString() === new Date(dateFilter).toDateString();
+
+                return matchesSearch && matchesStatus && matchesDate;
+            });
+
+            renderOrdersTable();
+        }
+
+        function viewOrder(orderId, isPending = false) {
+            const order = isPending ? adminManager.getPendingOrderById(orderId) : adminManager.getOrderById(orderId);
+            if (!order) return;
+
+            document.getElementById('modalTitle').textContent = `Order ${order.id}`;
+            document.getElementById('orderModalBody').innerHTML = `
+                <div style="display: grid; gap: 1.5rem;">
+                    <!-- Order Header -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1rem; background: var(--section-bg); border-radius: 0.5rem;">
+                        <div>
+                            <strong>Order ID:</strong> ${order.id}<br>
+                            <strong>Status:</strong> <span class="status-badge ${getOrderStatusBadgeClass(order.status)}">${order.status}</span><br>
+                            <strong>Order Date:</strong> ${formatDateTime(order.orderDate)}
+                        </div>
+                        <div>
+                            <strong>Customer:</strong> ${order.customerName}<br>
+                            <strong>Email:</strong> ${order.customerEmail}<br>
+                            <strong>Total:</strong> <span style="font-size: 1.25rem; font-weight: 600; color: var(--primary-color);">$${order.total.toFixed(2)}</span>
+                        </div>
+                    </div>
+
+                    <!-- Order Items -->
+                    <div>
+                        <h4 style="margin-bottom: 1rem;">Order Items</h4>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            ${order.items.map(item => `
+                                <div style="display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem;">
+                                    <img src="${item.image}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 0.5rem;">
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 500; margin-bottom: 0.25rem;">${item.name}</div>
+                                        <div style="color: var(--text-light); font-size: 0.875rem;">Quantity: ${item.quantity}</div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-weight: 500;">$${item.price.toFixed(2)}</div>
+                                        <div style="color: var(--text-light); font-size: 0.875rem;">each</div>
+                                    </div>
+                                    <div style="text-align: right; font-weight: 600;">
+                                        $${(item.price * item.quantity).toFixed(2)}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Shipping Information -->
+                    <div>
+                        <h4 style="margin-bottom: 1rem;">Shipping Information</h4>
+                        <div style="padding: 1rem; background: var(--section-bg); border-radius: 0.5rem;">
+                            <strong>Address:</strong><br>
+                            ${order.shippingAddress}
+                        </div>
+                    </div>
+
+                    <!-- Order Timeline -->
+                    <div>
+                        <h4 style="margin-bottom: 1rem;">Order Timeline</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 12px; height: 12px; border-radius: 50%; background: var(--success-color);"></div>
+                                <span><strong>Order Placed:</strong> ${formatDateTime(order.orderDate)}</span>
+                            </div>
+                            ${order.completedDate ? `
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div style="width: 12px; height: 12px; border-radius: 50%; background: var(--success-color);"></div>
+                                    <span><strong>Completed:</strong> ${formatDateTime(order.completedDate)}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                    <button class="btn btn-danger" onclick="deleteOrder('${order.id}'); closeModal();">
+                        <i class="fas fa-trash"></i> Delete Order
+                    </button>
+                </div>
+            `;
+
+            showModal();
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            if (!newStatus) return;
+
+            if (confirm(`Are you sure you want to update the order status to "${newStatus}"?`)) {
+                adminManager.updateOrderStatus(orderId, newStatus);
+                loadOrders();
+                loadOrderStats();
+            }
+        }
+
+        function deleteOrder(orderId) {
+            const order = adminManager.getOrderById(orderId);
+            if (!order) return;
+
+            if (confirm(`Are you sure you want to delete order "${order.id}" from ${order.customerName}? This action cannot be undone.`)) {
+                const deletedOrder = adminManager.deleteOrder(orderId);
+                if (deletedOrder) {
+                    alert('Order deleted successfully!');
+                    loadOrders();
+                    loadOrderStats();
+                } else {
+                    alert('Error deleting order');
+                }
+            }
+        }
+
+        function deletePendingOrder(orderId) {
+            const order = adminManager.getPendingOrderById(orderId);
+            if (!order) return;
+
+            if (confirm(`Are you sure you want to delete pending order "${order.id}" from ${order.customerName}? This action cannot be undone.`)) {
+                const deletedOrder = adminManager.deletePendingOrder(orderId);
+                if (deletedOrder) {
+                    alert('Pending order deleted successfully!');
+                    loadPendingOrders();
+                    loadOrderStats();
+                } else {
+                    alert('Error deleting pending order');
+                }
+            }
+        }
+
+        function showModal() {
+            document.getElementById('orderModal').style.display = 'flex';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

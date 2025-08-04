@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - VAITH</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4B0082',
+                        secondary: '#D8BFD8',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom dark mode styles for checkout page */
+        [data-theme="dark"] body,
+        body.dark-theme {
+            background-color: var(--background-color) !important;
+            color: var(--text-color) !important;
+        }
+
+        /* Dark mode for checkout cards */
+        [data-theme="dark"] .checkout-card,
+        body.dark-theme .checkout-card {
+            background: var(--card-bg) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-color) !important;
+        }
+
+        /* Dark mode for form elements */
+        [data-theme="dark"] .checkout-input,
+        [data-theme="dark"] .checkout-select,
+        body.dark-theme .checkout-input,
+        body.dark-theme .checkout-select {
+            background: var(--input-bg) !important;
+            border-color: var(--input-border) !important;
+            color: var(--text-color) !important;
+        }
+
+        [data-theme="dark"] .checkout-input:focus,
+        [data-theme="dark"] .checkout-select:focus,
+        body.dark-theme .checkout-input:focus,
+        body.dark-theme .checkout-select:focus {
+            border-color: var(--primary-color) !important;
+            box-shadow: 0 0 0 2px rgba(75, 0, 130, 0.2) !important;
+        }
+
+        /* Dark mode for labels */
+        [data-theme="dark"] .checkout-label,
+        body.dark-theme .checkout-label {
+            color: var(--text-color) !important;
+        }
+
+        /* Dark mode for text elements */
+        [data-theme="dark"] .checkout-text,
+        body.dark-theme .checkout-text {
+            color: var(--text-light) !important;
+        }
+
+        /* Dark mode for borders */
+        [data-theme="dark"] .checkout-border,
+        body.dark-theme .checkout-border {
+            border-color: var(--border-color) !important;
+        }
+
+        /* Dark mode for hero section */
+        [data-theme="dark"] .checkout-hero,
+        body.dark-theme .checkout-hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #6a1b9a 100%) !important;
+        }
+
+        /* Dark mode for footer override */
+        [data-theme="dark"] .checkout-footer,
+        body.dark-theme .checkout-footer {
+            background: var(--footer-bg) !important;
+            color: var(--footer-text) !important;
+            border-top: 1px solid var(--border-color) !important;
+        }
+
+        [data-theme="dark"] .checkout-footer h3,
+        [data-theme="dark"] .checkout-footer h4,
+        body.dark-theme .checkout-footer h3,
+        body.dark-theme .checkout-footer h4 {
+            color: var(--primary-color) !important;
+        }
+
+        [data-theme="dark"] .checkout-footer p,
+        body.dark-theme .checkout-footer p {
+            color: var(--footer-text) !important;
+            opacity: 0.9;
+        }
+
+        [data-theme="dark"] .checkout-footer a,
+        body.dark-theme .checkout-footer a {
+            color: var(--footer-text) !important;
+            opacity: 0.85;
+        }
+
+        [data-theme="dark"] .checkout-footer a:hover,
+        body.dark-theme .checkout-footer a:hover {
+            color: var(--primary-color) !important;
+            opacity: 1;
+        }
+
+        [data-theme="dark"] .checkout-footer .border-gray-800,
+        body.dark-theme .checkout-footer .border-gray-800 {
+            border-color: var(--border-color) !important;
+        }
+
+        /* Dark mode for product titles and headings */
+        [data-theme="dark"] .checkout-card h2,
+        [data-theme="dark"] .checkout-card h3,
+        body.dark-theme .checkout-card h2,
+        body.dark-theme .checkout-card h3 {
+            color: var(--text-color) !important;
+        }
+
+        /* Dark mode for product titles specifically */
+        [data-theme="dark"] .checkout-card .font-medium,
+        body.dark-theme .checkout-card .font-medium {
+            color: var(--text-color) !important;
+        }
+
+        /* Dark mode for total and pricing text */
+        [data-theme="dark"] .checkout-card .font-semibold,
+        body.dark-theme .checkout-card .font-semibold {
+            color: var(--text-color) !important;
+        }
+
+        /* Dark mode for section background */
+        [data-theme="dark"] .checkout-section,
+        body.dark-theme .checkout-section {
+            background: var(--section-bg) !important;
+        }
+
+        /* Dark mode for select options */
+        [data-theme="dark"] .checkout-select option,
+        body.dark-theme .checkout-select option {
+            background: var(--input-bg) !important;
+            color: var(--text-color) !important;
+        }
+
+        /* Override Tailwind's hardcoded colors in dark mode */
+        [data-theme="dark"] .text-gray-600,
+        [data-theme="dark"] .text-gray-700,
+        body.dark-theme .text-gray-600,
+        body.dark-theme .text-gray-700 {
+            color: var(--text-light) !important;
+        }
+
+        /* Dark mode button hover states */
+        [data-theme="dark"] .bg-primary:hover,
+        body.dark-theme .bg-primary:hover {
+            background-color: #6a1b9a !important;
+        }
+
+        /* Believe Loud Effects */
+        .believe-loud-text {
+            background: linear-gradient(45deg, #fff, #f0f0f0, #fff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite, pulse 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.1em;
+            transform: perspective(500px) rotateX(15deg);
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes pulse {
+            0% { transform: perspective(500px) rotateX(15deg) scale(1); }
+            100% { transform: perspective(500px) rotateX(15deg) scale(1.05); }
+        }
+
+        /* Moving Background */
+        .moving-background {
+            background: linear-gradient(45deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 25%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0.05) 75%,
+                rgba(255, 255, 255, 0.1) 100%);
+            background-size: 400% 400%;
+            animation: gradientMove 8s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 100% 0%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 6s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+            animation-duration: 8s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 4s;
+            animation-duration: 7s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.7;
+            }
+            25% {
+                transform: translateY(-20px) rotate(90deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-40px) rotate(180deg);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translateY(-20px) rotate(270deg);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .believe-loud-text {
+                font-size: 3rem;
+                transform: perspective(300px) rotateX(10deg);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .believe-loud-text {
+                font-size: 2.5rem;
+                transform: perspective(200px) rotateX(5deg);
+            }
+        }
+
+        /* Pre-filled form field styles */
+        .checkout-input:not(:placeholder-shown) {
+            background-color: rgba(75, 0, 130, 0.05);
+            border-color: rgba(75, 0, 130, 0.3);
+        }
+
+        .checkout-input:not(:placeholder-shown):focus {
+            background-color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Info note styling */
+        #editableNote {
+            background: linear-gradient(135deg, rgba(75, 0, 130, 0.1), rgba(216, 191, 216, 0.1));
+            padding: 12px 16px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        #editableNote i {
+            margin-right: 8px;
+        }
+
+        /* Dark mode for pre-filled fields */
+        [data-theme="dark"] .checkout-input:not(:placeholder-shown),
+        body.dark-theme .checkout-input:not(:placeholder-shown) {
+            background-color: rgba(75, 0, 130, 0.15);
+            border-color: rgba(75, 0, 130, 0.5);
+            color: var(--text-color);
+        }
+
+        [data-theme="dark"] #editableNote,
+        body.dark-theme #editableNote {
+            background: linear-gradient(135deg, rgba(75, 0, 130, 0.2), rgba(216, 191, 216, 0.1));
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body class="checkout-body" style="background-color: var(--background-color); color: var(--text-color);"
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <a href="index.html">
+                        <svg width="150" height="40" viewBox="0 0 150 40" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#4B0082;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#D8BFD8;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <text x="5" y="28" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="url(#logoGradient)">The Project Faith</text>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="sale.html">Sale</a></li>
+                </ul>
+                <div class="search-box">
+                    <input type="text" placeholder="Search for products..." id="searchInput">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <div class="nav-icons">
+                    <button class="nav-icon theme-toggle" id="themeToggle" title="Toggle dark mode">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <a href="login.html" class="nav-icon">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button class="nav-icon" id="favoritesBtn">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="favoritesCount">0</span>
+                    </button>
+                    <button class="nav-icon" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="checkout-hero bg-gradient-to-r from-primary to-secondary pt-24 pb-12 relative overflow-hidden">
+        <div class="absolute inset-0 moving-background"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-6xl font-bold text-white mb-4 believe-loud-text">Believe loud</h1>
+            <div class="floating-elements">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Checkout Form -->
+                <div class="lg:col-span-2 space-y-8">
+                    <form id="checkoutForm">
+                        <!-- Shipping Information -->
+                        <div class="checkout-card bg-white rounded-2xl shadow-lg p-6">
+                            <h2 class="text-2xl font-semibold text-primary mb-6">Shipping Information</h2>
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="checkout-label block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                                    <input type="text" id="customerName" class="checkout-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary transition-colors" required>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="checkout-label block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                        <input type="email" id="customerEmail" class="checkout-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary transition-colors" required>
+                                    </div>
+                                    <div>
+                                        <label class="checkout-label block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                                        <input type="tel" id="customerPhone" class="checkout-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary transition-colors" required>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="checkout-label block text-sm font-medium text-gray-700 mb-2">Country</label>
+                                    <select id="customerCountry" class="checkout-select w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary transition-colors" required>
+                                        <option value="">Select Country</option>
+                                        <option value="Syria" selected>Syria</option>
+                                        <option value="US">United States</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="UK">United Kingdom</option>
+                                        <option value="AU">Australia</option>
+                                        <option value="Lebanon">Lebanon</option>
+                                        <option value="Jordan">Jordan</option>
+                                        <option value="Turkey">Turkey</option>
+                                        <option value="Egypt">Egypt</option>
+                                        <option value="Saudi Arabia">Saudi Arabia</option>
+                                        <option value="UAE">United Arab Emirates</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="France">France</option>
+                                        <option value="Sweden">Sweden</option>
+                                        <option value="Netherlands">Netherlands</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="checkout-label block text-sm font-medium text-gray-700 mb-2">City</label>
+                                    <input type="text" id="customerCity" class="checkout-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary transition-colors" required>
+                                </div>
+                                <div>
+                                    <label class="checkout-label block text-sm font-medium text-gray-700 mb-2">Address</label>
+                                    <input type="text" id="customerAddress" class="checkout-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary focus:border-primary transition-colors" required>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="checkout-card bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+                        <h2 class="text-2xl font-semibold text-primary mb-6">Order Summary</h2>
+                        <div class="space-y-4 mb-6" id="orderItems">
+                            <!-- Order items will be loaded dynamically -->
+                        </div>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex justify-between checkout-text text-gray-600">
+                                <span>Subtotal</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+                            <div class="flex justify-between checkout-text text-gray-600">
+                                <span>Shipping</span>
+                                <span id="shipping">$5.00</span>
+                            </div>
+                            <div class="flex justify-between checkout-text text-gray-600">
+                                <span>Tax</span>
+                                <span id="tax">$0.00</span>
+                            </div>
+                            <div class="flex justify-between text-lg font-semibold pt-3 checkout-border border-t border-gray-200">
+                                <span>Total</span>
+                                <span id="orderTotal">$0.00</span>
+                            </div>
+                        </div>
+                        <button type="button" id="placeOrderBtn" class="w-full bg-primary text-white py-4 rounded-lg font-semibold hover:bg-primary/90 transition-colors">
+                            Place Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="checkout-footer bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h4 class="text-lg font-semibold mb-4">Connect With Us</h4>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="https://www.instagram.com/the_project_faith?igsh=MXB6MGdjcDFhMGJ4cA%3D%3D&utm_source=qr" target="_blank" class="text-gray-400 hover:text-white transition-colors text-2xl"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@the_project_faith?_t=ZS-8yH5DE2wuif&_r=1" target="_blank" class="text-gray-400 hover:text-white transition-colors text-2xl"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://youtube.com/@the_project_faith?si=IzuWgm51yWY5xoEc" target="_blank" class="text-gray-400 hover:text-white transition-colors text-2xl"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 The Project Faith. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/store-status.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadOrderSummary();
+            setupCheckoutHandlers();
+            loadUserShippingInfo();
+        });
+
+        function loadUserShippingInfo() {
+            // Get current user from auth system
+            const currentUser = authManager.getCurrentUser();
+
+            if (currentUser) {
+                // Populate form fields with user data
+                const customerName = document.getElementById('customerName');
+                const customerEmail = document.getElementById('customerEmail');
+                const customerPhone = document.getElementById('customerPhone');
+                const customerAddress = document.getElementById('customerAddress');
+                const customerCity = document.getElementById('customerCity');
+                const customerCountry = document.getElementById('customerCountry');
+
+                // Set default values from user account
+                if (customerName) {
+                    customerName.value = `${currentUser.firstName || ''} ${currentUser.lastName || ''}`.trim();
+                    customerName.placeholder = 'Enter your full name';
+                }
+
+                if (customerEmail) {
+                    customerEmail.value = currentUser.email || '';
+                    customerEmail.placeholder = 'Enter your email address';
+                }
+
+                if (customerPhone) {
+                    customerPhone.value = currentUser.phone || '';
+                    customerPhone.placeholder = 'Enter your phone number';
+                }
+
+                if (customerAddress && currentUser.address) {
+                    // Parse address if it contains city and country
+                    const addressParts = currentUser.address.split(',');
+                    if (addressParts.length >= 3) {
+                        customerAddress.value = addressParts[0].trim();
+                        customerCity.value = addressParts[1].trim();
+                        customerCountry.value = addressParts[2].trim();
+                    } else {
+                        customerAddress.value = currentUser.address;
+                    }
+                    customerAddress.placeholder = 'Enter your street address';
+                }
+
+                if (customerCity && !customerCity.value) {
+                    customerCity.placeholder = 'Enter your city';
+                }
+
+                if (customerCountry && !customerCountry.value) {
+                    customerCountry.value = 'Syria';
+                }
+
+                // Add a note to inform user they can edit the information
+                const shippingCard = document.querySelector('.checkout-card h2');
+                if (shippingCard && !document.getElementById('editableNote')) {
+                    const note = document.createElement('p');
+                    note.id = 'editableNote';
+                    note.className = 'text-sm text-gray-600 mt-2 mb-4';
+                    note.innerHTML = '<i class="fas fa-info-circle text-primary"></i> Your account information has been pre-filled. You can edit any field as needed.';
+                    shippingCard.parentNode.insertBefore(note, shippingCard.nextSibling);
+                }
+            } else {
+                // If no user is logged in, Syria is already selected by default in HTML
+                // No additional action needed since Syria has the 'selected' attribute
+            }
+        }
+
+        function loadOrderSummary() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const orderItemsContainer = document.getElementById('orderItems');
+
+            if (cart.length === 0) {
+                orderItemsContainer.innerHTML = `
+                    <div class="text-center py-8">
+                        <p class="text-gray-600">Your cart is empty</p>
+                        <a href="products.html" class="text-primary hover:underline">Continue Shopping</a>
+                    </div>
+                `;
+                return;
+            }
+
+            // Render cart items
+            orderItemsContainer.innerHTML = cart.map(item => `
+                <div class="flex gap-4 pb-4 checkout-border border-b border-gray-200">
+                    <img src="${item.image}" alt="${item.title}" class="w-20 h-20 object-cover rounded-lg">
+                    <div class="flex-1">
+                        <h3 class="font-medium checkout-text">${item.title}</h3>
+                        <p class="text-sm checkout-text text-gray-600">Qty: ${item.quantity}</p>
+                        <p class="text-primary font-semibold">$${(item.price * item.quantity).toFixed(2)}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Calculate totals
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 50 ? 0 : 5.00; // Free shipping over $50
+            const taxRate = 0.08; // 8% tax
+            const tax = subtotal * taxRate;
+            const total = subtotal + shipping + tax;
+
+            // Update totals
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('shipping').textContent = `$${shipping.toFixed(2)}`;
+            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('orderTotal').textContent = `$${total.toFixed(2)}`;
+        }
+
+        function setupCheckoutHandlers() {
+            const placeOrderBtn = document.getElementById('placeOrderBtn');
+            const checkoutForm = document.getElementById('checkoutForm');
+
+            placeOrderBtn.addEventListener('click', function() {
+                if (checkoutForm.checkValidity()) {
+                    processOrder();
+                } else {
+                    checkoutForm.reportValidity();
+                }
+            });
+        }
+
+        function processOrder() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            if (cart.length === 0) {
+                alert('Your cart is empty');
+                return;
+            }
+
+            // Get form data
+            const customerName = document.getElementById('customerName').value;
+            const customerEmail = document.getElementById('customerEmail').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('customerAddress').value;
+            const city = document.getElementById('customerCity').value;
+            const country = document.getElementById('customerCountry').value;
+
+            const shippingAddress = `${address}, ${city}, ${country}`;
+
+            // Calculate total
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 50 ? 0 : 5.00;
+            const tax = subtotal * 0.08;
+            const total = subtotal + shipping + tax;
+
+            // Prepare order data
+            const orderData = {
+                customerName: customerName,
+                customerEmail: customerEmail,
+                customerPhone: customerPhone,
+                shippingAddress: shippingAddress,
+                total: total,
+                items: cart.map(item => ({
+                    id: item.id,
+                    name: item.title,
+                    price: item.price,
+                    quantity: item.quantity,
+                    image: item.image
+                }))
+            };
+
+            // Create order in admin system
+            try {
+                const order = adminManager.createOrder(orderData);
+
+                // Clear cart
+                localStorage.removeItem('cart');
+
+                // Show communication options instead of redirect
+                showCommunicationOptions(orderData, order.id);
+
+            } catch (error) {
+                console.error('Error creating order:', error);
+                alert('There was an error processing your order. Please try again.');
+            }
+        }
+
+        function showCommunicationOptions(orderData, orderId) {
+            // Create modal overlay
+            const modalOverlay = document.createElement('div');
+            modalOverlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modalOverlay.id = 'communicationModal';
+
+            // Create modal content
+            const modalContent = document.createElement('div');
+            modalContent.className = 'bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl';
+
+            modalContent.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-check text-green-600 text-2xl"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Order Placed Successfully!</h2>
+                    <p class="text-gray-600">Order ID: ${orderId}</p>
+                    <p class="text-gray-600 mt-2">Choose how you'd like to receive your order confirmation:</p>
+                </div>
+
+                <div class="space-y-3">
+                    <button onclick="sendToWhatsApp('${orderId}')" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-3 transition-colors">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                        <span class="font-medium">Send via WhatsApp</span>
+                    </button>
+
+                    <button onclick="sendToTelegram('${orderId}')" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-3 transition-colors">
+                        <i class="fab fa-telegram text-xl"></i>
+                        <span class="font-medium">Send via Telegram</span>
+                    </button>
+
+                    <button onclick="sendToGmail('${orderId}')" class="w-full bg-red-500 hover:bg-red-600 text-white py-3 px-4 rounded-lg flex items-center justify-center gap-3 transition-colors">
+                        <i class="fas fa-envelope text-xl"></i>
+                        <span class="font-medium">Send via Gmail</span>
+                    </button>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-gray-200">
+                    <button onclick="closeCommunicationModal()" class="w-full text-gray-600 hover:text-gray-800 py-2 transition-colors">
+                        Skip and continue to homepage
+                    </button>
+                </div>
+            `;
+
+            modalOverlay.appendChild(modalContent);
+            document.body.appendChild(modalOverlay);
+
+            // Store order data globally for communication functions
+            window.currentOrderData = orderData;
+        }
+
+        function formatOrderMessage(orderId) {
+            const orderData = window.currentOrderData;
+
+            let message = `🛍️ *New Order Confirmation*\n\n`;
+            message += `📋 *Order ID:* ${orderId}\n\n`;
+            message += `👤 *Customer Information:*\n`;
+            message += `• Name: ${orderData.customerName}\n`;
+            message += `• Phone: ${orderData.customerPhone}\n`;
+            message += `• Email: ${orderData.customerEmail}\n`;
+            message += `• Address: ${orderData.shippingAddress}\n\n`;
+
+            message += `📦 *Order Details:*\n`;
+            orderData.items.forEach(item => {
+                message += `• ${item.name} - Qty: ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}\n`;
+            });
+
+            message += `\n💰 *Total: $${orderData.total.toFixed(2)}*\n\n`;
+            message += `Thank you for your order! 🙏`;
+
+            return message;
+        }
+
+        function sendToWhatsApp(orderId) {
+            const message = formatOrderMessage(orderId);
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/9639446077690?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+            closeCommunicationModal();
+        }
+
+        function sendToTelegram(orderId) {
+            const message = formatOrderMessage(orderId);
+            const encodedMessage = encodeURIComponent(message);
+            const telegramUrl = `https://t.me/9639446077690?text=${encodedMessage}`;
+            window.open(telegramUrl, '_blank');
+            closeCommunicationModal();
+        }
+
+        function sendToGmail(orderId) {
+            const orderData = window.currentOrderData;
+
+            const subject = `New Order Confirmation - Order #${orderId}`;
+            const body = `Dear VAITH Team,
+
+I have placed a new order with the following details:
+
+Order ID: ${orderId}
+
+Customer Information:
+- Name: ${orderData.customerName}
+- Phone: ${orderData.customerPhone}
+- Email: ${orderData.customerEmail}
+- Shipping Address: ${orderData.shippingAddress}
+
+Order Details:
+${orderData.items.map(item => `- ${item.name} - Quantity: ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`).join('\n')}
+
+Total Amount: $${orderData.total.toFixed(2)}
+
+Please process this order and send me the confirmation details.
+
+Thank you!
+
+Best regards,
+${orderData.customerName}`;
+
+            const encodedSubject = encodeURIComponent(subject);
+            const encodedBody = encodeURIComponent(body);
+            const gmailUrl = `mailto:hamzabour2202@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+            window.open(gmailUrl, '_blank');
+            closeCommunicationModal();
+        }
+
+        function closeCommunicationModal() {
+            const modal = document.getElementById('communicationModal');
+            if (modal) {
+                modal.remove();
+            }
+            // Redirect to home page after closing modal
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 500);
+        }
+    </script>
+</body>
+</html> 

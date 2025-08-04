@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sale - VAITH</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Remove outlines from all elements */
+        *:focus,
+        *:active,
+        *:focus-visible {
+            outline: none !important;
+        }
+
+        body {
+            padding-top: 80px;
+        }
+        
+        .sale-hero {
+            background:
+                radial-gradient(circle at 25% 25%, #ff6b6b 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, #4ecdc4 0%, transparent 50%),
+                linear-gradient(135deg, #667eea 0%, #764ba2 50%, #4B0082 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: backgroundPulse 12s ease-in-out infinite;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { filter: hue-rotate(0deg) brightness(1); }
+            25% { filter: hue-rotate(90deg) brightness(1.1); }
+            50% { filter: hue-rotate(180deg) brightness(0.9); }
+            75% { filter: hue-rotate(270deg) brightness(1.1); }
+        }
+
+        /* Matrix-style digital rain */
+        .digital-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .rain-column {
+            position: absolute;
+            top: -100%;
+            width: 2px;
+            background: linear-gradient(to bottom,
+                transparent 0%,
+                rgba(255, 255, 255, 0.8) 50%,
+                transparent 100%);
+            animation: rainFall linear infinite;
+        }
+
+        @keyframes rainFall {
+            0% { top: -100%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+
+
+        /* Ensure content is above background effects */
+        .sale-hero .page-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .sale-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        /* Believe loud animation styles */
+        #believeLoudTitle {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow:
+                0 2px 4px rgba(0, 0, 0, 0.8),
+                0 0 10px rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 2px;
+        }
+
+        /* Text Trail Animation */
+        .text-trail {
+            display: inline-block;
+        }
+
+        .text-trail .letter {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(30px) scale(0.8);
+            animation: letterTrail 0.8s ease-out forwards;
+        }
+
+        @keyframes letterTrail {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.8);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(5px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Subtle glow effect that starts after trail completes */
+        @keyframes textGlow {
+            0%, 100% {
+                text-shadow:
+                    0 2px 4px rgba(0, 0, 0, 0.8),
+                    0 0 8px rgba(255, 255, 255, 0.4);
+            }
+            50% {
+                text-shadow:
+                    0 2px 4px rgba(0, 0, 0, 0.8),
+                    0 0 15px rgba(255, 255, 255, 0.6),
+                    0 0 25px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        .text-trail.glow {
+            animation: textGlow 3s ease-in-out 2.5s infinite;
+        }
+
+
+
+
+
+
+        
+        .sale-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .sale-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .filters-section {
+            background: var(--section-bg);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .filters-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .filters-left {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .filter-group label {
+            font-weight: 500;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+
+        .filter-select {
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            background: var(--input-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(75, 0, 130, 0.2);
+        }
+        
+        .view-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .view-btn {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover {
+            border-color: var(--primary-color);
+            background: var(--section-bg);
+        }
+
+        .view-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+
+
+        .sale-products {
+            padding: 3rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .sale-products {
+                padding: 2rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sale-products {
+                padding: 1.5rem 0;
+            }
+        }
+        
+        .products-grid.list-view {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .product-card.list-view {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            gap: 1rem;
+        }
+        
+        .product-card.list-view .product-image {
+            width: 150px;
+            height: 150px;
+            flex-shrink: 0;
+        }
+        
+        .product-card.list-view .product-info {
+            flex: 1;
+            padding: 0;
+        }
+        
+        .product-card.list-view .product-actions {
+            position: static;
+            opacity: 1;
+            flex-direction: row;
+            gap: 0.5rem;
+        }
+        
+        .sale-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #e74c3c;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+        }
+        
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .pagination button:hover {
+            background: var(--section-bg);
+            border-color: var(--primary-color);
+        }
+
+        .pagination button.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .loading-products {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+
+        .loading-spinner {
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <a href="index.html">
+                        <svg width="150" height="40" viewBox="0 0 150 40" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#4B0082;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#D8BFD8;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <text x="5" y="28" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="url(#logoGradient)">The Project Faith</text>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="sale.html" class="active">Sale</a></li>
+                </ul>
+                <div class="search-box">
+                    <input type="text" placeholder="Search for products..." id="searchInput">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <div class="nav-icons">
+                    <button class="nav-icon theme-toggle" id="themeToggle" title="Toggle dark mode">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <a href="login.html" class="nav-icon">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button class="nav-icon" id="favoritesBtn">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="favoritesCount">0</span>
+                    </button>
+                    <button class="nav-icon" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="page-hero sale-hero">
+        <!-- Digital rain effect -->
+        <div class="digital-rain" id="digitalRain">
+            <!-- Rain columns will be generated by JavaScript -->
+        </div>
+
+
+
+
+
+
+
+        <div class="page-hero-content">
+            <h1 id="believeLoudTitle">Believe loud</h1>
+        </div>
+    </section>
+
+
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-container">
+                <div class="filters-left">
+                    <div class="filter-group">
+                        <label for="categoryFilter">Category:</label>
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="women">Women</option>
+                            <option value="men">Men</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="sortFilter">Sort by:</label>
+                        <select id="sortFilter" class="filter-select">
+                            <option value="featured">Featured</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="discount">Highest Discount</option>
+                            <option value="newest">Newest</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="view-toggle">
+                    <button class="view-btn active" id="gridViewBtn">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-btn" id="listViewBtn">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="sale-products">
+        <div class="container">
+
+            
+            <div class="loading-products" id="loadingProducts">
+                <div class="loading-spinner"></div>
+                <p>Loading sale products...</p>
+            </div>
+            
+            <div class="products-grid" id="saleProductsGrid">
+                <!-- Products will be loaded dynamically -->
+            </div>
+            
+            <div class="pagination" id="pagination">
+                <!-- Pagination will be generated dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section" style="text-align: center; max-width: 600px; margin: 0 auto;">
+                    <h3>The Project Faith</h3>
+                    <p>Your destination for trendy and affordable fashion.</p>
+                    <div class="social-links" style="justify-content: center; margin-top: 1.5rem;">
+                        <a href="https://www.instagram.com/the_project_faith?igsh=MXB6MGdjcDFhMGJ4cA%3D%3D&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@the_project_faith?_t=ZS-8yH5DE2wuif&_r=1" target="_blank"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://youtube.com/@the_project_faith?si=IzuWgm51yWY5xoEc" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Project Faith. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-modal" id="closeCart">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="cartItems">
+                <!-- Cart items will be loaded dynamically -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <strong>Total: $<span id="cartTotal">0.00</span></strong>
+                </div>
+                <button class="checkout-btn">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorites Modal -->
+    <div class="modal" id="favoritesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Your Favorites</h3>
+                <button class="close-modal" id="closeFavorites">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="favoritesItems">
+                <!-- Favorites will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Scripts -->
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/store-status.js"></script>
+    <script src="js/vip-access.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/favorites.js"></script>
+    
+    <script>
+        // Sale page specific functionality
+        let currentPage = 1;
+        let currentView = 'grid';
+        let currentFilters = {
+            category: '',
+            sort: 'featured'
+        };
+        
+        // Sale products data - loaded from admin system
+        let saleProducts = [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSalePage();
+        });
+        
+        function initializeSalePage() {
+            // Load sale products from admin system first
+            loadSaleProductsFromAdmin();
+
+            // Initialize filters
+            document.getElementById('categoryFilter').addEventListener('change', handleFilterChange);
+            document.getElementById('sortFilter').addEventListener('change', handleFilterChange);
+
+            // Initialize view toggle
+            document.getElementById('gridViewBtn').addEventListener('click', () => setView('grid'));
+            document.getElementById('listViewBtn').addEventListener('click', () => setView('list'));
+
+            // Load initial products
+            loadProducts();
+        }
+
+        function loadSaleProductsFromAdmin() {
+            try {
+                const storedProducts = localStorage.getItem('vaith_products');
+                if (storedProducts) {
+                    const adminProducts = JSON.parse(storedProducts);
+
+                    // Reset sale products array
+                    saleProducts = [];
+
+                    // Convert admin product format to sale page format and filter for sale products
+                    adminProducts.forEach(product => {
+                        // Only include products that should be shown on sale page
+                        if (product.showOnSale) {
+                            const saleProduct = {
+                                id: product.id,
+                                title: product.name,
+                                price: product.price,
+                                originalPrice: product.originalPrice,
+                                image: product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/400x500?text=No+Image',
+                                rating: product.rating || 0,
+                                reviews: product.reviews || 0,
+                                category: product.category,
+                                subcategory: product.subcategory || 'general',
+                                onSale: product.originalPrice && product.originalPrice > product.price,
+                                discount: product.originalPrice && product.originalPrice > product.price ?
+                                    Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0
+                            };
+
+                            saleProducts.push(saleProduct);
+                        }
+                    });
+
+                    console.log('Loaded', saleProducts.length, 'sale products from admin system');
+                }
+            } catch (error) {
+                console.error('Error loading sale products from admin system:', error);
+            }
+        }
+        
+        function handleFilterChange() {
+            currentFilters.category = document.getElementById('categoryFilter').value;
+            currentFilters.sort = document.getElementById('sortFilter').value;
+            currentPage = 1;
+            loadProducts();
+        }
+        
+        function setView(view) {
+            currentView = view;
+            
+            // Update button states
+            document.getElementById('gridViewBtn').classList.toggle('active', view === 'grid');
+            document.getElementById('listViewBtn').classList.toggle('active', view === 'list');
+            
+            // Update grid class
+            const grid = document.getElementById('saleProductsGrid');
+            grid.classList.toggle('list-view', view === 'list');
+            
+            // Re-render products with new view
+            renderProducts(getFilteredProducts());
+        }
+        
+        function loadProducts() {
+            const loadingElement = document.getElementById('loadingProducts');
+            const gridElement = document.getElementById('saleProductsGrid');
+            
+            // Show loading
+            loadingElement.style.display = 'block';
+            gridElement.style.display = 'none';
+            
+            // Simulate API call
+            setTimeout(() => {
+                const filteredProducts = getFilteredProducts();
+                renderProducts(filteredProducts);
+                renderPagination(filteredProducts.length);
+                
+                // Hide loading
+                loadingElement.style.display = 'none';
+                gridElement.style.display = currentView === 'list' ? 'flex' : 'grid';
+            }, 500);
+        }
+        
+        function getFilteredProducts() {
+            let filtered = [...saleProducts];
+
+            // Filter by category
+            if (currentFilters.category) {
+                filtered = filtered.filter(product => product.category === currentFilters.category);
+            }
+
+            // Sort products
+            switch (currentFilters.sort) {
+                case 'price-low':
+                    filtered.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filtered.sort((a, b) => b.price - a.price);
+                    break;
+                case 'discount':
+                    filtered.sort((a, b) => {
+                        const discountA = a.originalPrice ? (a.originalPrice - a.price) / a.originalPrice : 0;
+                        const discountB = b.originalPrice ? (b.originalPrice - b.price) / b.originalPrice : 0;
+                        return discountB - discountA;
+                    });
+                    break;
+                case 'newest':
+                    // In a real app, this would sort by date
+                    filtered.reverse();
+                    break;
+                default:
+                    // Featured - keep original order
+                    break;
+            }
+            
+            return filtered;
+        }
+        
+        function renderProducts(products) {
+            const container = document.getElementById('saleProductsGrid');
+            container.innerHTML = '';
+
+            const itemsPerPage = 12;
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageProducts = products.slice(startIndex, endIndex);
+
+            pageProducts.forEach(product => {
+                const productCard = createSaleProductCard(product);
+                container.appendChild(productCard);
+            });
+
+            // Update button states after rendering products
+            setTimeout(() => {
+                if (typeof updateFavoriteButtons === 'function') {
+                    updateFavoriteButtons();
+                }
+                if (typeof updateCartButtons === 'function') {
+                    updateCartButtons();
+                }
+            }, 100);
+        }
+        
+        function createSaleProductCard(product) {
+            const card = document.createElement('div');
+            card.className = `product-card ${currentView === 'list' ? 'list-view' : ''}`;
+            card.setAttribute('data-product-id', product.id);
+
+            const discount = product.originalPrice ? 
+                Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
+
+            card.innerHTML = `
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.title}" loading="lazy">
+                    <div class="sale-badge">-${discount}%</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">${product.title}</h3>
+                    <div class="product-price">
+                        <span class="current-price">$${product.price}</span>
+                        <span class="original-price">$${product.originalPrice}</span>
+                    </div>
+                    <div class="product-rating">
+                        <div class="stars">
+                            ${generateStars(product.rating)}
+                        </div>
+                        <span class="rating-count">(${product.reviews})</span>
+                    </div>
+                    <button class="btn btn-outline favorite-btn-text" data-product-id="${product.id}">
+                        <i class="far fa-heart"></i>
+                        Add to Favorites
+                    </button>
+                </div>
+            `;
+
+            // Add event listeners
+            const favoriteBtnText = card.querySelector('.favorite-btn-text');
+
+            favoriteBtnText.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleFavorite(product.id);
+                // Update button states after toggling favorite
+                if (typeof updateFavoriteButtons === 'function') {
+                    updateFavoriteButtons();
+                }
+            });
+
+
+
+            // Navigate to product page on card click
+            card.addEventListener('click', () => {
+                window.location.href = `product.html?id=${product.id}`;
+            });
+
+            return card;
+        }
+        
+
+        
+        function renderPagination(totalItems) {
+            const container = document.getElementById('pagination');
+            const itemsPerPage = 12;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            let paginationHTML = '';
+            
+            // Previous button
+            paginationHTML += `
+                <button ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(${currentPage - 1})">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            `;
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    paginationHTML += `
+                        <button class="${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">
+                            ${i}
+                        </button>
+                    `;
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    paginationHTML += '<span>...</span>';
+                }
+            }
+            
+            // Next button
+            paginationHTML += `
+                <button ${currentPage === totalPages ? 'disabled' : ''} onclick="changePage(${currentPage + 1})">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            `;
+            
+            container.innerHTML = paginationHTML;
+        }
+        
+        function changePage(page) {
+            currentPage = page;
+            loadProducts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Make changePage available globally
+        window.changePage = changePage;
+
+        // Initialize text trail animation for "Believe loud"
+        function initializeBelieveLoudAnimation() {
+            const titleElement = document.getElementById('believeLoudTitle');
+            if (!titleElement) return;
+
+            const text = 'Believe loud';
+            titleElement.innerHTML = '';
+
+            // Create container for text trail effect
+            const trailContainer = document.createElement('span');
+            trailContainer.className = 'text-trail glow';
+
+            // Split text into individual letters and spaces
+            text.split('').forEach((char, index) => {
+                const letterSpan = document.createElement('span');
+                letterSpan.className = 'letter';
+                letterSpan.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space
+
+                // Add staggered delay for trail effect
+                letterSpan.style.animationDelay = `${index * 0.1}s`;
+
+                trailContainer.appendChild(letterSpan);
+            });
+
+            titleElement.appendChild(trailContainer);
+        }
+
+        // Initialize digital rain effect
+        function initializeDigitalRain() {
+            const rainContainer = document.getElementById('digitalRain');
+            if (!rainContainer) return;
+
+            const numberOfColumns = 50;
+
+            for (let i = 0; i < numberOfColumns; i++) {
+                const column = document.createElement('div');
+                column.className = 'rain-column';
+                column.style.left = `${(i / numberOfColumns) * 100}%`;
+                column.style.height = `${Math.random() * 100 + 50}px`;
+                column.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                column.style.animationDelay = `${Math.random() * 5}s`;
+                rainContainer.appendChild(column);
+            }
+        }
+
+        // Initialize animation when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBelieveLoudAnimation();
+            initializeDigitalRain();
+        });
+    </script>
+</body>
+</html>

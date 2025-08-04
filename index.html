@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Project Faith - Fashion for Everyone</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <a href="index.html">
+                        <svg width="150" height="40" viewBox="0 0 150 40" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#4B0082;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#D8BFD8;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <text x="5" y="28" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="url(#logoGradient)">The Project Faith</text>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="sale.html">Sale</a></li>
+                </ul>
+                <div class="search-box">
+                    <input type="text" placeholder="Search for products..." id="searchInput">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+
+            <div class="nav-right">
+                <div class="nav-icons">
+                    <button class="nav-icon theme-toggle" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">
+                        <i class="fas fa-moon" id="themeIcon" aria-hidden="true"></i>
+                    </button>
+                    <a href="login.html" class="nav-icon">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button class="nav-icon" id="favoritesBtn">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="favoritesCount">0</span>
+                    </button>
+                    <button class="nav-icon" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Super Modern Design -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-slider">
+                <div class="hero-slide active">
+                    <div class="hero-content">
+
+                        <h1>Believe loud</h1>
+                        <p>Style built for bold believers<br>
+                        Born from the streets built on belief<br>
+                        loud fits for louder dreams<br>
+                        Every piece tells a purpose street wear that<br>
+                        moves with meaning</p>
+                        <div class="hero-cta-group">
+                            <button class="cta-btn primary">Explore Collection</button>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">50K+</span>
+                                <span class="stat-label">Happy Customers</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">4.9★</span>
+                                <span class="stat-label">Customer Rating</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <div class="image-container">
+                            <img src="images/hero page pic.jpeg" alt="Premium Fashion Collection - Luxury clothing showcasing modern style and elegance">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+    <!-- Sales Section with Chroma Grid -->
+    <section class="sales-section">
+        <div class="container">
+            <h2 class="section-title">Sales & Special Offers</h2>
+            <div class="chroma-grid">
+                <div class="chroma-card" data-color="purple">
+                    <div class="chroma-image">
+                        <img src="images/womens collection.jpeg" alt="Women's Fashion Collection - Elegant dresses and stylish outfits for modern women">
+                    </div>
+                    <div class="chroma-content">
+                        <div class="chroma-icon">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <h3>Women's Collection</h3>
+                        <p>Up to 50% Off</p>
+                        <a href="products.html?category=women" class="chroma-link">Shop Now</a>
+                    </div>
+                </div>
+                <div class="chroma-card" data-color="blue">
+                    <div class="chroma-image">
+                        <img src="images/mens collection.jpeg" alt="Men's Fashion Collection - Stylish shirts, jackets and contemporary menswear">
+                    </div>
+                    <div class="chroma-content">
+                        <div class="chroma-icon">
+                            <i class="fas fa-male"></i>
+                        </div>
+                        <h3>Men's Collection</h3>
+                        <p>Up to 40% Off</p>
+                        <a href="products.html?category=men" class="chroma-link">Shop Now</a>
+                    </div>
+                </div>
+                <div class="chroma-card" data-color="cyan">
+                    <div class="chroma-image">
+                        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&h=300&fit=crop&auto=format&q=80" alt="New Arrivals - Latest fashion trends and fresh styles just in">
+                    </div>
+                    <div class="chroma-content">
+                        <div class="chroma-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3>New Arrivals</h3>
+                        <p>Fresh Styles</p>
+                        <a href="products.html?category=new-arrivals" class="chroma-link">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products-cosmic">
+        <div class="container">
+            <div class="cosmic-content-wrapper">
+                <!-- Header -->
+                <div class="cosmic-header">
+                    <div class="cosmic-title-wrapper">
+                        <h2 class="cosmic-title">Featured Products</h2>
+                        <div class="cosmic-subtitle-wrapper">
+                            <p class="cosmic-subtitle">Discover stellar collections from across the universe</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div class="cosmic-products-container">
+                    <div class="products-grid cosmic-grid" id="featuredProducts">
+                        <!-- Products will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest Products Section -->
+    <section class="trending">
+        <div class="container">
+            <h2 class="section-title">Latest Arrivals</h2>
+            <div class="products-grid" id="trendingProducts">
+                <!-- Latest products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Stay Updated</h2>
+                <p>Subscribe to get special offers, free giveaways, and exclusive deals.</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section" style="text-align: center; max-width: 600px; margin: 0 auto;">
+                    <h3>The Project Faith</h3>
+                    <p>Your destination for trendy and affordable fashion.</p>
+                    <div class="social-links" style="justify-content: center; margin-top: 1.5rem;">
+                        <a href="https://www.instagram.com/the_project_faith?igsh=MXB6MGdjcDFhMGJ4cA%3D%3D&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@the_project_faith?_t=ZS-8yH5DE2wuif&_r=1" target="_blank"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://youtube.com/@the_project_faith?si=IzuWgm51yWY5xoEc" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Project Faith. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-modal" id="closeCart">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="cartItems">
+                <!-- Cart items will be loaded dynamically -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <strong>Total: $<span id="cartTotal">0.00</span></strong>
+                </div>
+                <button class="checkout-btn">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Favorites Modal -->
+    <div class="modal" id="favoritesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Your Favorites</h3>
+                <button class="close-modal" id="closeFavorites">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="favoritesItems">
+                <!-- Favorites will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/store-status.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/favorites.js"></script>
+
+    <script>
+        // Add click handlers for chroma cards and hero explore button
+        document.addEventListener('DOMContentLoaded', function() {
+            const chromaCards = document.querySelectorAll('.chroma-card');
+
+            chromaCards.forEach((card, index) => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', function() {
+                    let category = '';
+                    switch(index) {
+                        case 0: category = 'women'; break;
+                        case 1: category = 'men'; break;
+                        case 2: category = 'new'; break;
+                        default: category = 'women';
+                    }
+
+                    if (category) {
+                        window.location.href = `products.html?category=${category}`;
+                    } else {
+                        window.location.href = 'products.html';
+                    }
+                });
+            });
+
+            // Add click handler for "Explore Collection" button to scroll to Latest Arrivals
+            const exploreBtn = document.querySelector('.cta-btn.primary');
+            if (exploreBtn) {
+                exploreBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const trendingSection = document.querySelector('.trending');
+                    if (trendingSection) {
+                        trendingSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

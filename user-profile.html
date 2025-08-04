@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - The Project Faith</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <a href="index.html">
+                        <svg width="150" height="40" viewBox="0 0 150 40" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#4B0082;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#D8BFD8;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <text x="5" y="28" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="url(#logoGradient)">The Project Faith</text>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="nav-center">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="sale.html">Sale</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <div class="nav-icons">
+                    <button class="nav-icon theme-toggle" id="themeToggle" title="Toggle dark mode">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                    <a href="user-profile.html" class="nav-icon active">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <button class="nav-icon" id="favoritesBtn">
+                        <i class="fas fa-heart"></i>
+                        <span class="badge" id="favoritesCount">0</span>
+                    </button>
+                    <button class="nav-icon" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="badge" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Container -->
+    <div class="profile-container">
+        <!-- Profile Header -->
+        <div class="profile-header">
+            <div class="profile-info">
+                <div class="profile-avatar" id="profileAvatar">
+                    <!-- Avatar will be loaded dynamically -->
+                </div>
+                <div class="profile-details">
+                    <h1 id="profileName">Loading...</h1>
+                    <p id="profileEmail">Loading...</p>
+                    <p id="profileJoinDate">Member since Loading...</p>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-number" id="totalOrders">0</span>
+                            <span class="stat-label">Orders</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="totalSpent">$0</span>
+                            <span class="stat-label">Spent</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="favoriteItems">0</span>
+                            <span class="stat-label">Favorites</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Navigation -->
+        <nav class="profile-nav">
+            <ul class="profile-nav-list">
+                <li class="profile-nav-item">
+                    <a href="#overview" class="profile-nav-link active" data-tab="overview">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Overview</span>
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="#orders" class="profile-nav-link" data-tab="orders">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Orders</span>
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="#favorites" class="profile-nav-link" data-tab="favorites">
+                        <i class="fas fa-heart"></i>
+                        <span>Favorites</span>
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="user-profile-edit.html" class="profile-nav-link">
+                        <i class="fas fa-edit"></i>
+                        <span>Edit Profile</span>
+                    </a>
+                </li>
+                <li class="profile-nav-item">
+                    <a href="user-settings.html" class="profile-nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Profile Content -->
+        <div class="profile-content">
+            <div class="profile-main">
+                <!-- Overview Tab -->
+                <div class="tab-content active" id="overview-tab">
+                    <h3>Account Overview</h3>
+                    <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin: 2rem 0;">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon orders">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3 id="overviewOrders">0</h3>
+                                    <p>Total Orders</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon revenue">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3 id="overviewSpent">$0</h3>
+                                    <p>Total Spent</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <div class="card-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3 id="overviewFavorites">0</h3>
+                                    <p>Favorite Items</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-activity">
+                        <h4>Recent Activity</h4>
+                        <div id="recentActivity">
+                            <p style="color: var(--text-light); text-align: center; padding: 2rem;">No recent activity</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Tab -->
+                <div class="tab-content" id="orders-tab">
+                    <h3>Order History</h3>
+                    <div class="order-list" id="ordersList">
+                        <!-- Orders will be loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- Favorites Tab -->
+                <div class="tab-content" id="favorites-tab">
+                    <h3>Favorite Items</h3>
+                    <div class="products-grid" id="favoritesList">
+                        <!-- Favorites will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="profile-sidebar">
+                <div class="sidebar-card">
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <a href="products.html" class="btn btn-secondary">
+                            <i class="fas fa-shopping-bag"></i> Continue Shopping
+                        </a>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Account Status</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Status:</span>
+                            <span class="status-badge status-active" id="accountStatus">Active</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Member Role:</span>
+                            <span style="color: var(--primary-color); font-weight: 500;" id="memberRole">User</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Last Login:</span>
+                            <span style="color: var(--text-light); font-size: 0.875rem;" id="lastLogin">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <button class="btn btn-danger btn-sm" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section" style="text-align: center; max-width: 600px; margin: 0 auto;">
+                    <h3>The Project Faith</h3>
+                    <p>Your destination for trendy and affordable fashion.</p>
+                    <div class="social-links" style="justify-content: center; margin-top: 1.5rem;">
+                        <a href="https://www.instagram.com/the_project_faith?igsh=MXB6MGdjcDFhMGJ4cA%3D%3D&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@the_project_faith?_t=ZS-8yH5DE2wuif&_r=1" target="_blank"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://youtube.com/@the_project_faith?si=IzuWgm51yWY5xoEc" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 The Project Faith. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Tab Content Styles -->
+    <style>
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .recent-activity {
+            margin-top: 2rem;
+        }
+
+        .recent-activity h4 {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .activity-content h5 {
+            margin: 0 0 0.25rem 0;
+            color: var(--text-color);
+        }
+
+        .activity-content p {
+            margin: 0;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/store-status.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/favorites.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            if (!authManager.requireAuth()) {
+                return;
+            }
+
+            // Check if we're viewing another user's profile (from admin panel)
+            const viewUserId = sessionStorage.getItem('viewUserId');
+            if (viewUserId) {
+                sessionStorage.removeItem('viewUserId');
+                initializeProfile(parseInt(viewUserId));
+            } else {
+                // Initialize current user's profile
+                initializeProfile();
+            }
+            setupEventListeners();
+
+            // Handle hash navigation (for links from other pages)
+            handleHashNavigation();
+        });
+
+        function initializeProfile(userId = null) {
+            // Get the user to display (either current user or specified user)
+            const currentUser = userId ? authManager.getUserById(userId) : authManager.getCurrentUser();
+            const isViewingOtherUser = userId !== null;
+
+            if (!currentUser) {
+                alert('User not found');
+                window.location.href = 'admin-users.html';
+                return;
+            }
+            
+            // Update profile header
+            document.getElementById('profileName').textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+            document.getElementById('profileEmail').textContent = currentUser.email;
+            document.getElementById('profileJoinDate').textContent = `Member since ${formatDate(currentUser.joinDate)}`;
+            
+            // Update avatar
+            const avatar = document.getElementById('profileAvatar');
+            avatar.textContent = getInitials(currentUser.firstName, currentUser.lastName);
+
+            // Add admin viewing indicator if viewing another user's profile
+            if (isViewingOtherUser) {
+                const profileHeader = document.querySelector('.profile-header');
+                const adminBanner = document.createElement('div');
+                adminBanner.style.cssText = `
+                    background: var(--warning-color);
+                    color: white;
+                    padding: 0.75rem 1rem;
+                    text-align: center;
+                    font-weight: 500;
+                    margin-bottom: 1rem;
+                    border-radius: 0.5rem;
+                `;
+                adminBanner.innerHTML = `
+                    <i class="fas fa-eye"></i> Admin View: Viewing ${currentUser.firstName} ${currentUser.lastName}'s Profile
+                    <button onclick="window.location.href='admin-dashboard.html'" style="margin-left: 1rem; background: rgba(255,255,255,0.2); border: none; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer;">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </button>
+                    <button onclick="window.location.href='admin-users.html'" style="margin-left: 0.5rem; background: rgba(255,255,255,0.2); border: none; color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; cursor: pointer;">
+                        <i class="fas fa-users"></i> User Management
+                    </button>
+                `;
+                profileHeader.parentNode.insertBefore(adminBanner, profileHeader);
+            }
+
+            // Update stats
+            document.getElementById('totalOrders').textContent = currentUser.stats.totalOrders;
+            document.getElementById('totalSpent').textContent = `$${currentUser.stats.totalSpent.toFixed(2)}`;
+            document.getElementById('favoriteItems').textContent = currentUser.stats.favoriteItems;
+            
+            // Update overview cards
+            document.getElementById('overviewOrders').textContent = currentUser.stats.totalOrders;
+            document.getElementById('overviewSpent').textContent = `$${currentUser.stats.totalSpent.toFixed(2)}`;
+            document.getElementById('overviewFavorites').textContent = currentUser.stats.favoriteItems;
+            
+            // Update sidebar info
+            document.getElementById('accountStatus').textContent = currentUser.status;
+            document.getElementById('accountStatus').className = `status-badge ${getStatusBadgeClass(currentUser.status)}`;
+            document.getElementById('lastLogin').textContent = currentUser.lastLogin ? formatDateTime(currentUser.lastLogin) : 'Never';
+            
+            // Determine member role based on user role and status
+            let memberRole = 'User';
+            if (currentUser.role === 'admin') {
+                memberRole = 'Admin';
+            } else if (currentUser.role === 'vip' || currentUser.stats.totalSpent >= 1000 || currentUser.status === 'vip') {
+                memberRole = 'VIP User';
+            } else {
+                memberRole = 'User';
+            }
+            document.getElementById('memberRole').textContent = memberRole;
+            
+            // Load tab content
+            loadOverviewContent();
+            loadOrdersContent();
+            loadFavoritesContent();
+        }
+
+        function setupEventListeners() {
+            // Tab navigation
+            document.querySelectorAll('.profile-nav-link[data-tab]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tabName = this.dataset.tab;
+                    switchTab(tabName);
+                });
+            });
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                if (confirm('Are you sure you want to logout?')) {
+                    authManager.logout();
+                }
+            });
+        }
+
+        function switchTab(tabName) {
+            // Update nav links
+            document.querySelectorAll('.profile-nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        }
+
+        function handleHashNavigation() {
+            // Check if there's a hash in the URL
+            const hash = window.location.hash.substring(1); // Remove the # symbol
+
+            if (hash) {
+                // Map hash values to tab names
+                const hashToTab = {
+                    'overview': 'overview',
+                    'orders': 'orders',
+                    'favorites': 'favorites'
+                };
+
+                const tabName = hashToTab[hash];
+                if (tabName) {
+                    // Switch to the specified tab
+                    switchTab(tabName);
+                }
+            }
+        }
+
+        function loadOverviewContent() {
+            // Load recent activity (mock data for now)
+            const activities = [
+                {
+                    icon: 'shopping-cart',
+                    title: 'Order Placed',
+                    description: 'Order #ORD-001 for $299.99',
+                    date: '2 days ago'
+                },
+                {
+                    icon: 'heart',
+                    title: 'Item Added to Favorites',
+                    description: 'Premium T-Shirt added to favorites',
+                    date: '1 week ago'
+                }
+            ];
+
+            const activityContainer = document.getElementById('recentActivity');
+            if (activities.length > 0) {
+                activityContainer.innerHTML = activities.map(activity => `
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-${activity.icon}"></i>
+                        </div>
+                        <div class="activity-content">
+                            <h5>${activity.title}</h5>
+                            <p>${activity.description} • ${activity.date}</p>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function loadOrdersContent() {
+            // Mock orders data
+            const orders = [
+                {
+                    id: 'ord_001',
+                    date: '2024-01-15',
+                    status: 'completed',
+                    total: 299.99,
+                    items: [
+                        { name: 'Premium T-Shirt', image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=100&h=100&fit=crop', price: 49.99, quantity: 2 },
+                        { name: 'Designer Jeans', image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=100&h=100&fit=crop', price: 199.99, quantity: 1 }
+                    ]
+                }
+            ];
+
+            const ordersList = document.getElementById('ordersList');
+            if (orders.length > 0) {
+                ordersList.innerHTML = orders.map(order => `
+                    <div class="order-item">
+                        <div class="order-header">
+                            <div>
+                                <div class="order-number">Order ${order.id}</div>
+                                <div class="order-date">${formatDate(order.date)}</div>
+                            </div>
+                            <span class="status-badge ${getOrderStatusBadgeClass(order.status)}">${order.status}</span>
+                        </div>
+                        <div class="order-products">
+                            ${order.items.map(item => `
+                                <div class="order-product">
+                                    <img src="${item.image}" alt="${item.name}" class="product-image">
+                                    <div class="product-info">
+                                        <h4>${item.name}</h4>
+                                        <p>Qty: ${item.quantity} • $${item.price}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="order-footer">
+                            <div class="order-total">Total: $${order.total}</div>
+                            <div>
+                                <button class="btn btn-secondary btn-sm">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                ordersList.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 2rem;">No orders yet</p>';
+            }
+        }
+
+        function loadFavoritesContent() {
+            const favoritesList = document.getElementById('favoritesList');
+            favoritesList.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 2rem;">No favorite items yet</p>';
+        }
+
+        function getOrderStatusBadgeClass(status) {
+            const statusClasses = {
+                'pending': 'status-pending',
+                'completed': 'status-completed',
+                'cancelled': 'status-cancelled'
+            };
+            return statusClasses[status] || 'status-inactive';
+        }
+    </script>
+</body>
+</html>

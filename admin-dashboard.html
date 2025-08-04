@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - The Project Faith</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Enhanced Table Styling -->
+    <style>
+        /* Make tables bigger and more visible */
+        .data-table-container {
+            margin-bottom: 3rem !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+            border-radius: 12px !important;
+            overflow: hidden;
+        }
+
+        .data-table {
+            font-size: 0.95rem !important;
+            min-width: 100% !important;
+        }
+
+        .data-table th {
+            padding: 1.25rem 1rem !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-hover) 100%) !important;
+            color: white !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none !important;
+        }
+
+        .data-table td {
+            padding: 1.25rem 1rem !important;
+            font-size: 0.9rem !important;
+            border-bottom: 1px solid var(--admin-border) !important;
+            vertical-align: middle !important;
+        }
+
+        .data-table tr:hover {
+            background: var(--admin-surface-hover) !important;
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        .table-header {
+            padding: 1.5rem 2rem !important;
+            background: var(--admin-bg-secondary) !important;
+            border-bottom: 2px solid var(--admin-border) !important;
+        }
+
+        .table-title {
+            font-size: 1.4rem !important;
+            font-weight: 700 !important;
+            color: var(--admin-text-primary) !important;
+            margin: 0 !important;
+        }
+
+        /* Enhanced profile avatars in tables */
+        .profile-avatar {
+            width: 45px !important;
+            height: 45px !important;
+            font-size: 1rem !important;
+            font-weight: 600 !important;
+            border: 2px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        /* Enhanced status badges */
+        .status-badge {
+            padding: 0.5rem 0.75rem !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            border-radius: 6px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Enhanced buttons in tables */
+        .data-table .btn {
+            padding: 0.6rem 0.8rem !important;
+            font-size: 0.85rem !important;
+            border-radius: 6px !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease;
+        }
+
+        .data-table .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Responsive table improvements */
+        @media (max-width: 1200px) {
+            .data-table {
+                font-size: 0.85rem !important;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 1rem 0.75rem !important;
+            }
+        }
+
+        /* Loading skeleton enhancement */
+        .loading-skeleton {
+            height: 400px !important;
+            border-radius: 12px !important;
+            background: linear-gradient(90deg,
+                var(--admin-surface) 25%,
+                var(--admin-surface-hover) 50%,
+                var(--admin-surface) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Enhanced Sidebar with Accessibility -->
+        <aside class="admin-sidebar" id="adminSidebar" role="navigation" aria-label="Admin navigation" aria-hidden="false">
+            <div class="sidebar-header">
+                <a href="admin-dashboard.html" class="sidebar-logo" aria-label="The Project Faith Admin Dashboard">The Project Faith</a>
+            </div>
+            <nav class="sidebar-nav" role="menu">
+                <div class="nav-item" role="none">
+                    <a href="admin-dashboard.html" class="nav-link active" role="menuitem" aria-current="page">
+                        <i class="nav-icon fas fa-chart-line" aria-hidden="true"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </div>
+                <div class="nav-item" role="none">
+                    <a href="admin-users.html" class="nav-link" role="menuitem">
+                        <i class="nav-icon fas fa-users" aria-hidden="true"></i>
+                        <span class="nav-text">Users</span>
+                    </a>
+                </div>
+                <div class="nav-item" role="none">
+                    <a href="admin-products.html" class="nav-link" role="menuitem">
+                        <i class="nav-icon fas fa-box" aria-hidden="true"></i>
+                        <span class="nav-text">Products</span>
+                    </a>
+                </div>
+                <div class="nav-item" role="none">
+                    <a href="admin-orders.html" class="nav-link" role="menuitem">
+                        <i class="nav-icon fas fa-shopping-cart" aria-hidden="true"></i>
+                        <span class="nav-text">Orders</span>
+                    </a>
+                </div>
+                <div class="nav-item" role="none">
+                    <a href="admin-condition.html" class="nav-link" role="menuitem">
+                        <i class="nav-icon fas fa-store" aria-hidden="true"></i>
+                        <span class="nav-text">Condition</span>
+                    </a>
+                </div>
+
+
+                <!-- Navigation Divider -->
+                <div style="margin: 1.5rem 1rem; border-top: 1px solid var(--admin-border); opacity: 0.5;"></div>
+
+                <!-- Quick Links Section -->
+                <div style="padding: 0 1rem; margin-bottom: 1rem;">
+                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--admin-text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+                        Quick Links
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="index.html" class="nav-link" target="_blank">
+                        <i class="nav-icon fas fa-external-link-alt"></i>
+                        <span class="nav-text">View Store</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="user-settings.html" class="nav-link">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <span class="nav-text">Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Mobile Sidebar Overlay -->
+        <div class="admin-sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+
+        <!-- Main Content -->
+        <main class="admin-main" id="adminMain">
+            <!-- Enhanced Header with Accessibility -->
+            <header class="admin-header" role="banner">
+                <div class="admin-header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle"
+                            aria-label="Toggle navigation sidebar"
+                            aria-expanded="false"
+                            aria-controls="adminSidebar">
+                        <i class="fas fa-bars" aria-hidden="true"></i>
+                    </button>
+                    <h1 class="page-title">Dashboard</h1>
+                </div>
+                <div class="admin-header-right">
+                    <button class="nav-icon theme-toggle" id="themeToggle"
+                            title="Toggle dark mode"
+                            aria-label="Toggle dark mode">
+                        <i class="fas fa-moon" id="themeIcon" aria-hidden="true"></i>
+                    </button>
+
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <!-- Breadcrumb Navigation -->
+                <nav class="breadcrumb fade-in">
+                    <div class="breadcrumb-item">
+                        <a href="admin-dashboard.html" class="breadcrumb-link">
+                            <i class="fas fa-home"></i> Admin
+                        </a>
+                    </div>
+                    <div class="breadcrumb-item">
+                        <span class="breadcrumb-current">Dashboard</span>
+                    </div>
+                </nav>
+
+
+
+                <!-- Dashboard Cards -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card fade-in" style="animation-delay: 0.1s;">
+                        <div class="card-header">
+                            <div class="card-icon users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="totalUsers">
+                                    <span class="loading-spinner" id="usersLoader"></span>
+                                    <span id="usersCount" style="display: none;">0</span>
+                                </h3>
+                                <p>Total Users</p>
+                                <div class="card-trend trend-up" id="usersTrendContainer" style="display: none;">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span id="usersTrend">+12%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card fade-in" style="animation-delay: 0.2s;">
+                        <div class="card-header">
+                            <div class="card-icon orders">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="totalOrders">
+                                    <span class="loading-spinner" id="ordersLoader"></span>
+                                    <span id="ordersCount" style="display: none;">0</span>
+                                </h3>
+                                <p>Total Orders</p>
+                                <div class="card-trend trend-up" id="ordersTrendContainer" style="display: none;">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span id="ordersTrend">+8%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card fade-in" style="animation-delay: 0.3s;">
+                        <div class="card-header">
+                            <div class="card-icon revenue">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="totalRevenue">
+                                    <span class="loading-spinner" id="revenueLoader"></span>
+                                    <span id="revenueAmount" style="display: none;">$0</span>
+                                </h3>
+                                <p>Total Revenue</p>
+                                <div class="card-trend trend-up" id="revenueTrendContainer" style="display: none;">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span id="revenueTrend">+15%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-card fade-in" style="animation-delay: 0.4s;">
+                        <div class="card-header">
+                            <div class="card-icon products">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="totalProducts">
+                                    <span class="loading-spinner" id="productsLoader"></span>
+                                    <span id="productsCount" style="display: none;">0</span>
+                                </h3>
+                                <p>Total Products</p>
+                                <div class="card-trend trend-up" id="productsTrendContainer" style="display: none;">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span id="productsTrend">+5%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Orders Section -->
+                <div class="data-table-container fade-in" style="animation-delay: 0.5s;">
+                    <div class="table-header">
+                        <h3 class="table-title">⏳ Pending Orders</h3>
+                        <div class="table-actions">
+                            <span id="pendingOrdersCount" class="badge" style="background: var(--warning-color); color: white; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem; margin-right: 1rem;">0</span>
+                            <button class="btn btn-secondary btn-sm" onclick="refreshPendingOrders()" title="Refresh Pending Orders">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+                    <div id="pendingOrdersLoading" class="loading-skeleton" style="height: 300px; margin: 20px;"></div>
+                    <div class="table-wrapper" id="pendingOrdersTableContainer" style="display: none;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 150px;">Order ID</th>
+                                    <th style="min-width: 220px;">Customer</th>
+                                    <th style="min-width: 120px;">Total</th>
+                                    <th style="min-width: 150px;">Order Date</th>
+                                    <th style="min-width: 250px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pendingOrdersTable">
+                                <!-- Pending orders will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="noPendingOrders" style="display: none; text-align: center; padding: 2rem; color: var(--text-light);">
+                        <i class="fas fa-check-circle" style="font-size: 3rem; margin-bottom: 1rem; color: var(--success-color);"></i>
+                        <p>No pending orders to review</p>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="data-table-container fade-in" style="animation-delay: 0.6s;">
+                    <div class="table-header">
+                        <h3 class="table-title">📊 Recent Users</h3>
+                        <div class="table-actions">
+                            <a href="admin-users.html" class="btn btn-primary btn-sm" title="View All Users">
+                                <i class="fas fa-eye"></i> View All Users
+                            </a>
+                            <button class="btn btn-secondary btn-sm" onclick="refreshRecentUsers()" title="Refresh Data">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+                    <div id="recentUsersLoading" class="loading-skeleton" style="height: 300px; margin: 20px;"></div>
+                    <div class="table-wrapper" id="recentUsersTableContainer" style="display: none;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 250px;">User</th>
+                                    <th style="min-width: 250px;">Email</th>
+                                    <th style="min-width: 100px;">Role</th>
+                                    <th style="min-width: 120px;">Status</th>
+                                    <th style="min-width: 150px;">Join Date</th>
+                                    <th style="min-width: 150px;">Last Login</th>
+                                    <th style="min-width: 180px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentUsersTable">
+                                <!-- Users will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recent Products -->
+                <div class="data-table-container fade-in" style="animation-delay: 0.7s; margin-top: 2rem;">
+                    <div class="table-header">
+                        <h3 class="table-title">📦 Recent Products</h3>
+                        <div class="table-actions">
+                            <a href="admin-products.html" class="btn btn-primary btn-sm" title="View All Products">
+                                <i class="fas fa-eye"></i> View All Products
+                            </a>
+                            <button class="btn btn-secondary btn-sm" onclick="refreshRecentProducts()" title="Refresh Data">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+                    <div id="recentProductsLoading" class="loading-skeleton" style="height: 300px; margin: 20px;"></div>
+                    <div class="table-wrapper" id="recentProductsTableContainer" style="display: none;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 280px;">Product</th>
+                                    <th style="min-width: 120px;">Price</th>
+                                    <th style="min-width: 100px;">Stock</th>
+                                    <th style="min-width: 120px;">Status</th>
+                                    <th style="min-width: 150px;">Created</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentProductsTable">
+                                <!-- Products will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Section -->
+                <div class="dashboard-grid" style="margin-top: 2rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div class="dashboard-card fade-in" style="animation-delay: 0.8s;">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="card-content">
+                                <h4 style="margin: 0; color: var(--admin-text-primary);">Quick Actions</h4>
+                                <p style="margin: 0.5rem 0; color: var(--admin-text-secondary); font-size: 0.875rem;">Manage your store efficiently</p>
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+                                    <a href="admin-products.html" class="btn btn-secondary btn-sm">
+                                        <i class="fas fa-box"></i> Add Product
+                                    </a>
+                                    <a href="admin-users.html" class="btn btn-secondary btn-sm">
+                                        <i class="fas fa-user-plus"></i> Manage Users
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- User Menu Dropdown Styles -->
+    <style>
+        .user-menu {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: var(--section-bg);
+        }
+
+        .dropdown-divider {
+            margin: 0.5rem 0;
+            border: none;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/admin-common.js"></script>
+
+    <script>
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check admin access
+            if (!authManager.requireAdmin()) {
+                return;
+            }
+
+            // Initialize dashboard
+            initializeDashboard();
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+
+        function initializeDashboard() {
+            // Load dashboard stats
+            loadDashboardStats();
+            loadPendingOrders();
+            loadRecentUsers();
+            loadRecentProducts();
+
+            // Listen for product updates from other tabs
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'vaith_products' || e.key === 'vaith_stats_updated') {
+                    console.log('Products updated in another tab, refreshing dashboard...');
+                    loadDashboardStats();
+                    loadRecentProducts(); // Also refresh the products table
+                }
+            });
+        }
+
+        function loadDashboardStats() {
+            // Simulate loading delay for better UX
+            setTimeout(() => {
+                const userStats = authManager.getUserStats();
+
+                // Users
+                document.getElementById('usersLoader').style.display = 'none';
+                document.getElementById('usersCount').style.display = 'inline';
+                document.getElementById('usersCount').textContent = userStats.total;
+                document.getElementById('usersTrendContainer').style.display = 'flex';
+
+                // Orders
+                document.getElementById('ordersLoader').style.display = 'none';
+                document.getElementById('ordersCount').style.display = 'inline';
+                document.getElementById('ordersCount').textContent = '156'; // Mock data
+                document.getElementById('ordersTrendContainer').style.display = 'flex';
+
+                // Revenue
+                document.getElementById('revenueLoader').style.display = 'none';
+                document.getElementById('revenueAmount').style.display = 'inline';
+                document.getElementById('revenueAmount').textContent = '$12,450';
+                document.getElementById('revenueTrendContainer').style.display = 'flex';
+
+                // Products - refresh from localStorage first
+                adminManager.refreshProducts();
+                const productCount = adminManager.getAllProducts().length;
+                console.log('Dashboard - Total products:', productCount); // Debug log
+                document.getElementById('productsLoader').style.display = 'none';
+                document.getElementById('productsCount').style.display = 'inline';
+                document.getElementById('productsCount').textContent = productCount;
+                document.getElementById('productsTrendContainer').style.display = 'flex';
+            }, 800);
+        }
+
+        function loadRecentUsers() {
+            // Show loading state
+            document.getElementById('recentUsersLoading').style.display = 'block';
+            document.getElementById('recentUsersTableContainer').style.display = 'none';
+
+            // Simulate loading delay
+            setTimeout(() => {
+                const users = authManager.getAllUsers()
+                    .sort((a, b) => new Date(b.joinDate) - new Date(a.joinDate))
+                    .slice(0, 5);
+
+                const tbody = document.getElementById('recentUsersTable');
+                tbody.innerHTML = users.map(user => `
+                    <tr class="slide-in">
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div class="profile-avatar" style="width: 40px; height: 40px; font-size: 0.875rem; background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-hover) 100%); color: white; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: 600;">
+                                    ${getInitials(user.firstName, user.lastName)}
+                                </div>
+                                <div>
+                                    <div style="cursor: pointer; color: var(--admin-primary); font-weight: 600; font-size: 0.95rem;"
+                                          onclick="viewUserDetails(${user.id})"
+                                          title="View user profile">
+                                        ${user.firstName} ${user.lastName}
+                                    </div>
+                                    <div style="font-size: 0.75rem; color: var(--admin-text-tertiary);">
+                                        ID: ${user.id}
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td style="color: var(--admin-text-secondary);">${user.email}</td>
+                        <td>
+                            <select class="form-select" style="font-size: 0.8rem; padding: 0.4rem 0.6rem; min-width: 120px;" onchange="updateUserRole(${user.id}, this.value)">
+                                <option value="user" ${user.role === 'user' ? 'selected' : ''}>User</option>
+                                <option value="vip" ${user.role === 'vip' ? 'selected' : ''}>VIP User</option>
+                                <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Admin</option>
+                            </select>
+                        </td>
+                        <td><span class="status-badge ${getStatusBadgeClass(user.status)}">${user.status}</span></td>
+                        <td style="color: var(--admin-text-secondary);">${formatDate(user.joinDate)}</td>
+                        <td style="color: var(--admin-text-secondary);">${user.lastLogin ? formatDateTime(user.lastLogin) : 'Never'}</td>
+                        <td>
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button class="btn btn-secondary btn-sm" onclick="viewUserDetails(${user.id})" title="View User Profile">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <a href="admin-users.html" class="btn btn-secondary btn-sm" title="Manage User">
+                                    <i class="fas fa-cog"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+
+                // Hide loading and show table
+                document.getElementById('recentUsersLoading').style.display = 'none';
+                document.getElementById('recentUsersTableContainer').style.display = 'table';
+            }, 1000);
+        }
+
+        function refreshRecentUsers() {
+            adminInterface.showToast('Refreshing user data...', 'info');
+            loadRecentUsers();
+        }
+
+        function loadRecentProducts() {
+            // Show loading state
+            document.getElementById('recentProductsLoading').style.display = 'block';
+            document.getElementById('recentProductsTableContainer').style.display = 'none';
+
+            // Simulate loading delay
+            setTimeout(() => {
+                try {
+                    // Refresh products from localStorage first
+                    adminManager.refreshProducts();
+                    const allProducts = adminManager.getAllProducts();
+                    console.log('Dashboard - Loading recent products, total products:', allProducts.length);
+
+                    // Sort by creation date (newest first), handle missing createdDate
+                    const products = allProducts
+                        .sort((a, b) => {
+                            const dateA = a.createdDate ? new Date(a.createdDate) : new Date(0);
+                            const dateB = b.createdDate ? new Date(b.createdDate) : new Date(0);
+                            return dateB - dateA;
+                        })
+                        .slice(0, 5);
+
+                    console.log('Dashboard - Recent products to display:', products.length);
+                    console.log('Dashboard - Products data:', products);
+                    const tbody = document.getElementById('recentProductsTable');
+
+                if (products.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 2rem; color: var(--admin-text-tertiary);">
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                                    <i class="fas fa-box-open" style="font-size: 2rem; opacity: 0.5;"></i>
+                                    <div>
+                                        <div style="font-weight: 600; margin-bottom: 0.5rem;">No products found</div>
+                                        <div style="font-size: 0.875rem;">Start by adding your first product to the store</div>
+                                    </div>
+                                    <a href="admin-products.html" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-plus"></i> Add Product
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    tbody.innerHTML = products.map(product => `
+                        <tr class="slide-in">
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <img src="${product.images && product.images.length > 0 ? product.images[0] : 'https://via.placeholder.com/40x40?text=No+Image'}"
+                                         alt="${product.name}"
+                                         style="width: 40px; height: 40px; border-radius: 6px; object-fit: cover; border: 1px solid var(--admin-border);">
+                                    <div>
+                                        <div style="font-weight: 600; color: var(--admin-text-primary); cursor: pointer;"
+                                             onclick="viewProductDetails(${product.id})"
+                                             title="View product details">
+                                            ${product.name}
+                                        </div>
+                                        <div style="font-size: 0.75rem; color: var(--admin-text-tertiary);">
+                                            SKU: ${product.sku}
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color: var(--admin-text-secondary);">$${product.price}</td>
+                            <td style="color: var(--admin-text-secondary);">${product.stock}</td>
+                            <td><span class="status-badge ${getStatusBadgeClass(product.status)}">${product.status}</span></td>
+                            <td style="color: var(--admin-text-secondary);">${formatDate(product.createdDate)}</td>
+                        </tr>
+                    `).join('');
+                }
+
+                    // Hide loading and show table
+                    document.getElementById('recentProductsLoading').style.display = 'none';
+                    document.getElementById('recentProductsTableContainer').style.display = 'block';
+                } catch (error) {
+                    console.error('Error loading recent products:', error);
+                    const tbody = document.getElementById('recentProductsTable');
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 2rem; color: var(--admin-text-tertiary);">
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                                    <i class="fas fa-exclamation-triangle" style="font-size: 2rem; opacity: 0.5; color: var(--error-color);"></i>
+                                    <div>
+                                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Error loading products</div>
+                                        <div style="font-size: 0.875rem;">Please refresh the page or try again later</div>
+                                    </div>
+                                    <button class="btn btn-secondary btn-sm" onclick="loadRecentProducts()">
+                                        <i class="fas fa-sync-alt"></i> Retry
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                    document.getElementById('recentProductsLoading').style.display = 'none';
+                    document.getElementById('recentProductsTableContainer').style.display = 'block';
+                }
+            }, 1200);
+        }
+
+        function refreshRecentProducts() {
+            adminInterface.showToast('Refreshing product data...', 'info');
+            loadRecentProducts();
+        }
+
+        function viewProductDetails(productId) {
+            // Store the product ID to view details
+            sessionStorage.setItem('viewProductId', productId);
+            // Redirect to admin products page
+            window.location.href = 'admin-products.html';
+        }
+
+
+
+        // Function to update user role via dropdown
+        function updateUserRole(userId, newRole) {
+            const user = authManager.getUserById(userId);
+            if (!user) {
+                adminInterface.showToast('User not found', 'error');
+                return;
+            }
+
+            // Prevent admin from changing their own role to non-admin
+            const currentUser = authManager.getCurrentUser();
+            if (currentUser.id === userId && newRole !== 'admin') {
+                adminInterface.showToast('You cannot remove your own admin privileges', 'warning');
+                // Reset the dropdown to the original value
+                loadRecentUsers();
+                return;
+            }
+
+            try {
+                authManager.updateUser(userId, { role: newRole });
+
+                // Display user-friendly role name
+                const roleDisplayName = newRole === 'vip' ? 'VIP User' :
+                                      newRole === 'admin' ? 'Admin' : 'User';
+                adminInterface.showToast(`User role updated to ${roleDisplayName}`, 'success');
+
+                // Refresh the table to show updated data
+                setTimeout(() => {
+                    loadRecentUsers();
+                }, 500);
+
+            } catch (error) {
+                adminInterface.showToast('Failed to update user role', 'error');
+                // Reset the dropdown to the original value
+                loadRecentUsers();
+            }
+        }
+
+        // Function to view user details - redirects directly to user profile
+        function viewUserDetails(userId) {
+            // Store the user ID to view their profile
+            sessionStorage.setItem('viewUserId', userId);
+            // Redirect directly to user profile page
+            window.location.href = 'user-profile.html';
+        }
+
+        // Pending Orders Functions
+        function loadPendingOrders() {
+            // Show loading state
+            document.getElementById('pendingOrdersLoading').style.display = 'block';
+            document.getElementById('pendingOrdersTableContainer').style.display = 'none';
+            document.getElementById('noPendingOrders').style.display = 'none';
+
+            setTimeout(() => {
+                const pendingOrders = adminManager.getAllPendingOrders();
+                const tbody = document.getElementById('pendingOrdersTable');
+                const countBadge = document.getElementById('pendingOrdersCount');
+
+                // Update count badge
+                countBadge.textContent = pendingOrders.length;
+
+                if (pendingOrders.length === 0) {
+                    // Show no pending orders message
+                    document.getElementById('pendingOrdersLoading').style.display = 'none';
+                    document.getElementById('noPendingOrders').style.display = 'block';
+                } else {
+                    // Render pending orders table
+                    tbody.innerHTML = pendingOrders.slice(0, 10).map(order => `
+                        <tr>
+                            <td style="font-family: monospace; font-weight: 500;">${order.id}</td>
+                            <td>
+                                <div>
+                                    <div style="font-weight: 500;">${order.customerName}</div>
+                                    <div style="font-size: 0.75rem; color: var(--admin-text-tertiary);">${order.customerEmail}</div>
+                                </div>
+                            </td>
+                            <td style="font-weight: 500; color: var(--primary-color);">$${order.total.toFixed(2)}</td>
+                            <td style="color: var(--admin-text-secondary);">${formatDate(order.orderDate)}</td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="btn btn-success btn-sm" onclick="approvePendingOrder('${order.id}')" title="Approve Order">
+                                        <i class="fas fa-check"></i> Approve
+                                    </button>
+                                    <button class="btn btn-secondary btn-sm" onclick="viewPendingOrder('${order.id}')" title="View Details">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="rejectPendingOrder('${order.id}')" title="Reject Order">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="deletePendingOrder('${order.id}')" title="Delete Order">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `).join('');
+
+                    // Hide loading and show table
+                    document.getElementById('pendingOrdersLoading').style.display = 'none';
+                    document.getElementById('pendingOrdersTableContainer').style.display = 'table';
+                }
+            }, 800);
+        }
+
+        function refreshPendingOrders() {
+            loadPendingOrders();
+        }
+
+        function approvePendingOrder(orderId) {
+            if (confirm('Are you sure you want to approve this order and move it to the main orders list?')) {
+                const approvedOrder = adminManager.approvePendingOrder(orderId, 'pending');
+                if (approvedOrder) {
+                    adminInterface.showToast('Order approved successfully!', 'success');
+                    loadPendingOrders();
+                    loadDashboardStats();
+                } else {
+                    adminInterface.showToast('Error approving order', 'error');
+                }
+            }
+        }
+
+        function rejectPendingOrder(orderId) {
+            const reason = prompt('Please provide a reason for rejecting this order (optional):');
+            if (reason !== null) { // User didn't cancel
+                const rejectedOrder = adminManager.rejectPendingOrder(orderId, reason);
+                if (rejectedOrder) {
+                    adminInterface.showToast('Order rejected', 'warning');
+                    loadPendingOrders();
+                } else {
+                    adminInterface.showToast('Error rejecting order', 'error');
+                }
+            }
+        }
+
+        function deletePendingOrder(orderId) {
+            const order = adminManager.getPendingOrderById(orderId);
+            if (!order) return;
+
+            if (confirm(`Are you sure you want to delete pending order "${order.id}" from ${order.customerName}? This action cannot be undone.`)) {
+                const deletedOrder = adminManager.deletePendingOrder(orderId);
+                if (deletedOrder) {
+                    adminInterface.showToast('Pending order deleted successfully!', 'success');
+                    loadPendingOrders();
+                    loadDashboardStats();
+                } else {
+                    adminInterface.showToast('Error deleting pending order', 'error');
+                }
+            }
+        }
+
+        function viewPendingOrder(orderId) {
+            const order = adminManager.getPendingOrderById(orderId);
+            if (!order) return;
+
+            // Create modal content similar to the orders page
+            const modalContent = `
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--admin-text-primary);">Order Details</h3>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div>
+                            <strong>Order ID:</strong> ${order.id}<br>
+                            <strong>Status:</strong> <span class="status-badge ${getOrderStatusBadgeClass(order.status)}">${order.status}</span><br>
+                            <strong>Total:</strong> $${order.total.toFixed(2)}
+                        </div>
+                        <div>
+                            <strong>Customer:</strong> ${order.customerName}<br>
+                            <strong>Email:</strong> ${order.customerEmail}<br>
+                            <strong>Phone:</strong> ${order.customerPhone || 'N/A'}
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <strong>Shipping Address:</strong><br>
+                        ${order.shippingAddress}
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <strong>Items:</strong>
+                        <div style="margin-top: 0.5rem;">
+                            ${order.items.map(item => `
+                                <div style="display: flex; align-items: center; gap: 1rem; padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 0.25rem; margin-bottom: 0.5rem;">
+                                    <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 0.25rem;">
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 500;">${item.name}</div>
+                                        <div style="font-size: 0.875rem; color: var(--admin-text-secondary);">Qty: ${item.quantity} × $${item.price.toFixed(2)}</div>
+                                    </div>
+                                    <div style="font-weight: 500;">$${(item.quantity * item.price).toFixed(2)}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 1rem; justify-content: center;">
+                        <button class="btn btn-success" onclick="approvePendingOrder('${order.id}'); hideModal();">
+                            <i class="fas fa-check"></i> Approve Order
+                        </button>
+                        <button class="btn btn-danger" onclick="rejectPendingOrder('${order.id}'); hideModal();">
+                            <i class="fas fa-times"></i> Reject Order
+                        </button>
+                        <button class="btn btn-danger" onclick="deletePendingOrder('${order.id}'); hideModal();">
+                            <i class="fas fa-trash"></i> Delete Order
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('modalContent').innerHTML = modalContent;
+            showModal();
+        }
+
+        function getOrderStatusBadgeClass(status) {
+            const statusClasses = {
+                'pending': 'status-pending',
+                'pending_review': 'status-suspended',
+                'completed': 'status-completed',
+                'cancelled': 'status-cancelled',
+                'rejected': 'status-cancelled'
+            };
+            return statusClasses[status] || 'status-inactive';
+        }
+
+        function getStatusBadgeClass(status) {
+            const statusClasses = {
+                'active': 'status-active',
+                'inactive': 'status-inactive',
+                'pending': 'status-pending',
+                'suspended': 'status-suspended',
+                'completed': 'status-completed',
+                'cancelled': 'status-cancelled'
+            };
+            return statusClasses[status] || 'status-inactive';
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function formatDateTime(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Debug function to test product loading
+        function debugProducts() {
+            console.log('=== DEBUG PRODUCTS ===');
+            console.log('AdminManager exists:', typeof adminManager !== 'undefined');
+            if (typeof adminManager !== 'undefined') {
+                adminManager.refreshProducts();
+                const products = adminManager.getAllProducts();
+                console.log('Total products:', products.length);
+                console.log('Products:', products);
+                console.log('LocalStorage products:', localStorage.getItem('vaith_products'));
+            }
+            console.log('=== END DEBUG ===');
+        }
+
+        // Make debug function available globally
+        window.debugProducts = debugProducts;
+
+        // Modal functions
+        function showModal() {
+            document.getElementById('orderModal').style.display = 'flex';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function hideModal() {
+            document.getElementById('orderModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function setupEventListeners() {
+            // Logout functionality (sidebar/user menu handled by admin-common.js)
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                adminInterface.showToast('Logging out...', 'info');
+                setTimeout(() => {
+                    authManager.logout();
+                }, 1000);
+            });
+        }
+
+
+    </script>
+
+    <!-- Modal for order details -->
+    <div id="orderModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-close" onclick="hideModal()">&times;</button>
+            </div>
+            <div id="modalContent">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay" onclick="hideModal()" style="display: none;"></div>
+</body>
+</html>

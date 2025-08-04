@@ -1,0 +1,2686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management - The Project Faith Admin</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Enhanced Table Styling -->
+    <style>
+        /* Enhanced table styling for better visibility */
+        .data-table-container {
+            margin-bottom: 3rem !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+            border-radius: 12px !important;
+            overflow: hidden;
+        }
+
+        .data-table {
+            font-size: 0.95rem !important;
+            min-width: 100% !important;
+        }
+
+        .data-table th {
+            padding: 1.25rem 1rem !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            background: linear-gradient(135deg, var(--admin-primary) 0%, var(--admin-primary-hover) 100%) !important;
+            color: white !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none !important;
+        }
+
+        .data-table td {
+            padding: 1.25rem 1rem !important;
+            font-size: 0.9rem !important;
+            border-bottom: 1px solid var(--admin-border) !important;
+            vertical-align: middle !important;
+        }
+
+        .data-table tr:hover {
+            background: var(--admin-surface-hover) !important;
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        .table-header {
+            padding: 1.5rem 2rem !important;
+            background: var(--admin-bg-secondary) !important;
+            border-bottom: 2px solid var(--admin-border) !important;
+        }
+
+        .table-title {
+            font-size: 1.4rem !important;
+            font-weight: 700 !important;
+            color: var(--admin-text-primary) !important;
+            margin: 0 !important;
+        }
+
+        /* Enhanced product images */
+        .product-image {
+            width: 60px !important;
+            height: 60px !important;
+            border-radius: 8px !important;
+            object-fit: cover !important;
+            border: 2px solid var(--admin-border) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* Enhanced status badges */
+        .status-badge {
+            padding: 0.5rem 0.75rem !important;
+            font-size: 0.8rem !important;
+            font-weight: 600 !important;
+            border-radius: 6px !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Enhanced buttons */
+        .data-table .btn {
+            padding: 0.6rem 0.8rem !important;
+            font-size: 0.85rem !important;
+            border-radius: 6px !important;
+            font-weight: 500 !important;
+            transition: all 0.2s ease;
+        }
+
+        .data-table .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Price styling */
+        .price-display {
+            font-weight: 600 !important;
+            font-size: 1rem !important;
+            color: var(--admin-success) !important;
+        }
+
+        /* Stock styling */
+        .stock-display {
+            font-weight: 600 !important;
+            padding: 0.25rem 0.5rem !important;
+            border-radius: 4px !important;
+            font-size: 0.85rem !important;
+        }
+
+        .stock-low {
+            background: rgba(239, 68, 68, 0.1) !important;
+            color: var(--error-color) !important;
+        }
+
+        .stock-medium {
+            background: rgba(245, 158, 11, 0.1) !important;
+            color: var(--warning-color) !important;
+        }
+
+        .stock-high {
+            background: rgba(16, 185, 129, 0.1) !important;
+            color: var(--success-color) !important;
+        }
+
+        /* Search and filter enhancements */
+        .search-box input,
+        .form-select {
+            padding: 0.75rem 1rem !important;
+            font-size: 0.9rem !important;
+            border-radius: 8px !important;
+            border: 2px solid var(--admin-border) !important;
+            transition: all 0.2s ease;
+        }
+
+        .search-box input:focus,
+        .form-select:focus {
+            border-color: var(--admin-primary) !important;
+            box-shadow: 0 0 0 3px rgba(var(--admin-primary-rgb), 0.1) !important;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 1200px) {
+            .data-table {
+                font-size: 0.85rem !important;
+            }
+
+            .data-table th,
+            .data-table td {
+                padding: 1rem 0.75rem !important;
+            }
+
+            .product-image {
+                width: 50px !important;
+                height: 50px !important;
+            }
+        }
+    </style>
+    <script>
+        console.log('JavaScript is working - page loaded');
+        window.addEventListener('load', function() {
+            console.log('Page fully loaded');
+        });
+    </script>
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-header">
+                <a href="admin-dashboard.html" class="sidebar-logo">The Project Faith</a>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-item">
+                    <a href="admin-dashboard.html" class="nav-link">
+                        <i class="nav-icon fas fa-chart-line"></i>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="admin-users.html" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <span class="nav-text">Users</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="admin-products.html" class="nav-link active">
+                        <i class="nav-icon fas fa-box"></i>
+                        <span class="nav-text">Products</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="admin-orders.html" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <span class="nav-text">Orders</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="admin-condition.html" class="nav-link">
+                        <i class="nav-icon fas fa-store"></i>
+                        <span class="nav-text">Condition</span>
+                    </a>
+                </div>
+
+
+                <!-- Navigation Divider -->
+                <div style="margin: 1.5rem 1rem; border-top: 1px solid var(--admin-border); opacity: 0.5;"></div>
+
+                <!-- Quick Links Section -->
+                <div style="padding: 0 1rem; margin-bottom: 1rem;">
+                    <div style="font-size: 0.75rem; font-weight: 600; color: var(--admin-text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+                        Quick Links
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a href="index.html" class="nav-link" target="_blank">
+                        <i class="nav-icon fas fa-external-link-alt"></i>
+                        <span class="nav-text">View Store</span>
+                    </a>
+                </div>
+                <div class="nav-item">
+                    <a href="user-settings.html" class="nav-link">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <span class="nav-text">Settings</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main" id="adminMain">
+            <!-- Header -->
+            <header class="admin-header">
+                <div class="admin-header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Product Management</h1>
+                </div>
+                <div class="admin-header-right">
+                    <button class="nav-icon theme-toggle" id="themeToggle" title="Toggle dark mode">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="admin-content">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h2 class="page-title">Products</h2>
+                    <p class="page-subtitle">Manage your product catalog and inventory</p>
+                </div>
+
+                <!-- Product Stats -->
+                <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 2rem;">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon products">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="totalProductsCount">0</h3>
+                                <p>Total Products</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: linear-gradient(135deg, var(--success-color) 0%, var(--success-color) 100%);">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="activeProductsCount">0</h3>
+                                <p>Active Products</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: linear-gradient(135deg, var(--error-color) 0%, var(--error-color) 100%);">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="outOfStockCount">0</h3>
+                                <p>Out of Stock</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: linear-gradient(135deg, var(--warning-color) 0%, var(--warning-color) 100%);">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="card-content">
+                                <h3 id="lowStockCount">0</h3>
+                                <p>Low Stock</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Product Button -->
+                <div class="page-actions" style="margin-bottom: 2rem;">
+                    <button class="btn btn-primary" id="addProductBtn" onclick="forceShowModal()">
+                        <i class="fas fa-plus"></i> Add New Product
+                    </button>
+                    <button class="btn btn-secondary" onclick="addSampleProducts()" style="margin-left: 1rem;">
+                        <i class="fas fa-database"></i> Add Sample Products
+                    </button>
+                    <button class="btn btn-warning" onclick="clearAllProducts()" style="margin-left: 0.5rem;">
+                        <i class="fas fa-trash"></i> Clear All Products
+                    </button>
+                </div>
+
+                <!-- Filters and Search -->
+                <div class="data-table-container">
+                    <div class="table-header">
+                        <h3 class="table-title">All Products</h3>
+                        <div class="table-actions">
+                            <div class="search-box" style="margin-right: 1rem;">
+                                <input type="text" id="productSearch" placeholder="Search products..." style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 0.25rem; background: var(--input-bg); color: var(--text-color);">
+                            </div>
+                            <select id="categoryFilter" class="form-select" style="margin-right: 1rem; padding: 0.5rem; min-width: 120px;">
+                                <option value="">All Categories</option>
+                                <option value="men">Men</option>
+                                <option value="women">Women</option>
+                            </select>
+                            <select id="statusFilter" class="form-select" style="margin-right: 1rem; padding: 0.5rem; min-width: 120px;">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="draft">Draft</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Products Table -->
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th style="min-width: 280px;">Product</th>
+                                    <th style="min-width: 120px;">SKU</th>
+                                    <th style="min-width: 150px;">Category</th>
+                                    <th style="min-width: 120px;">Price</th>
+                                    <th style="min-width: 100px;">Stock</th>
+                                    <th style="min-width: 120px;">Status</th>
+                                    <th style="min-width: 120px;">Rating</th>
+                                    <th style="min-width: 150px;">Display</th>
+                                    <th style="min-width: 200px;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <!-- Products will be loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div class="modal" id="productModal" style="display: none;">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3 id="modalTitle">Product Details</h3>
+                <button class="close-modal" id="closeProductModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="productModalBody">
+                <!-- Product details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Add Product Modal -->
+    <div id="addProductModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); z-index: 999999; align-items: center; justify-content: center;">
+        <div style="background: var(--modal-bg); padding: 30px; border-radius: 10px; width: 90%; max-width: 700px; max-height: 80vh; overflow-y: auto; border: 1px solid var(--border-color);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">
+                <h3 style="margin: 0; color: var(--text-color);">Add New Product</h3>
+                <button onclick="forceCloseModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-light);">×</button>
+            </div>
+            <div>
+                <form id="addProductForm" onsubmit="handleSimpleSubmit(event)" style="margin: 0;">
+                    <div class="form-grid">
+                        <!-- Basic Information Section -->
+                        <div class="form-section">
+                            <h4 class="section-title">
+                                <i class="fas fa-info-circle"></i>
+                                Basic Information
+                            </h4>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productName" class="form-label required">Product Name</label>
+                                    <input type="text" id="productName" name="productName" class="form-input" required>
+                                    <div class="error-message" id="productNameError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="productBrand" class="form-label">Brand</label>
+                                    <input type="text" id="productBrand" name="productBrand" class="form-input" value="TheProjectFaith">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productDescription" class="form-label">Description</label>
+                                <textarea id="productDescription" name="productDescription" class="form-textarea" rows="4" placeholder="Enter product description..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Category and Pricing Section -->
+                        <div class="form-section">
+                            <h4 class="section-title">
+                                <i class="fas fa-tags"></i>
+                                Category & Pricing
+                            </h4>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productCategory" class="form-label required">Category</label>
+                                    <select id="productCategory" name="productCategory" class="form-select" required>
+                                        <option value="">Select Category</option>
+                                        <option value="men">Men's Clothing</option>
+                                        <option value="women">Women's Clothing</option>
+                                        <option value="bags">Bags</option>
+                                        <option value="jewelry">Jewelry</option>
+                                    </select>
+                                    <div class="error-message" id="productCategoryError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="productStatus" class="form-label">Status</label>
+                                    <select id="productStatus" name="productStatus" class="form-select">
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                        <option value="draft">Draft</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Display Options</label>
+                                    <div class="checkbox-group" style="margin-top: 8px;">
+                                        <label class="checkbox-label" style="display: flex; align-items: center; font-weight: normal; cursor: pointer; margin-bottom: 8px;">
+                                            <input type="checkbox" id="showOnHomepage" name="showOnHomepage" style="margin-right: 8px; transform: scale(1.2);">
+                                            <span>Show on Homepage (Featured Products)</span>
+                                        </label>
+                                        <label class="checkbox-label" style="display: flex; align-items: center; font-weight: normal; cursor: pointer; margin-bottom: 8px;">
+                                            <input type="checkbox" id="showOnProducts" name="showOnProducts" checked style="margin-right: 8px; transform: scale(1.2);">
+                                            <span>Show on Products Page</span>
+                                        </label>
+                                        <label class="checkbox-label" style="display: flex; align-items: center; font-weight: normal; cursor: pointer; margin-bottom: 8px;">
+                                            <input type="checkbox" id="showOnSale" name="showOnSale" style="margin-right: 8px; transform: scale(1.2);">
+                                            <span>Show on Sale Page</span>
+                                        </label>
+                                        <small class="form-help" style="display: block; margin-top: 4px; color: var(--text-light); font-size: 12px;">
+                                            Choose where you want this product to appear. Products page is selected by default. Homepage shows featured products, and Sale page shows discounted items.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productPrice" class="form-label required">Price ($)</label>
+                                    <input type="number" id="productPrice" name="productPrice" class="form-input" step="0.01" min="0" required>
+                                    <div class="error-message" id="productPriceError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="productOriginalPrice" class="form-label">Original Price ($)</label>
+                                    <input type="number" id="productOriginalPrice" name="productOriginalPrice" class="form-input" step="0.01" min="0" placeholder="For sale items">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Inventory Section -->
+                        <div class="form-section">
+                            <h4 class="section-title">
+                                <i class="fas fa-boxes"></i>
+                                Inventory & Details
+                            </h4>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productStock" class="form-label required">Stock Quantity</label>
+                                    <input type="number" id="productStock" name="productStock" class="form-input" min="0" required>
+                                    <div class="error-message" id="productStockError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="productSku" class="form-label">SKU</label>
+                                    <input type="text" id="productSku" name="productSku" class="form-input" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Available Sizes</label>
+                                    <div class="checkbox-grid">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="productSizes" value="XS">
+                                            <span>XS</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="productSizes" value="S">
+                                            <span>S</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="productSizes" value="M">
+                                            <span>M</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="productSizes" value="L">
+                                            <span>L</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="productSizes" value="XL">
+                                            <span>XL</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="productSizes" value="XXL">
+                                            <span>XXL</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="productSizes" value="One Size">
+                                            <span>One Size</span>
+                                        </label>
+                                    </div>
+                                    <small class="form-help" style="display: block; margin-top: 0.5rem; color: var(--text-light); font-size: 12px;">
+                                        Select all sizes that are available for this product
+                                    </small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="productColors" class="form-label">Available Colors</label>
+                                    <input type="text" id="productColors" name="productColors" class="form-input" placeholder="e.g., Red, Blue, Black (comma separated)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Image Upload Section -->
+                        <div class="form-section">
+                            <h4 class="section-title">
+                                <i class="fas fa-images"></i>
+                                Product Images
+                            </h4>
+
+                            <div class="image-upload-container">
+                                <div class="upload-methods">
+                                    <div class="upload-method active" data-method="file">
+                                        <i class="fas fa-upload"></i>
+                                        Upload Files
+                                    </div>
+                                    <div class="upload-method" data-method="url">
+                                        <i class="fas fa-link"></i>
+                                        Image URLs
+                                    </div>
+                                </div>
+
+                                <div class="upload-content" id="fileUploadContent">
+                                    <div class="file-upload-area" id="fileUploadArea">
+                                        <input type="file" id="productImageFiles" name="productImageFiles" multiple accept="image/*" style="display: none;">
+                                        <div class="upload-placeholder">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                            <p>Click to upload images or drag and drop</p>
+                                            <small>PNG, JPG, GIF up to 5MB each</small>
+                                        </div>
+                                    </div>
+                                    <div class="image-preview-container" id="imagePreviewContainer"></div>
+                                </div>
+
+                                <div class="upload-content" id="urlUploadContent" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="productImages" class="form-label">Image URLs</label>
+                                        <textarea id="productImages" name="productImages" class="form-textarea" rows="4" placeholder="Enter image URLs (one per line)"></textarea>
+                                        <small class="form-help">Enter one URL per line. First image will be the main product image.</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="forceCloseModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add Product
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div id="editProductModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); z-index: 999999; align-items: center; justify-content: center;">
+        <div style="background: var(--modal-bg); padding: 30px; border-radius: 10px; width: 90%; max-width: 700px; max-height: 80vh; overflow-y: auto; border: 1px solid var(--border-color);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px;">
+                <h3 style="margin: 0; color: var(--text-color);">Edit Product</h3>
+                <button onclick="closeEditProductModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-light);">×</button>
+            </div>
+            <div>
+                <form id="editProductForm" onsubmit="handleEditSubmit(event)" style="margin: 0;">
+                    <input type="hidden" id="editProductId" name="editProductId">
+                    <div class="form-grid">
+                        <!-- Basic Information Section -->
+                        <div class="form-section">
+                            <h4 class="section-title">
+                                <i class="fas fa-info-circle"></i>
+                                Basic Information
+                            </h4>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="editProductName" class="form-label required">Product Name</label>
+                                    <input type="text" id="editProductName" name="editProductName" class="form-input" required>
+                                    <div class="error-message" id="editProductNameError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="editProductBrand" class="form-label">Brand</label>
+                                    <input type="text" id="editProductBrand" name="editProductBrand" class="form-input">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="editProductDescription" class="form-label">Description</label>
+                                <textarea id="editProductDescription" name="editProductDescription" class="form-textarea" rows="4" placeholder="Enter product description..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Category and Pricing Section -->
+                        <div class="form-section">
+                            <h4 class="section-title">
+                                <i class="fas fa-tags"></i>
+                                Category & Pricing
+                            </h4>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="editProductCategory" class="form-label required">Category</label>
+                                    <select id="editProductCategory" name="editProductCategory" class="form-select" required>
+                                        <option value="">Select Category</option>
+                                        <option value="men">Men's Clothing</option>
+                                        <option value="women">Women's Clothing</option>
+                                        <option value="bags">Bags</option>
+                                        <option value="jewelry">Jewelry</option>
+                                    </select>
+                                    <div class="error-message" id="editProductCategoryError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="editProductStatus" class="form-label">Status</label>
+                                    <select id="editProductStatus" name="editProductStatus" class="form-select">
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                        <option value="draft">Draft</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Display Options</label>
+                                    <div class="checkbox-group" style="margin-top: 8px;">
+                                        <label class="checkbox-label" style="display: flex; align-items: center; font-weight: normal; cursor: pointer; margin-bottom: 8px;">
+                                            <input type="checkbox" id="editShowOnHomepage" name="editShowOnHomepage" style="margin-right: 8px; transform: scale(1.2);">
+                                            <span>Show on Homepage (Featured Products)</span>
+                                        </label>
+                                        <label class="checkbox-label" style="display: flex; align-items: center; font-weight: normal; cursor: pointer; margin-bottom: 8px;">
+                                            <input type="checkbox" id="editShowOnProducts" name="editShowOnProducts" style="margin-right: 8px; transform: scale(1.2);">
+                                            <span>Show on Products Page</span>
+                                        </label>
+                                        <label class="checkbox-label" style="display: flex; align-items: center; font-weight: normal; cursor: pointer; margin-bottom: 8px;">
+                                            <input type="checkbox" id="editShowOnSale" name="editShowOnSale" style="margin-right: 8px; transform: scale(1.2);">
+                                            <span>Show on Sale Page</span>
+                                        </label>
+                                        <small class="form-help" style="display: block; margin-top: 4px; color: var(--text-light); font-size: 12px;">
+                                            Choose where you want this product to appear. Products page is selected by default. Homepage shows featured products, and Sale page shows discounted items.
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="editProductPrice" class="form-label required">Current Price ($)</label>
+                                    <input type="number" id="editProductPrice" name="editProductPrice" class="form-input" step="0.01" min="0" required>
+                                    <div class="error-message" id="editProductPriceError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="editProductOriginalPrice" class="form-label">Original Price ($)</label>
+                                    <input type="number" id="editProductOriginalPrice" name="editProductOriginalPrice" class="form-input" step="0.01" min="0" placeholder="For sale items">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Inventory Section -->
+                        <div class="form-section">
+                            <h4 class="section-title">
+                                <i class="fas fa-warehouse"></i>
+                                Inventory
+                            </h4>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="editProductStock" class="form-label required">Stock Quantity</label>
+                                    <input type="number" id="editProductStock" name="editProductStock" class="form-input" min="0" required>
+                                    <div class="error-message" id="editProductStockError"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="editProductSku" class="form-label">SKU</label>
+                                    <input type="text" id="editProductSku" name="editProductSku" class="form-input" readonly>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Available Sizes</label>
+                                    <div class="checkbox-grid">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="editProductSizes" value="XS">
+                                            <span>XS</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="editProductSizes" value="S">
+                                            <span>S</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="editProductSizes" value="M">
+                                            <span>M</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="editProductSizes" value="L">
+                                            <span>L</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="editProductSizes" value="XL">
+                                            <span>XL</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="editProductSizes" value="XXL">
+                                            <span>XXL</span>
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="editProductSizes" value="One Size">
+                                            <span>One Size</span>
+                                        </label>
+                                    </div>
+                                    <small class="form-help" style="display: block; margin-top: 0.5rem; color: var(--text-light); font-size: 12px;">
+                                        Select all sizes that are available for this product
+                                    </small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="editProductColors" class="form-label">Available Colors</label>
+                                    <input type="text" id="editProductColors" name="editProductColors" class="form-input" placeholder="e.g., Red, Blue, Black (comma separated)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Image Section -->
+                        <div class="form-section">
+                            <h4 class="section-title">
+                                <i class="fas fa-images"></i>
+                                Product Images
+                            </h4>
+
+                            <div class="form-group">
+                                <label for="editProductImage" class="form-label">Main Image URL</label>
+                                <input type="url" id="editProductImage" name="editProductImage" class="form-input" placeholder="https://example.com/image.jpg">
+                                <small class="form-help">Enter the URL of the main product image</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" onclick="closeEditProductModal()" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            Update Product
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple Styles -->
+    <style>
+        .user-menu {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: var(--section-bg);
+        }
+
+        .dropdown-divider {
+            margin: 0.5rem 0;
+            border: none;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stock-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stock-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .stock-high { background: var(--success-color); }
+        .stock-medium { background: var(--warning-color); }
+        .stock-low { background: var(--error-color); }
+        .stock-out { background: var(--text-light); }
+
+        /* Enhanced Product Form Styles */
+        .product-form {
+            padding: 0;
+        }
+
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .form-section {
+            background: var(--admin-card-bg);
+            border: 1px solid var(--admin-border);
+            border-radius: var(--admin-border-radius);
+            padding: 1.5rem;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0 0 1.5rem 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--admin-text-primary);
+            border-bottom: 2px solid var(--admin-border);
+            padding-bottom: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--admin-primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--admin-text-primary);
+            font-size: 0.875rem;
+        }
+
+        .form-label.required::after {
+            content: ' *';
+            color: var(--error-color);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 0.75rem;
+            border: 1px solid var(--admin-border);
+            border-radius: var(--admin-border-radius);
+            background: var(--admin-input-bg);
+            color: var(--admin-text-primary);
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--admin-primary);
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .form-help {
+            color: var(--admin-text-tertiary);
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Image Upload Styles */
+        .image-upload-container {
+            border: 1px solid var(--admin-border);
+            border-radius: var(--admin-border-radius);
+            overflow: hidden;
+        }
+
+        .upload-methods {
+            display: flex;
+            background: var(--admin-section-bg);
+            border-bottom: 1px solid var(--admin-border);
+        }
+
+        .upload-method {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-right: 1px solid var(--admin-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            color: var(--admin-text-secondary);
+        }
+
+        .upload-method:last-child {
+            border-right: none;
+        }
+
+        .upload-method.active {
+            background: var(--admin-primary);
+            color: white;
+        }
+
+        .upload-method:hover:not(.active) {
+            background: var(--admin-hover-bg);
+        }
+
+        .upload-content {
+            padding: 1.5rem;
+        }
+
+        .file-upload-area {
+            border: 2px dashed var(--admin-border);
+            border-radius: var(--admin-border-radius);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--admin-input-bg);
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--admin-primary);
+            background: rgba(139, 69, 19, 0.05);
+        }
+
+        .file-upload-area.dragover {
+            border-color: var(--admin-primary);
+            background: rgba(139, 69, 19, 0.1);
+        }
+
+        .upload-placeholder i {
+            font-size: 2rem;
+            color: var(--admin-text-tertiary);
+            margin-bottom: 1rem;
+        }
+
+        .upload-placeholder p {
+            margin: 0 0 0.5rem 0;
+            color: var(--admin-text-primary);
+            font-weight: 500;
+        }
+
+        .upload-placeholder small {
+            color: var(--admin-text-tertiary);
+        }
+
+        .image-preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .image-preview {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: var(--admin-border-radius);
+            overflow: hidden;
+            border: 1px solid var(--admin-border);
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-preview .remove-image {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .image-preview .remove-image:hover {
+            background: var(--error-color);
+        }
+
+        /* Checkbox Grid Styling */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-grid .checkbox-label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            background: var(--input-bg);
+        }
+
+        .checkbox-grid .checkbox-label:hover {
+            background: var(--admin-hover-bg);
+            border-color: var(--primary-color);
+        }
+
+        .checkbox-grid .checkbox-label input[type="checkbox"] {
+            margin-right: 0.5rem;
+            transform: scale(1.1);
+        }
+
+        .checkbox-grid .checkbox-label input[type="checkbox"]:checked + span {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--modal-overlay);
+            z-index: 9998;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 1rem;
+                max-width: none;
+            }
+
+            .upload-methods {
+                flex-direction: column;
+            }
+
+            .upload-method {
+                border-right: none;
+                border-bottom: 1px solid var(--admin-border);
+            }
+
+            .upload-method:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script src="js/theme-toggle.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+
+    <script>
+        // Enhanced modal functions
+        function showAddProductModal() {
+            console.log('showAddProductModal function called');
+
+            const modal = document.getElementById('addProductModal');
+            console.log('Modal element:', modal);
+
+            if (modal) {
+                modal.style.display = 'flex';
+                console.log('Modal displayed');
+
+                // Generate SKU
+                const sku = generateSKU();
+                const skuInput = document.getElementById('productSku');
+                if (skuInput) {
+                    skuInput.value = sku;
+                    console.log('SKU generated:', sku);
+                } else {
+                    console.error('SKU input not found');
+                }
+
+                // Initialize image upload functionality
+                try {
+                    initializeImageUpload();
+                    console.log('Image upload initialized');
+                } catch (error) {
+                    console.error('Error initializing image upload:', error);
+                }
+            } else {
+                console.error('Modal not found');
+                alert('Error: Modal element not found. Please check the console for details.');
+            }
+        }
+
+        function closeAddProductModal() {
+            const modal = document.getElementById('addProductModal');
+
+            if (modal) {
+                modal.style.display = 'none';
+                console.log('Modal closed');
+            }
+
+            // Reset form
+            const form = document.getElementById('addProductForm');
+            if (form) {
+                form.reset();
+                clearImagePreviews();
+                clearErrorMessages();
+                console.log('Form reset');
+            }
+        }
+
+        function generateSKU() {
+            const timestamp = Date.now().toString().slice(-6);
+            const random = Math.random().toString(36).substring(2, 5).toUpperCase();
+            return `SKU-${random}${timestamp}`;
+        }
+
+        // Image upload functionality
+        function initializeImageUpload() {
+            const uploadMethods = document.querySelectorAll('.upload-method');
+            const fileUploadContent = document.getElementById('fileUploadContent');
+            const urlUploadContent = document.getElementById('urlUploadContent');
+            const fileUploadArea = document.getElementById('fileUploadArea');
+            const fileInput = document.getElementById('productImageFiles');
+
+            // Upload method switching
+            uploadMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    uploadMethods.forEach(m => m.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const methodType = this.dataset.method;
+                    if (methodType === 'file') {
+                        fileUploadContent.style.display = 'block';
+                        urlUploadContent.style.display = 'none';
+                    } else {
+                        fileUploadContent.style.display = 'none';
+                        urlUploadContent.style.display = 'block';
+                    }
+                });
+            });
+
+            // File upload area click
+            fileUploadArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            // File input change
+            fileInput.addEventListener('change', function(e) {
+                handleFileSelection(e.target.files);
+            });
+
+            // Drag and drop functionality
+            fileUploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+
+            fileUploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+            });
+
+            fileUploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                handleFileSelection(e.dataTransfer.files);
+            });
+        }
+
+        function handleFileSelection(files) {
+            console.log('handleFileSelection called with', files.length, 'files');
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const maxFiles = 5;
+            const maxSize = 5 * 1024 * 1024; // 5MB
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+
+            if (files.length > maxFiles) {
+                alert(`Maximum ${maxFiles} images allowed`);
+                return;
+            }
+
+            // Clear existing previews
+            if (previewContainer) {
+                previewContainer.innerHTML = '';
+            }
+
+            Array.from(files).forEach((file, index) => {
+                console.log('Processing file:', file.name, 'Type:', file.type, 'Size:', file.size);
+
+                if (!allowedTypes.includes(file.type)) {
+                    alert(`Invalid file type: ${file.name}. Please use JPG, PNG, GIF, or WebP.`);
+                    return;
+                }
+
+                if (file.size > maxSize) {
+                    alert(`File too large: ${file.name} (max 5MB)`);
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    console.log('File read successfully:', file.name);
+                    createImagePreview(e.target.result, file.name, index);
+                };
+                reader.onerror = function() {
+                    console.error('Error reading file:', file.name);
+                    alert(`Error reading file: ${file.name}`);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function createImagePreview(src, fileName, index) {
+            console.log('createImagePreview called for:', fileName);
+            const previewContainer = document.getElementById('imagePreviewContainer');
+
+            if (!previewContainer) {
+                console.error('Preview container not found');
+                return;
+            }
+
+            const previewDiv = document.createElement('div');
+            previewDiv.className = 'image-preview';
+            previewDiv.dataset.index = index;
+            previewDiv.dataset.filename = fileName;
+
+            previewDiv.innerHTML = `
+                <img src="${src}" alt="${fileName}" style="width: 100%; height: 100%; object-fit: cover;">
+                <button type="button" class="remove-image" onclick="removeImagePreview(${index})" style="position: absolute; top: 4px; right: 4px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                    ×
+                </button>
+            `;
+
+            previewContainer.appendChild(previewDiv);
+            console.log('Image preview created and added to container');
+        }
+
+        function removeImagePreview(index) {
+            const preview = document.querySelector(`.image-preview[data-index="${index}"]`);
+            if (preview) {
+                preview.remove();
+            }
+        }
+
+        function clearImagePreviews() {
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            if (previewContainer) {
+                previewContainer.innerHTML = '';
+            }
+        }
+
+        function clearErrorMessages() {
+            const errorMessages = document.querySelectorAll('.error-message');
+            errorMessages.forEach(msg => {
+                msg.classList.remove('show');
+                msg.textContent = '';
+            });
+        }
+
+        function showErrorMessage(fieldId, message) {
+            const errorElement = document.getElementById(fieldId + 'Error');
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+            }
+        }
+
+        // Enhanced form validation and submission
+        function validateForm() {
+            clearErrorMessages();
+            let isValid = true;
+
+            // Required field validation
+            const requiredFields = [
+                { id: 'productName', name: 'Product Name' },
+                { id: 'productCategory', name: 'Category' },
+                { id: 'productPrice', name: 'Price' },
+                { id: 'productStock', name: 'Stock Quantity' }
+            ];
+
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field.id);
+                const value = element.value.trim();
+
+                if (!value) {
+                    showErrorMessage(field.id, `${field.name} is required`);
+                    isValid = false;
+                }
+            });
+
+            // Price validation
+            const price = parseFloat(document.getElementById('productPrice').value);
+            if (price <= 0) {
+                showErrorMessage('productPrice', 'Price must be greater than 0');
+                isValid = false;
+            }
+
+            // Stock validation
+            const stock = parseInt(document.getElementById('productStock').value);
+            if (stock < 0) {
+                showErrorMessage('productStock', 'Stock cannot be negative');
+                isValid = false;
+            }
+
+            // Original price validation
+            const originalPrice = document.getElementById('productOriginalPrice').value;
+            if (originalPrice && parseFloat(originalPrice) <= price) {
+                showErrorMessage('productOriginalPrice', 'Original price must be higher than current price');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function handleAddProduct(e) {
+            e.preventDefault();
+
+            if (!validateForm()) {
+                return;
+            }
+
+            // Get form data
+            const formData = {
+                name: document.getElementById('productName').value.trim(),
+                brand: document.getElementById('productBrand').value.trim() || 'TheProjectFaith',
+                description: document.getElementById('productDescription').value.trim(),
+                category: document.getElementById('productCategory').value,
+                status: document.getElementById('productStatus').value,
+                sku: document.getElementById('productSku').value.trim(),
+                price: parseFloat(document.getElementById('productPrice').value),
+                originalPrice: document.getElementById('productOriginalPrice').value ?
+                    parseFloat(document.getElementById('productOriginalPrice').value) : null,
+                stock: parseInt(document.getElementById('productStock').value),
+                sizes: Array.from(document.querySelectorAll('input[name="productSizes"]:checked'))
+                    .map(checkbox => checkbox.value),
+                colors: document.getElementById('productColors').value.trim().split(',')
+                    .map(color => color.trim()).filter(color => color)
+            };
+
+            // Handle images
+            const images = getProductImages();
+            formData.images = images.length > 0 ? images : ['https://via.placeholder.com/400x500?text=No+Image'];
+
+            // Add default sizes and colors if none provided
+            if (formData.sizes.length === 0) {
+                formData.sizes = ['One Size'];
+            }
+            if (formData.colors.length === 0) {
+                formData.colors = ['Default'];
+            }
+
+            // Create product object
+            const product = {
+                id: Date.now(),
+                ...formData,
+                rating: 0,
+                reviews: 0,
+                createdDate: new Date().toISOString(),
+                updatedDate: new Date().toISOString()
+            };
+
+            // Save product
+            try {
+                let products = JSON.parse(localStorage.getItem('vaith_products')) || [];
+                products.push(product);
+                localStorage.setItem('vaith_products', JSON.stringify(products));
+
+                // Show success message
+                showFileProtocolToast(`Product "${formData.name}" added successfully!`, 'success');
+
+                // Close modal and refresh
+                closeAddProductModal();
+
+                // Refresh the products display
+                if (typeof loadProducts === 'function') {
+                    loadProducts();
+                }
+                if (typeof loadProductStats === 'function') {
+                    loadProductStats();
+                }
+
+            } catch (error) {
+                showFileProtocolToast('Error saving product. Please try again.', 'error');
+            }
+        }
+
+        function getProductImages() {
+            const activeMethodElement = document.querySelector('.upload-method.active');
+            const activeMethod = activeMethodElement ? activeMethodElement.dataset.method : 'file';
+
+            console.log('getProductImages called, active method:', activeMethod);
+
+            if (activeMethod === 'file') {
+                // Get images from file previews
+                const previews = document.querySelectorAll('.image-preview img');
+                const images = Array.from(previews).map(img => img.src);
+                return images;
+            } else {
+                // Get images from URL textarea
+                const urlText = document.getElementById('productImages').value.trim();
+                const images = urlText.split('\n')
+                    .map(url => url.trim())
+                    .filter(url => url && url.startsWith('http'));
+                return images;
+            }
+        }
+
+        let currentProducts = [];
+        let filteredProducts = [];
+
+        // File protocol compatible initialization
+        function initializeAdminProducts() {
+            // Initialize admin manager with fallback for file:// protocol
+            if (typeof window.adminManager === 'undefined') {
+                // Create a simple product manager for file:// protocol
+                window.adminManager = new FileProtocolProductManager();
+            }
+
+            // Initialize page
+            initializeProductsPage();
+            setupEventListeners();
+        }
+
+        // File Protocol Compatible Product Manager
+        class FileProtocolProductManager {
+            constructor() {
+                this.products = this.loadProducts();
+                console.log('FileProtocolProductManager initialized with', this.products.length, 'products');
+            }
+
+            loadProducts() {
+                try {
+                    const products = localStorage.getItem('vaith_products');
+                    return products ? JSON.parse(products) : [];
+                } catch (error) {
+                    console.error('Error loading products:', error);
+                    return [];
+                }
+            }
+
+            saveProducts() {
+                try {
+                    localStorage.setItem('vaith_products', JSON.stringify(this.products));
+                    console.log('Products saved to localStorage');
+                    return true;
+                } catch (error) {
+                    console.error('Error saving products:', error);
+                    return false;
+                }
+            }
+
+            getAllProducts() {
+                return this.products;
+            }
+
+            getProductById(id) {
+                return this.products.find(product => product.id === parseInt(id));
+            }
+
+
+
+            updateProduct(id, productData) {
+                const index = this.products.findIndex(product => product.id === parseInt(id));
+                if (index !== -1) {
+                    this.products[index] = {
+                        ...this.products[index],
+                        ...productData,
+                        updatedDate: new Date().toISOString()
+                    };
+                    this.saveProducts();
+                    return this.products[index];
+                }
+                return null;
+            }
+
+            deleteProduct(id) {
+                const index = this.products.findIndex(product => product.id === parseInt(id));
+                if (index !== -1) {
+                    const deletedProduct = this.products.splice(index, 1)[0];
+                    this.saveProducts();
+                    return deletedProduct;
+                }
+                return null;
+            }
+
+            getProductStats() {
+                const total = this.products.length;
+                const active = this.products.filter(p => p.status === 'active').length;
+                const outOfStock = this.products.filter(p => p.stock === 0).length;
+                const lowStock = this.products.filter(p => p.stock > 0 && p.stock <= 5).length;
+
+                return {
+                    total,
+                    active,
+                    outOfStock,
+                    lowStock,
+                    activePercentage: total > 0 ? Math.round((active / total) * 100) : 0
+                };
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded');
+
+            // Wait a bit for admin.js to load
+            setTimeout(function() {
+                console.log('Checking AdminManager availability...');
+                console.log('window.adminManager:', typeof window.adminManager);
+
+                if (typeof window.adminManager === 'undefined') {
+                    console.log('AdminManager not found, creating new instance...');
+                    // Try to create AdminManager if it doesn't exist
+                    if (typeof AdminManager !== 'undefined') {
+                        window.adminManager = new AdminManager();
+                    } else {
+                        console.error('AdminManager class not available');
+                    }
+                }
+
+                // Skip auth check for now - just initialize
+                console.log('Initializing admin products...');
+                initializeAdminProducts();
+            }, 100);
+        });
+
+        // Fallback initialization in case auth manager blocks the main initialization
+        setTimeout(function() {
+            const addProductBtn = document.getElementById('addProductBtn');
+            if (addProductBtn && !addProductBtn.hasAttribute('data-initialized')) {
+                console.log('Fallback initialization triggered');
+                setupEventListeners();
+                addProductBtn.setAttribute('data-initialized', 'true');
+            }
+        }, 1000);
+
+        // Test function for debugging - can be called from browser console
+        window.testAddProductModal = function() {
+            console.log('Testing add product modal...');
+            showAddProductModal();
+        };
+
+        // Debug and test functions
+        function debugModal() {
+            console.log('=== MODAL DEBUG ===');
+            const modal = document.getElementById('addProductModal');
+            console.log('Modal element:', modal);
+            console.log('Modal display style:', modal ? modal.style.display : 'N/A');
+            console.log('Modal computed style:', modal ? window.getComputedStyle(modal).display : 'N/A');
+
+            if (modal) {
+                console.log('Modal HTML:', modal.outerHTML.substring(0, 200) + '...');
+                alert('Modal found! Check console for details. Trying to show it now...');
+                modal.style.display = 'flex';
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                modal.style.zIndex = '99999';
+            } else {
+                alert('Modal NOT found! Check console for details.');
+            }
+        }
+
+        function testModalShow() {
+            console.log('testModalShow called');
+            alert('Button clicked! Check console and then modal should appear...');
+
+            const modal = document.getElementById('addProductModal');
+            console.log('Modal found:', !!modal);
+
+            if (modal) {
+                // Force show with inline styles
+                modal.style.display = 'flex !important';
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100vw';
+                modal.style.height = '100vh';
+                modal.style.backgroundColor = 'rgba(0,0,0,0.8)';
+                modal.style.zIndex = '999999';
+                modal.style.alignItems = 'center';
+                modal.style.justifyContent = 'center';
+
+                console.log('Modal should be visible now');
+
+                // Generate SKU
+                const skuInput = document.getElementById('productSku');
+                if (skuInput) {
+                    skuInput.value = 'SKU-' + Date.now();
+                }
+            } else {
+                alert('ERROR: Modal element not found!');
+            }
+        }
+
+        // Simple, reliable modal functions
+        function showSimpleAddModal() {
+            console.log('showSimpleAddModal called');
+
+            // Clear all form fields including size checkboxes
+            document.querySelectorAll('input[name="productSizes"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // Reset brand field to default value
+            const brandField = document.getElementById('productBrand');
+            if (brandField) {
+                brandField.value = 'TheProjectFaith';
+            }
+
+            testModalShow(); // Use the test function for now
+        }
+
+        function closeSimpleAddModal() {
+            console.log('closeSimpleAddModal called');
+            const modal = document.getElementById('addProductModal');
+            if (modal) {
+                modal.style.display = 'none';
+                console.log('Modal hidden');
+
+                // Reset form
+                const form = document.getElementById('addProductForm');
+                if (form) {
+                    form.reset();
+                }
+            }
+        }
+
+        // Alternative close function that definitely works
+        function forceCloseModal() {
+            const modal = document.getElementById('addProductModal');
+            if (modal) {
+                modal.setAttribute('style', 'display: none !important;');
+
+                // Reset form
+                const form = document.getElementById('addProductForm');
+                if (form) {
+                    form.reset();
+                }
+
+                // Clear image previews
+                clearImagePreviews();
+
+                // Clear error messages
+                clearErrorMessages();
+            }
+        }
+
+        // Enhanced form submission handler with image support
+        function handleSimpleSubmit(event) {
+            event.preventDefault();
+            console.log('Form submitted');
+
+            const name = document.getElementById('productName').value.trim();
+            const brand = document.getElementById('productBrand').value.trim() || 'TheProjectFaith';
+            const category = document.getElementById('productCategory').value;
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const originalPrice = document.getElementById('productOriginalPrice').value ?
+                parseFloat(document.getElementById('productOriginalPrice').value) : null;
+            const stock = parseInt(document.getElementById('productStock').value);
+            const description = document.getElementById('productDescription').value.trim();
+            const sizes = Array.from(document.querySelectorAll('input[name="productSizes"]:checked'))
+                .map(checkbox => checkbox.value);
+            const colors = document.getElementById('productColors').value.trim().split(',')
+                .map(color => color.trim()).filter(color => color);
+            const showOnHomepage = document.getElementById('showOnHomepage').checked;
+            const showOnProducts = document.getElementById('showOnProducts').checked;
+            const showOnSale = document.getElementById('showOnSale').checked;
+
+            if (!name || !category || !price || stock < 0) {
+                alert('Please fill in all required fields: Name, Category, Price, and Stock');
+                return;
+            }
+
+            // Get images from upload system
+            const images = getProductImages();
+
+            const product = {
+                id: Date.now(),
+                name: name,
+                brand: brand,
+                description: description || 'No description available',
+                category: category,
+                status: 'active',
+                sku: 'SKU-' + Date.now(),
+                price: price,
+                originalPrice: originalPrice,
+                stock: stock,
+                images: images.length > 0 ? images : ['https://via.placeholder.com/400x500?text=No+Image'],
+                sizes: sizes.length > 0 ? sizes : ['One Size'],
+                colors: colors.length > 0 ? colors : ['Default'],
+                rating: 0,
+                reviews: 0,
+                showOnHomepage: showOnHomepage,
+                showOnProducts: showOnProducts,
+                showOnSale: showOnSale,
+                createdDate: new Date().toISOString(),
+                updatedDate: new Date().toISOString()
+            };
+
+            try {
+                let products = JSON.parse(localStorage.getItem('vaith_products')) || [];
+                products.push(product);
+                localStorage.setItem('vaith_products', JSON.stringify(products));
+
+                alert(`Product "${name}" added successfully!`);
+                forceCloseModal();
+
+                // Refresh the page to show new product
+                window.location.reload();
+            } catch (error) {
+                alert('Error saving product. Please try again.');
+            }
+        }
+
+        // Force show modal function - guaranteed to work
+        function forceShowModal() {
+
+            const modal = document.getElementById('addProductModal');
+            if (modal) {
+                // Force show with maximum priority styles
+                modal.setAttribute('style', 'display: flex !important; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0,0,0,0.8) !important; z-index: 999999 !important; align-items: center !important; justify-content: center !important;');
+
+                console.log('Modal forced to show');
+
+                // Generate SKU
+                const skuInput = document.getElementById('productSku');
+                if (skuInput) {
+                    skuInput.value = 'SKU-' + Date.now();
+                }
+
+                // Initialize image upload functionality
+                try {
+                    initializeImageUpload();
+                    console.log('Image upload initialized');
+                } catch (error) {
+                    console.error('Error initializing image upload:', error);
+                }
+            } else {
+                alert('ERROR: Modal not found!');
+            }
+        }
+
+        // Test image upload function
+        function testImageUpload() {
+            console.log('Testing image upload functionality...');
+            const fileInput = document.getElementById('productImageFiles');
+            const uploadArea = document.getElementById('fileUploadArea');
+            const previewContainer = document.getElementById('imagePreviewContainer');
+
+            console.log('File input:', fileInput);
+            console.log('Upload area:', uploadArea);
+            console.log('Preview container:', previewContainer);
+
+            if (fileInput && uploadArea && previewContainer) {
+                alert('Image upload elements found! Click on the upload area or drag files to test.');
+            } else {
+                alert('Some image upload elements are missing. Check console for details.');
+            }
+        }
+
+        // Make functions globally available
+        window.debugModal = debugModal;
+        window.testModalShow = testModalShow;
+        window.showSimpleAddModal = showSimpleAddModal;
+        window.closeSimpleAddModal = closeSimpleAddModal;
+        window.handleSimpleSubmit = handleSimpleSubmit;
+        window.forceShowModal = forceShowModal;
+        window.forceCloseModal = forceCloseModal;
+        window.testImageUpload = testImageUpload;
+
+        // Make functions globally available for debugging
+        window.showAddProductModal = showAddProductModal;
+        window.closeAddProductModal = closeAddProductModal;
+        window.handleAddProduct = handleAddProduct;
+        window.showSimpleAddModal = showSimpleAddModal;
+        window.closeSimpleAddModal = closeSimpleAddModal;
+        window.testModal = function() {
+            console.log('Testing modal function...');
+            showSimpleAddModal();
+        };
+
+        // Debug function to add sample products
+        window.addSampleProducts = function() {
+            console.log('Adding sample products...');
+            const sampleProducts = [
+                {
+                    id: Date.now() + 1,
+                    name: 'Premium T-Shirt',
+                    brand: 'TheProjectFaith',
+                    description: 'High-quality cotton t-shirt',
+                    category: 'men',
+                    status: 'active',
+                    sku: 'SKU-TSH001',
+                    price: 29.99,
+                    originalPrice: 39.99,
+                    stock: 50,
+                    images: ['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop'],
+                    sizes: ['S', 'M', 'L', 'XL'],
+                    colors: ['Black', 'White', 'Gray'],
+                    rating: 4.5,
+                    reviews: 23,
+                    showOnHomepage: true,
+                    showOnProducts: true,
+                    showOnSale: false,
+                    createdDate: new Date().toISOString(),
+                    updatedDate: new Date().toISOString()
+                },
+                {
+                    id: Date.now() + 2,
+                    name: 'Designer Jeans',
+                    brand: 'TheProjectFaith',
+                    description: 'Stylish denim jeans',
+                    category: 'women',
+                    status: 'active',
+                    sku: 'SKU-JNS001',
+                    price: 79.99,
+                    originalPrice: 99.99,
+                    stock: 25,
+                    images: ['https://images.unsplash.com/photo-1542272604-787c3835535d?w=400&h=500&fit=crop'],
+                    sizes: ['XS', 'S', 'M', 'L'],
+                    colors: ['Blue', 'Black'],
+                    rating: 4.8,
+                    reviews: 45,
+                    showOnHomepage: true,
+                    showOnProducts: true,
+                    showOnSale: true,
+                    createdDate: new Date().toISOString(),
+                    updatedDate: new Date().toISOString()
+                }
+            ];
+
+            // Add products to localStorage
+            localStorage.setItem('vaith_products', JSON.stringify(sampleProducts));
+            console.log('Sample products added to localStorage');
+
+            // Reload the page
+            loadProducts();
+            loadProductStats();
+        };
+
+        // Debug function to clear all products
+        window.clearAllProducts = function() {
+            localStorage.removeItem('vaith_products');
+            console.log('All products cleared from localStorage');
+            loadProducts();
+            loadProductStats();
+        };
+
+        // Debug function to check current state
+        window.debugProductsState = function() {
+            console.log('=== PRODUCTS DEBUG STATE ===');
+            console.log('AdminManager exists:', typeof window.adminManager !== 'undefined');
+            console.log('AdminManager type:', typeof window.adminManager);
+
+            if (window.adminManager) {
+                console.log('AdminManager products:', window.adminManager.products);
+                console.log('AdminManager getAllProducts():', window.adminManager.getAllProducts());
+            }
+
+            console.log('localStorage vaith_products:', localStorage.getItem('vaith_products'));
+            console.log('currentProducts:', currentProducts);
+            console.log('filteredProducts:', filteredProducts);
+            console.log('=== END DEBUG ===');
+        };
+
+        // Force reload function
+        window.forceReloadProducts = function() {
+            console.log('Force reloading products...');
+
+            // Reinitialize AdminManager if needed
+            if (typeof window.adminManager === 'undefined' && typeof AdminManager !== 'undefined') {
+                window.adminManager = new AdminManager();
+            }
+
+            // Force reload
+            loadProducts();
+            loadProductStats();
+        };
+
+        function initializeProductsPage() {
+            loadProductStats();
+            loadProducts();
+        }
+
+        function loadProductStats() {
+            // Refresh products from localStorage first
+            adminManager.refreshProducts();
+            const stats = adminManager.getProductStats();
+            console.log('Loading product stats:', stats); // Debug log
+            document.getElementById('totalProductsCount').textContent = stats.total;
+            document.getElementById('activeProductsCount').textContent = stats.active;
+            document.getElementById('outOfStockCount').textContent = stats.outOfStock;
+            document.getElementById('lowStockCount').textContent = stats.lowStock;
+
+            // Also update dashboard if it's open in another tab
+            if (typeof Storage !== 'undefined') {
+                localStorage.setItem('vaith_stats_updated', Date.now().toString());
+            }
+        }
+
+        function loadProducts() {
+            console.log('Loading products...');
+            if (typeof adminManager === 'undefined') {
+                console.error('AdminManager not available');
+                return;
+            }
+
+            // Refresh products from localStorage first
+            adminManager.refreshProducts();
+            currentProducts = adminManager.getAllProducts();
+            filteredProducts = [...currentProducts];
+            console.log('Loaded products:', currentProducts.length);
+            console.log('Current products:', currentProducts);
+            console.log('Filtered products:', filteredProducts);
+
+            // Check localStorage directly
+            const storedProducts = localStorage.getItem('vaith_products');
+            console.log('Raw localStorage products:', storedProducts);
+
+            renderProductsTable();
+        }
+
+        function renderProductsTable() {
+            console.log('renderProductsTable called');
+            const tbody = document.getElementById('productsTableBody');
+            console.log('Table body element:', tbody);
+            console.log('Filtered products length:', filteredProducts.length);
+
+            if (filteredProducts.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" style="text-align: center; padding: 3rem; color: var(--admin-text-tertiary);">
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                                <i class="fas fa-box-open" style="font-size: 3rem; opacity: 0.5;"></i>
+                                <div>
+                                    <div style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1.1rem;">No products found</div>
+                                    <div style="font-size: 0.875rem;">No products are currently available in the store</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filteredProducts.map(product => `
+                <tr>
+                    <td>
+                        <div>
+                            <div style="font-weight: 500; margin-bottom: 0.25rem;">${product.name}</div>
+                            <div style="font-size: 0.75rem; color: var(--text-light);">${product.brand}</div>
+                        </div>
+                    </td>
+                    <td style="font-family: monospace;">${product.sku}</td>
+                    <td><span class="status-badge status-active">${product.category}</span></td>
+                    <td>
+                        <div style="font-weight: 500;">$${product.price}</div>
+                        ${product.originalPrice && product.originalPrice !== product.price ?
+                            `<div style="font-size: 0.75rem; color: var(--text-light); text-decoration: line-through;">$${product.originalPrice}</div>` :
+                            ''
+                        }
+                    </td>
+                    <td>
+                        <div class="stock-indicator">
+                            <div class="stock-dot ${getStockIndicatorClass(product.stock)}"></div>
+                            <span>${product.stock}</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge ${getProductStatusBadgeClass(product.status)}">${product.status}</span></td>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 0.25rem;">
+                            <span style="color: var(--star-color);">★</span>
+                            <span>${product.rating.toFixed(1)}</span>
+                            <span style="color: var(--text-light); font-size: 0.75rem;">(${product.reviews})</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.25rem;">
+                            ${product.showOnHomepage ? '<span class="status-badge status-active" style="font-size: 0.7rem;">Home</span>' : ''}
+                            ${(product.showOnProducts !== false) ? '<span class="status-badge status-pending" style="font-size: 0.7rem;">Products</span>' : ''}
+                            ${product.showOnSale ? '<span class="status-badge status-completed" style="font-size: 0.7rem;">Sale</span>' : ''}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary btn-sm" onclick="viewProduct(${product.id})" title="View Product Details">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-secondary btn-sm" onclick="editProduct(${product.id})" title="Edit Product">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})" title="Delete Product">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function setupEventListeners() {
+            // Sidebar toggle
+            document.getElementById('sidebarToggle').addEventListener('click', function() {
+                const sidebar = document.getElementById('adminSidebar');
+                const main = document.getElementById('adminMain');
+
+                sidebar.classList.toggle('collapsed');
+                main.classList.toggle('expanded');
+            });
+
+            // Search functionality
+            document.getElementById('productSearch').addEventListener('input', applyFilters);
+
+            // Filter functionality
+            document.getElementById('categoryFilter').addEventListener('change', applyFilters);
+            document.getElementById('statusFilter').addEventListener('change', applyFilters);
+
+            // Add Product Button - DISABLED to avoid conflicts with onclick
+            // The button now uses onclick="forceShowModal()" directly
+            console.log('Add Product button uses onclick handler directly');
+
+            // Add Product Modal Events
+            try {
+                const closeBtn = document.getElementById('closeAddProductModal');
+                const cancelBtn = document.getElementById('cancelAddProduct');
+                const form = document.getElementById('addProductForm');
+
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', closeAddProductModal);
+                    console.log('Close button event listener attached');
+                } else {
+                    console.error('Close button not found');
+                }
+
+                if (cancelBtn) {
+                    cancelBtn.addEventListener('click', closeAddProductModal);
+                    console.log('Cancel button event listener attached');
+                } else {
+                    console.error('Cancel button not found');
+                }
+
+                if (form) {
+                    form.addEventListener('submit', handleAddProduct);
+                    console.log('Form submit event listener attached');
+                } else {
+                    console.error('Form not found');
+                }
+            } catch (error) {
+                console.error('Error setting up modal event listeners:', error);
+            }
+
+            // User menu toggle
+            document.getElementById('userMenuBtn').addEventListener('click', function(e) {
+                e.stopPropagation();
+                const dropdown = document.getElementById('userDropdown');
+                dropdown.classList.toggle('show');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function() {
+                const dropdown = document.getElementById('userDropdown');
+                dropdown.classList.remove('show');
+            });
+
+            // Modal close
+            document.getElementById('closeProductModal').addEventListener('click', closeModal);
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                authManager.logout();
+            });
+        }
+
+        function applyFilters() {
+            const searchQuery = document.getElementById('productSearch').value;
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            filteredProducts = currentProducts.filter(product => {
+                const matchesSearch = !searchQuery ||
+                    product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    product.sku.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    product.brand.toLowerCase().includes(searchQuery.toLowerCase());
+
+                const matchesCategory = !categoryFilter || product.category === categoryFilter;
+                const matchesStatus = !statusFilter || product.status === statusFilter;
+
+                return matchesSearch && matchesCategory && matchesStatus;
+            });
+
+            renderProductsTable();
+        }
+
+        function getStockIndicatorClass(stock) {
+            if (stock === 0) return 'stock-out';
+            if (stock <= 5) return 'stock-low';
+            if (stock <= 20) return 'stock-medium';
+            return 'stock-high';
+        }
+
+        function viewProduct(productId) {
+            const product = adminManager.getProductById(productId);
+            if (!product) return;
+
+            document.getElementById('modalTitle').textContent = 'Product Details';
+            document.getElementById('productModalBody').innerHTML = `
+                <div style="display: grid; gap: 1.5rem;">
+                    <div>
+                        <h3 style="margin-bottom: 0.5rem;">${product.name}</h3>
+                        <p style="color: var(--text-light); margin-bottom: 1rem;">${product.description}</p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div><strong>Brand:</strong> ${product.brand}</div>
+                            <div><strong>SKU:</strong> ${product.sku}</div>
+                            <div><strong>Category:</strong> ${product.category}</div>
+                            <div><strong>Status:</strong> <span class="status-badge ${getProductStatusBadgeClass(product.status)}">${product.status}</span></div>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <strong>Price:</strong><br>
+                            <span style="font-size: 1.25rem; font-weight: 600; color: var(--primary-color);">$${product.price}</span>
+                            ${product.originalPrice && product.originalPrice !== product.price ?
+                                `<span style="text-decoration: line-through; color: var(--text-light); margin-left: 0.5rem;">$${product.originalPrice}</span>` :
+                                ''
+                            }
+                        </div>
+                        <div>
+                            <strong>Stock:</strong><br>
+                            <div class="stock-indicator" style="margin-top: 0.25rem;">
+                                <div class="stock-dot ${getStockIndicatorClass(product.stock)}"></div>
+                                <span>${product.stock} units</span>
+                            </div>
+                        </div>
+                        <div>
+                            <strong>Rating:</strong><br>
+                            <div style="display: flex; align-items: center; gap: 0.25rem; margin-top: 0.25rem;">
+                                <span style="color: var(--star-color);">★</span>
+                                <span>${product.rating.toFixed(1)}</span>
+                                <span style="color: var(--text-light);">(${product.reviews} reviews)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <strong>Available Sizes:</strong><br>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            ${product.sizes.map(size => `<span class="status-badge status-active">${size}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div>
+                        <strong>Available Colors:</strong><br>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            ${product.colors.map(color => `<span class="status-badge status-pending">${color}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div>
+                        <strong>Display Options:</strong><br>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;">
+                            ${product.showOnHomepage ? '<span class="status-badge status-active">Homepage</span>' : ''}
+                            ${(product.showOnProducts !== false) ? '<span class="status-badge status-pending">Products Page</span>' : ''}
+                            ${product.showOnSale ? '<span class="status-badge status-completed">Sale Page</span>' : ''}
+                        </div>
+                    </div>
+
+                    <div>
+                        <strong>Created:</strong> ${formatDate(product.createdDate)}<br>
+                        <strong>Last Updated:</strong> ${formatDate(product.updatedDate)}
+                    </div>
+                </div>
+            `;
+
+            showModal();
+        }
+
+        function editProduct(productId) {
+            const product = adminManager.getProductById(productId);
+            if (!product) return;
+
+            // Populate the edit form with product data
+            document.getElementById('editProductId').value = product.id;
+            document.getElementById('editProductName').value = product.name || '';
+            document.getElementById('editProductBrand').value = product.brand || '';
+            document.getElementById('editProductDescription').value = product.description || '';
+            document.getElementById('editProductCategory').value = product.category || '';
+            document.getElementById('editProductStatus').value = product.status || 'active';
+            document.getElementById('editProductPrice').value = product.price || '';
+            document.getElementById('editProductOriginalPrice').value = product.originalPrice || '';
+            document.getElementById('editProductStock').value = product.stock || '';
+            document.getElementById('editProductSku').value = product.sku || '';
+            // Clear all size checkboxes first
+            document.querySelectorAll('input[name="editProductSizes"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            // Check the sizes that are selected for this product
+            if (Array.isArray(product.sizes)) {
+                product.sizes.forEach(size => {
+                    const checkbox = document.querySelector(`input[name="editProductSizes"][value="${size}"]`);
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+                });
+            }
+            document.getElementById('editProductColors').value = Array.isArray(product.colors) ? product.colors.join(', ') : '';
+            document.getElementById('editProductImage').value = Array.isArray(product.images) ? product.images[0] : (product.image || '');
+            document.getElementById('editShowOnHomepage').checked = product.showOnHomepage || false;
+            document.getElementById('editShowOnProducts').checked = product.showOnProducts !== undefined ? product.showOnProducts : true;
+            document.getElementById('editShowOnSale').checked = product.showOnSale || false;
+
+            // Show the edit modal
+            showEditProductModal();
+        }
+
+        function deleteProduct(productId) {
+            const product = adminManager.getProductById(productId);
+            if (!product) return;
+
+            if (confirm(`Are you sure you want to delete "${product.name}"? This action cannot be undone.`)) {
+                adminManager.deleteProduct(productId);
+                loadProducts();
+                loadProductStats();
+            }
+        }
+
+        function showModal() {
+            document.getElementById('productModal').style.display = 'flex';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('productModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function showAddProductModal() {
+            console.log('showAddProductModal function called');
+
+            const modal = document.getElementById('addProductModal');
+            const overlay = document.getElementById('overlay');
+
+            if (modal && overlay) {
+                modal.style.display = 'flex';
+                overlay.style.display = 'block';
+                console.log('Modal and overlay displayed');
+
+                // Generate SKU
+                const sku = generateSKU();
+                const skuInput = document.getElementById('productSku');
+                if (skuInput) {
+                    skuInput.value = sku;
+                    console.log('SKU generated:', sku);
+                } else {
+                    console.error('SKU input not found');
+                }
+            } else {
+                console.error('Modal or overlay not found', { modal, overlay });
+            }
+        }
+
+        function closeAddProductModal() {
+            document.getElementById('addProductModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+
+            // Reset form
+            document.getElementById('addProductForm').reset();
+        }
+
+        function showEditProductModal() {
+            console.log('showEditProductModal function called');
+
+            const modal = document.getElementById('editProductModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                console.log('Edit modal displayed');
+            } else {
+                console.error('Edit modal not found');
+            }
+        }
+
+        function closeEditProductModal() {
+            const modal = document.getElementById('editProductModal');
+            if (modal) {
+                modal.style.display = 'none';
+                console.log('Edit modal closed');
+            }
+
+            // Reset form
+            const form = document.getElementById('editProductForm');
+            if (form) {
+                form.reset();
+            }
+        }
+
+        function generateSKU() {
+            const timestamp = Date.now().toString().slice(-6);
+            const random = Math.random().toString(36).substring(2, 5).toUpperCase();
+            return `SKU-${random}${timestamp}`;
+        }
+
+        function handleAddProduct(e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = {
+                name: document.getElementById('productName').value.trim(),
+                brand: document.getElementById('productBrand').value.trim() || 'TheProjectFaith',
+                description: document.getElementById('productDescription').value.trim(),
+                category: document.getElementById('productCategory').value,
+                status: document.getElementById('productStatus').value,
+                sku: document.getElementById('productSku').value.trim(),
+                price: parseFloat(document.getElementById('productPrice').value),
+                originalPrice: document.getElementById('productOriginalPrice').value ?
+                    parseFloat(document.getElementById('productOriginalPrice').value) : null,
+                stock: parseInt(document.getElementById('productStock').value),
+                images: document.getElementById('productImages').value.trim().split('\n')
+                    .map(url => url.trim()).filter(url => url),
+                sizes: Array.from(document.querySelectorAll('input[name="productSizes"]:checked'))
+                    .map(checkbox => checkbox.value),
+                colors: document.getElementById('productColors').value.trim().split(',')
+                    .map(color => color.trim()).filter(color => color),
+                showOnHomepage: document.getElementById('showOnHomepage').checked,
+                showOnProducts: document.getElementById('showOnProducts').checked,
+                showOnSale: document.getElementById('showOnSale').checked
+            };
+
+            // Validate required fields
+            if (!formData.name || !formData.category || !formData.price || formData.stock < 0) {
+                showFileProtocolToast('Please fill in all required fields', 'error');
+                return;
+            }
+
+            // Add default image if none provided
+            if (formData.images.length === 0) {
+                formData.images = ['https://via.placeholder.com/400x500?text=No+Image'];
+            }
+
+            // Add default sizes and colors if none provided
+            if (formData.sizes.length === 0) {
+                formData.sizes = ['One Size'];
+            }
+            if (formData.colors.length === 0) {
+                formData.colors = ['Default'];
+            }
+
+            // Create product object
+            const product = {
+                id: Date.now(), // Simple ID generation
+                ...formData,
+                rating: 0,
+                reviews: 0,
+                createdDate: new Date().toISOString(),
+                updatedDate: new Date().toISOString()
+            };
+
+            // Add product using admin manager
+            if (adminManager.addProduct) {
+                adminManager.addProduct(product);
+            } else {
+                // Fallback for file protocol
+                adminManager.products.push(product);
+                adminManager.saveProducts();
+            }
+
+            // Show success message
+            showFileProtocolToast(`Product "${formData.name}" added successfully!`, 'success');
+
+            // Close modal and refresh
+            closeAddProductModal();
+            loadProducts();
+            loadProductStats();
+        }
+        function handleEditSubmit(event) {
+            event.preventDefault();
+            console.log('Edit form submitted');
+
+            // Get form data
+            const productId = parseInt(document.getElementById('editProductId').value);
+            const name = document.getElementById('editProductName').value.trim();
+            const brand = document.getElementById('editProductBrand').value.trim();
+            const description = document.getElementById('editProductDescription').value.trim();
+            const category = document.getElementById('editProductCategory').value;
+            const status = document.getElementById('editProductStatus').value;
+            const price = parseFloat(document.getElementById('editProductPrice').value);
+            const originalPrice = document.getElementById('editProductOriginalPrice').value ?
+                parseFloat(document.getElementById('editProductOriginalPrice').value) : null;
+            const stock = parseInt(document.getElementById('editProductStock').value);
+            const sku = document.getElementById('editProductSku').value.trim();
+            const sizes = Array.from(document.querySelectorAll('input[name="editProductSizes"]:checked'))
+                .map(checkbox => checkbox.value);
+            const colors = document.getElementById('editProductColors').value.trim().split(',')
+                .map(color => color.trim()).filter(color => color);
+            const imageUrl = document.getElementById('editProductImage').value.trim();
+            const showOnHomepage = document.getElementById('editShowOnHomepage').checked;
+            const showOnProducts = document.getElementById('editShowOnProducts').checked;
+            const showOnSale = document.getElementById('editShowOnSale').checked;
+
+            // Validate required fields
+            if (!name || !category || !price || stock < 0) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Prepare update data
+            const updateData = {
+                name: name,
+                brand: brand || 'TheProjectFaith',
+                description: description || 'No description available',
+                category: category,
+                status: status,
+                price: price,
+                originalPrice: originalPrice,
+                stock: stock,
+                sku: sku,
+                sizes: sizes.length > 0 ? sizes : ['One Size'],
+                colors: colors.length > 0 ? colors : ['Default'],
+                showOnHomepage: showOnHomepage,
+                showOnProducts: showOnProducts,
+                showOnSale: showOnSale
+            };
+
+            // Handle image
+            if (imageUrl) {
+                updateData.images = [imageUrl];
+                updateData.image = imageUrl; // For backward compatibility
+            }
+
+            try {
+                // Update product using admin manager
+                const updatedProduct = adminManager.updateProduct(productId, updateData);
+
+                if (updatedProduct) {
+                    // Show success message
+                    showFileProtocolToast(`Product "${name}" updated successfully!`, 'success');
+
+                    // Close modal and refresh
+                    closeEditProductModal();
+                    loadProducts();
+                    loadProductStats();
+                } else {
+                    throw new Error('Product not found');
+                }
+            } catch (error) {
+                console.error('Error updating product:', error);
+                showFileProtocolToast('Error updating product. Please try again.', 'error');
+            }
+        }
+
+
+
+
+
+        // File Protocol Compatible Toast Notification System
+        function showFileProtocolToast(message, type = 'info') {
+            // Create toast container if it doesn't exist
+            let container = document.querySelector('.file-protocol-toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.className = 'file-protocol-toast-container';
+                container.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    z-index: 10000;
+                    pointer-events: none;
+                `;
+                document.body.appendChild(container);
+            }
+
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = `file-protocol-toast file-protocol-toast-${type}`;
+
+            // Toast styles
+            const baseStyles = `
+                background: var(--card-bg);
+                border-radius: 8px;
+                padding: 16px 20px;
+                margin-bottom: 10px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                border-left: 4px solid;
+                color: var(--text-color);
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                font-size: 14px;
+                font-weight: 500;
+                max-width: 400px;
+                word-wrap: break-word;
+                pointer-events: auto;
+                cursor: pointer;
+                transform: translateX(100%);
+                transition: transform 0.3s ease-in-out;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            `;
+
+            let typeStyles = '';
+            let icon = '';
+
+            switch (type) {
+                case 'success':
+                    typeStyles = 'border-left-color: var(--success-color);';
+                    icon = '✅';
+                    break;
+                case 'error':
+                    typeStyles = 'border-left-color: var(--error-color);';
+                    icon = '❌';
+                    break;
+                case 'warning':
+                    typeStyles = 'border-left-color: var(--warning-color);';
+                    icon = '⚠️';
+                    break;
+                default:
+                    typeStyles = 'border-left-color: var(--primary-color);';
+                    icon = 'ℹ️';
+            }
+
+            toast.style.cssText = baseStyles + typeStyles;
+            toast.innerHTML = `<span>${icon}</span><span>${message}</span>`;
+
+            // Add to container
+            container.appendChild(toast);
+
+            // Animate in
+            setTimeout(() => {
+                toast.style.transform = 'translateX(0)';
+            }, 10);
+
+            // Auto remove after 5 seconds
+            const removeToast = () => {
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (toast.parentElement) {
+                        toast.parentElement.removeChild(toast);
+                    }
+                }, 300);
+            };
+
+            // Click to dismiss
+            toast.addEventListener('click', removeToast);
+
+            // Auto dismiss
+            setTimeout(removeToast, 5000);
+        }
+
+        // Close modals when clicking overlay
+        document.getElementById('addProductModal').addEventListener('click', function(e) {
+            // Close modal when clicking the overlay (not the modal content)
+            if (e.target === this) {
+                closeSimpleAddModal();
+            }
+        });
+
+        // Close edit modal when clicking overlay
+        document.getElementById('editProductModal').addEventListener('click', function(e) {
+            // Close modal when clicking the overlay (not the modal content)
+            if (e.target === this) {
+                closeEditProductModal();
+            }
+        });
+    </script>
+
+
+</body>
+</html>
